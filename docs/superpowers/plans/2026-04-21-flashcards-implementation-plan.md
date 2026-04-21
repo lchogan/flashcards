@@ -1055,7 +1055,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.0.app
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
       - name: Install SwiftLint
         run: brew install swiftlint
       - name: swift-format lint
@@ -1066,7 +1068,7 @@ jobs:
         run: |
           xcodebuild \
             -scheme Flashcards \
-            -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
+            -destination 'platform=iOS Simulator,OS=latest' \
             -configuration Debug \
             -enableCodeCoverage YES \
             clean test | xcbeautify --is-ci
