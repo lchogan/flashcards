@@ -72,6 +72,15 @@ targets:
         product: PostHog
       - package: Sentry
         product: Sentry
+    preBuildScripts:
+      - name: SwiftLint
+        script: |
+          if command -v swiftlint >/dev/null 2>&1; then
+            swiftlint --config "${SRCROOT}/.swiftlint.yml" --strict
+          else
+            echo "warning: SwiftLint not installed — brew install swiftlint"
+          fi
+        basedOnDependencyAnalysis: false
 
   FlashcardsTests:
     type: bundle.unit-test

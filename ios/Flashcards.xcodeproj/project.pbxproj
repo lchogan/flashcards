@@ -140,6 +140,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CE79D582715594345ADD9246 /* Build configuration list for PBXNativeTarget "Flashcards" */;
 			buildPhases = (
+				51913F9C449EB8E2CC21A9F4 /* SwiftLint */,
 				B5E77E6414FBCAEFBCAD1F6A /* Sources */,
 				9190A102B33B13994342CCFF /* Frameworks */,
 			);
@@ -229,6 +230,28 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		51913F9C449EB8E2CC21A9F4 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if command -v swiftlint >/dev/null 2>&1; then\n  swiftlint --config \"${SRCROOT}/.swiftlint.yml\" --strict\nelse\n  echo \"warning: SwiftLint not installed — brew install swiftlint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		55819E4742DC6F948FC1C74F /* Sources */ = {
