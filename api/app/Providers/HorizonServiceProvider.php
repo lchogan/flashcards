@@ -24,12 +24,16 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
      * Register the Horizon gate.
      *
      * This gate determines who can access Horizon in non-local environments.
+     *
+     * TODO(deploy): Populate the allow-list with admin emails before first non-local
+     * deploy. Until this list contains an email, /horizon returns 403 in staging/prod.
+     * See ops/production-setup.md (Phase 5 Task 5.2).
      */
     protected function gate(): void
     {
         Gate::define('viewHorizon', function ($user = null) {
             return in_array(optional($user)->email, [
-                //
+                // Populate before first non-local deploy.
             ]);
         });
     }

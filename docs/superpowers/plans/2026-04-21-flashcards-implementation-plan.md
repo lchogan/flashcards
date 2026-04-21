@@ -443,6 +443,10 @@ cd /Users/lukehogan/Code/flashcards/api && composer require -W \
 cd /Users/lukehogan/Code/flashcards/api && php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
 ```
 
+**After publishing**, open the generated `database/migrations/*_create_personal_access_tokens_table.php` and change `$table->morphs('tokenable');` to `$table->uuidMorphs('tokenable');`. Our `users` table uses a UUID primary key (Task 0.31), and the default `morphs()` creates a `BIGINT UNSIGNED tokenable_id` which would silently corrupt token issuance. Add an inline comment so future re-reads know why.
+
+**Also**: in `app/Providers/HorizonServiceProvider.php`, the scaffolded `viewHorizon` gate ships with an empty email allow-list, so Horizon's dashboard 403s everyone in non-local environments. Add a `TODO(deploy)` comment inside the gate pointing at Task 5.2 so ops remembers to populate it before first staging deploy.
+
 - [ ] **Step 3: Publish Horizon**
 
 ```bash

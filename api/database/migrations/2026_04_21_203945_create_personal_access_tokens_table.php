@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('personal_access_tokens', function (Blueprint $table) {
             $table->id();
-            $table->morphs('tokenable');
+            // Use uuidMorphs because our User model will have a UUID primary key (Task 0.31).
+            // Default morphs() creates BIGINT tokenable_id, which would break token issuance.
+            $table->uuidMorphs('tokenable');
             $table->text('name');
             $table->string('token', 64)->unique();
             $table->text('abilities')->nullable();
