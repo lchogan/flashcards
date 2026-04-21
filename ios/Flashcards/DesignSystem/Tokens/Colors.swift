@@ -71,6 +71,6 @@ extension MWColor {
         .init(name: "again", color: again),
         .init(name: "hard", color: hard),
         .init(name: "good", color: good),
-        .init(name: "easy", color: easy)
+        .init(name: "easy", color: easy),
     ]
 }
