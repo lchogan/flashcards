@@ -421,17 +421,21 @@ git -C /Users/lukehogan/Code/flashcards commit -m "chore: add .env.example with 
 - [ ] **Step 1: Install packages**
 
 ```bash
-cd /Users/lukehogan/Code/flashcards/api && composer require \
+cd /Users/lukehogan/Code/flashcards/api && composer require -W \
   laravel/sanctum:^4.0 \
   laravel/horizon:^5.0 \
-  laravel/cashier-paddle:^2.0 \
+  laravel/cashier:^15.0 \
   spatie/laravel-query-builder:^6.0 \
   spatie/url-signer:^2.0 \
   sentry/sentry-laravel:^4.0 \
-  laravel-notification-channels/apn:^6.0
+  laravel-notification-channels/apn:^5.5
 ```
 
-> Note on Cashier: at time of writing Laravel has `laravel/cashier` (Stripe), `laravel/cashier-paddle`, and `laravel/cashier-apple`. Replace the above with `laravel/cashier-apple:^1.0` when installing; if unavailable at install time, install base Cashier and wire the StoreKit hooks manually in Task 3.17.
+> **Cashier note (verified 2026-04-21):** `laravel/cashier-apple` does not exist on Packagist. We install base Cashier (Stripe) for the subscription/webhook/receipt scaffolding and wire StoreKit manually in Task 3.10. If a `cashier-apple` package ships later, swap the require line and reassess Task 3.10.
+>
+> **APN note (verified 2026-04-21):** `laravel-notification-channels/apn ^6.0` requires PHP 8.4 + Laravel 12. We pin to `^5.5` which supports PHP 8.3 + Laravel 11. Revisit when the project moves to PHP 8.4 / Laravel 12.
+>
+> `-W` flag required because `edamov/pushok` (APN transitive) needs `brick/math` downgraded from 0.14 → 0.12 to be compatible with `web-token/jwt-library ^3.0`.
 
 - [ ] **Step 2: Publish Sanctum**
 
