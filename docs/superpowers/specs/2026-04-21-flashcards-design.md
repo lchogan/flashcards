@@ -447,6 +447,50 @@ Plug-in mechanism: feature flag (`Features.images`), `ImportSource` protocol, `E
 - **App Store Server Notifications v2** → Laravel → Cashier.
 - Server is source of truth cross-device; `User.subscription_status` cached in SwiftData for offline paid-feature access.
 
+### 11.2.1 Entitlements system — non-negotiable flexibility
+
+Paywall gating is a first-class architectural concern. The specific plan limits in §11.1 are **starting defaults, not load-bearing code**. The system must allow flipping, tuning, or A/B testing any limit without shipping an app update.
+
+**Design:**
+
+1. **Keyed entitlements.** Every gated capability has a stable string key:
+
+   | Key | Type | Example config |
+   |---|---|---|
+   | `decks.create` | max count | `{max: 5}` free, `{max: null}` Plus |
+   | `cards.create_in_deck` | max count | `{max: 200}` free, `{max: null}` Plus |
+   | `cards.create_total` | max count | `{max: 500}` free, `{max: null}` Plus |
+   | `study.smart` | boolean | `{allowed: true}` both tiers (today) |
+   | `study.basic` | boolean | `{allowed: true}` both tiers |
+   | `reminders.add` | max count | `{max: 1}` free, `{max: 3}` Plus |
+   | `new_card_limit.above_10` | boolean | `{allowed: false}` free, `{allowed: true}` Plus |
+   | `fsrs.personalized` | boolean | reserved for v1.5 |
+   | `images.use` | boolean | reserved for v1.5 |
+   | `import.csv` | boolean | reserved for v1.5 |
+   | `export.csv` / `export.json` | boolean | reserved for v1.5 |
+
+2. **Server-owned plans config, client-cached.** Laravel stores the plans-to-entitlements mapping in a `plans` DB table (or a versioned JSON config). iOS fetches it on login and caches it with a short TTL + refresh-on-foreground. Offline-safe.
+
+3. **One resolver API.** iOS exposes a single `EntitlementsManager`:
+   ```swift
+   let result = entitlements.can(.decksCreate, currentCount: deckCount)
+   // → .allowed | .paywall(reason: .decksCreate, limit: 5)
+   ```
+   Every gated code path calls this exactly once. No `if user.plan == .free` scattered through features.
+
+4. **Paywall copy keyed by entitlement.** The paywall screen takes a `reason: EntitlementKey` and renders the right headline and feature list from a copy map. Content edits, not engineering.
+
+5. **Server-side verification.** Client-side checks are for UX; the server re-validates on every mutation (deck create, card create, reminder add) against the same entitlements config. A stale or tampered client cannot bypass limits.
+
+**What this enables:**
+
+- Flip "Smart Study requires Plus" by changing `study.smart.allowed: false` in the free plan config. No app update.
+- A/B test paywall thresholds by assigning users to variant plan configs.
+- Grandfather launch-era users by assigning them a permanent "launch" plan with more generous limits.
+- Add a v1.5 gated feature (e.g., images) by adding one entitlement key and one call site check.
+
+**Packages:** none. Laravel `config()` + `plans` table + iOS `EntitlementsManager` class. Deliberately avoiding RevenueCat since their abstraction doesn't add value for an iOS-only build and adds a vendor + revenue share.
+
 ### 11.3 Paywall triggers
 
 1. 6th deck attempt → paywall ("Unlimited decks").
