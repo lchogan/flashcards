@@ -11,6 +11,7 @@
 		19BF3CEF62F523AA152B339F /* MWAccentKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3925292F9A0F8A65D5ADA9 /* MWAccentKey.swift */; };
 		1D3B8506D046FAD46CE79849 /* FlashcardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898ED96388E1C5A38EB3EC56 /* FlashcardsApp.swift */; };
 		24189012899F3CED7AB44E5E /* PostHog in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF295D3928BC732211057E9 /* PostHog */; };
+		319BDA71D9F0A272D6841EDA /* MWScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */; };
 		37DE4CDC872A96BF66F19D8F /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFBCFA88524780D98CE086 /* Spacing.swift */; };
 		4F357D7944554375AB0165EC /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1F414A0711619C5FDF3269DD /* MarkdownUI */; };
 		677876272A9353657D56BC78 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = B2E7B02A2283DBE098796542 /* Sentry */; };
@@ -58,6 +59,7 @@
 		9B3925292F9A0F8A65D5ADA9 /* MWAccentKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAccentKey.swift; sourceTree = "<group>"; };
 		A6D19E2DA08AE57F2E891450 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		BB0EDBD405DDBA367BDF1503 /* Radii.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radii.swift; sourceTree = "<group>"; };
+		BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScreen.swift; sourceTree = "<group>"; };
 		D75AEF6EC4869BDEED745175 /* ColorsTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsTokenTests.swift; sourceTree = "<group>"; };
 		DD49C9447BB17F91C561040F /* FlashcardsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsTests.swift; sourceTree = "<group>"; };
 		E7BFBCFA88524780D98CE086 /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
@@ -98,9 +100,18 @@
 			path = FlashcardsTests;
 			sourceTree = "<group>";
 		};
+		14F395A1EDCFA7C9108D63B4 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				934DD600AB566F95B6904B97 /* Layout */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		379B282C25770B71CD958878 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				14F395A1EDCFA7C9108D63B4 /* Components */,
 				638229C348DAB0712F8D39C4 /* EnvironmentKeys */,
 				4792559B161866F590E6EFEA /* Tokens */,
 			);
@@ -149,6 +160,14 @@
 				57D2CD70838F57E5188414E9 /* Info.plist */,
 			);
 			path = Flashcards;
+			sourceTree = "<group>";
+		};
+		934DD600AB566F95B6904B97 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */,
+			);
+			path = Layout;
 			sourceTree = "<group>";
 		};
 		DBFB1E547D31343C7FD8370D = {
@@ -346,6 +365,7 @@
 				A8E27F73C8E678C996E113CA /* ContentView.swift in Sources */,
 				1D3B8506D046FAD46CE79849 /* FlashcardsApp.swift in Sources */,
 				19BF3CEF62F523AA152B339F /* MWAccentKey.swift in Sources */,
+				319BDA71D9F0A272D6841EDA /* MWScreen.swift in Sources */,
 				A200308DB65D7AC28BF3AB87 /* Motion.swift in Sources */,
 				D9DD838304ED3D163450007C /* Radii.swift in Sources */,
 				17EF0C4A3171AF043E4BAC80 /* Shadows.swift in Sources */,
