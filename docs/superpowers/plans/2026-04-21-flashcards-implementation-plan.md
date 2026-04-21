@@ -478,9 +478,11 @@ git -C /Users/lukehogan/Code/flashcards commit -m "feat: install Sanctum, Horizo
 - [ ] **Step 1: Install Pest**
 
 ```bash
-cd /Users/lukehogan/Code/flashcards/api && composer require --dev pestphp/pest:^3.0 pestphp/pest-plugin-laravel:^3.0
-cd /Users/lukehogan/Code/flashcards/api && php artisan pest:install
+cd /Users/lukehogan/Code/flashcards/api && composer require --dev -W pestphp/pest:^3.0 pestphp/pest-plugin-laravel:^3.0
+cd /Users/lukehogan/Code/flashcards/api && ./vendor/bin/pest --init
 ```
+
+> **Note (verified 2026-04-21):** Pest v3 dropped the `php artisan pest:install` command — use `./vendor/bin/pest --init` instead. The `-W` flag is needed to downgrade phpunit (11.5.55 → 11.5.50) to satisfy Pest v3's constraint. Also: uncomment `DB_CONNECTION=sqlite` and `DB_DATABASE=:memory:` in `api/phpunit.xml` so `RefreshDatabase` can run without a local Postgres.
 
 - [ ] **Step 2: Replace `api/tests/Pest.php` with:**
 
