@@ -794,9 +794,9 @@ git -C /Users/lukehogan/Code/flashcards commit -m "ci: enable Dependabot for com
 
 In Xcode → File → New → Project → iOS → App.
 - Product Name: `Flashcards`
-- Team: (owner's team)
-- Organization Identifier: `app.flashcards`
-- Bundle Identifier: `app.flashcards`
+- Team: UWK6JHFFGJ
+- Organization Identifier: `com.lukehogan`
+- Bundle Identifier: `com.lukehogan.flashcards`
 - Interface: **SwiftUI**
 - Language: **Swift**
 - Storage: **SwiftData**
@@ -2212,10 +2212,10 @@ use App\Services\Auth\AppleIdentityVerifier;
 
 test('verifies a valid Apple identity token and returns subject + email', function () {
     $mockJwksResponse = [/* stub JWKS — filled in when ci runs mock server; for unit test, inject a public key pair */];
-    $verifier = new AppleIdentityVerifier(clientId: 'app.flashcards', jwksFetcher: fn () => $mockJwksResponse);
+    $verifier = new AppleIdentityVerifier(clientId: 'com.lukehogan.flashcards', jwksFetcher: fn () => $mockJwksResponse);
 
     // Sign a fake token with a matching private key in the test harness (firebase/php-jwt).
-    $token = makeFakeAppleIdentityToken(sub: 'APPLE_UID_123', email: 'user@example.com', aud: 'app.flashcards');
+    $token = makeFakeAppleIdentityToken(sub: 'APPLE_UID_123', email: 'user@example.com', aud: 'com.lukehogan.flashcards');
 
     $claims = $verifier->verify($token);
 
@@ -2224,7 +2224,7 @@ test('verifies a valid Apple identity token and returns subject + email', functi
 });
 
 test('rejects a token with wrong audience', function () {
-    $verifier = new AppleIdentityVerifier(clientId: 'app.flashcards', jwksFetcher: fn () => []);
+    $verifier = new AppleIdentityVerifier(clientId: 'com.lukehogan.flashcards', jwksFetcher: fn () => []);
     $token = makeFakeAppleIdentityToken(sub: 'x', email: 'x@x', aud: 'wrong.audience');
     expect(fn () => $verifier->verify($token))->toThrow(RuntimeException::class, 'Audience mismatch');
 });
@@ -2447,7 +2447,7 @@ class AppleAuthController extends Controller
 ```php
 $this->app->singleton(\App\Services\Auth\AppleIdentityVerifier::class, function () {
     return new \App\Services\Auth\AppleIdentityVerifier(
-        clientId: config('services.apple.client_id', 'app.flashcards'),
+        clientId: config('services.apple.client_id', 'com.lukehogan.flashcards'),
         jwksFetcher: fn () => json_decode(file_get_contents('https://appleid.apple.com/auth/keys'), true),
     );
 });
@@ -3064,7 +3064,7 @@ import KeychainAccess
 public actor TokenStore {
     private let keychain: Keychain
 
-    public init(service: String = "app.flashcards.tokens") {
+    public init(service: String = "com.lukehogan.flashcards.tokens") {
         self.keychain = Keychain(service: service).accessibility(.afterFirstUnlockThisDeviceOnly)
     }
 
@@ -3496,7 +3496,7 @@ Create `api/public/.well-known/apple-app-site-association` (no extension):
   "applinks": {
     "details": [
       {
-        "appIDs": ["TEAMID.app.flashcards"],
+        "appIDs": ["UWK6JHFFGJ.com.lukehogan.flashcards"],
         "components": [
           { "/": "/auth/consume", "?": { "t": "*" } }
         ]
@@ -11636,8 +11636,8 @@ git -C /Users/lukehogan/Code/flashcards commit -m "feat(paywall): MWPaywallScree
 
 | Product ID | Type | Price |
 |---|---|---|
-| `app.flashcards.plus.monthly` | Auto-renew | $4.99 / month |
-| `app.flashcards.plus.annual`  | Auto-renew | $29.99 / year (7-day free trial) |
+| `com.lukehogan.flashcards.plus.monthly` | Auto-renew | $4.99 / month |
+| `com.lukehogan.flashcards.plus.annual`  | Auto-renew | $29.99 / year (7-day free trial) |
 
 Wire into the scheme as StoreKit Configuration.
 
@@ -11658,10 +11658,10 @@ public final class PurchasesManager {
     public var isProcessing = false
 
     public var formattedMonthlyPrice: String? {
-        products.first(where: { $0.id == "app.flashcards.plus.monthly" })?.displayPrice
+        products.first(where: { $0.id == "com.lukehogan.flashcards.plus.monthly" })?.displayPrice
     }
     public var formattedAnnualPrice: String? {
-        products.first(where: { $0.id == "app.flashcards.plus.annual" })?.displayPrice
+        products.first(where: { $0.id == "com.lukehogan.flashcards.plus.annual" })?.displayPrice
     }
 
     private var updatesTask: Task<Void, Never>?
@@ -11675,7 +11675,7 @@ public final class PurchasesManager {
     public func load() async {
         do {
             products = try await Product.products(for: [
-                "app.flashcards.plus.monthly", "app.flashcards.plus.annual"
+                "com.lukehogan.flashcards.plus.monthly", "com.lukehogan.flashcards.plus.annual"
             ])
             for await entitlement in Transaction.currentEntitlements {
                 if case .verified(let tx) = entitlement {
@@ -11687,8 +11687,8 @@ public final class PurchasesManager {
         }
     }
 
-    public func purchaseAnnual() async { await purchase(id: "app.flashcards.plus.annual") }
-    public func purchaseMonthly() async { await purchase(id: "app.flashcards.plus.monthly") }
+    public func purchaseAnnual() async { await purchase(id: "com.lukehogan.flashcards.plus.annual") }
+    public func purchaseMonthly() async { await purchase(id: "com.lukehogan.flashcards.plus.monthly") }
 
     private func purchase(id: String) async {
         guard let product = products.first(where: { $0.id == id }) else { return }
@@ -11861,7 +11861,7 @@ test('POST /v1/subscriptions/verify flips user to plus', function () {
     $token = $u->createToken('t')->plainTextToken;
 
     $payload = base64_encode(json_encode([
-        'productID' => 'app.flashcards.plus.annual',
+        'productID' => 'com.lukehogan.flashcards.plus.annual',
         'originalTransactionID' => 'TX123',
         'expirationDate' => now()->addYear()->valueOf(),
         'environment' => 'Sandbox',
@@ -11901,7 +11901,7 @@ class AppStoreNotificationsController extends Controller
         if (!$origTxId) { return response()->json(status: 200); }
 
         $user = User::where('subscription_product_id', '!=', null)
-            ->where('subscription_product_id', 'like', 'app.flashcards.%')
+            ->where('subscription_product_id', 'like', 'com.lukehogan.flashcards.%')
             ->first(); // In prod, map via originalTransactionId → user
 
         if (!$user) { return response()->json(status: 200); }
@@ -12435,7 +12435,7 @@ git -C /Users/lukehogan/Code/flashcards commit -m "feat(notifications): Notifica
 - [ ] **Step 1: In Xcode: File → New → Target → Notification Content Extension.**
 
 - Name: `MWReminderContent`
-- Bundle ID: `app.flashcards.ReminderContent`
+- Bundle ID: `com.lukehogan.flashcards.ReminderContent`
 
 - [ ] **Step 2: Configure `Info.plist` of the extension:**
 
@@ -12470,7 +12470,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
 
     func didReceive(_ notification: UNNotification) {
         // Access shared container for due count persisted by the app.
-        let shared = UserDefaults(suiteName: "group.app.flashcards")
+        let shared = UserDefaults(suiteName: "group.com.lukehogan.flashcards")
         let dueCount = shared?.integer(forKey: "mw.dueCount") ?? 0
         label.text = dueCount == 0
             ? "All caught up. Nothing due right now."
@@ -12479,7 +12479,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
 }
 ```
 
-- [ ] **Step 4: Configure App Group.** In both Flashcards target and extension target → Signing → + Capability → App Groups → `group.app.flashcards`.
+- [ ] **Step 4: Configure App Group.** In both Flashcards target and extension target → Signing → + Capability → App Groups → `group.com.lukehogan.flashcards`.
 
 - [ ] **Step 5: App writes due count on background fetch + foreground update.** In a new helper `ios/Flashcards/Notifications/DueCountPublisher.swift`:
 
@@ -12488,7 +12488,7 @@ import Foundation
 
 public enum DueCountPublisher {
     public static func publish(_ count: Int) {
-        UserDefaults(suiteName: "group.app.flashcards")?.set(count, forKey: "mw.dueCount")
+        UserDefaults(suiteName: "group.com.lukehogan.flashcards")?.set(count, forKey: "mw.dueCount")
     }
 }
 ```
