@@ -25,24 +25,41 @@ public enum MWBorder {
 }
 
 /// Overlay stroke modifier. Draws a rectangular border around the content at
-/// the specified color and width.
+/// the specified color and width. When paired with a rounded-corner clip on the
+/// same view, pass a matching `cornerRadius` so the stroke traces the rounded
+/// outline instead of a sharp rectangle.
 public struct MWStroke: ViewModifier {
     /// Stroke color.
     let color: Color
     /// Stroke width in points.
     let width: CGFloat
+    /// Corner radius for the overlay shape. Defaults to `0` (sharp rectangle).
+    /// Set this to match any `mwCornerRadius` applied upstream so the border
+    /// lines up with the clipped fill.
+    let cornerRadius: CGFloat
 
-    /// Overlays a rectangular stroke on `content`.
+    /// Overlays a (optionally rounded) rectangular stroke on `content`.
     public func body(content: Content) -> some View {
         content.overlay(
-            RoundedRectangle(cornerRadius: 0).stroke(color, lineWidth: width)
+            RoundedRectangle(cornerRadius: cornerRadius).stroke(color, lineWidth: width)
         )
     }
 }
 
 public extension View {
     /// Applies a design-system stroke in `MWColor.ink` at `MWBorder.defaultWidth` by default.
-    func mwStroke(color: Color = MWColor.ink, width: CGFloat = MWBorder.defaultWidth) -> some View {
-        modifier(MWStroke(color: color, width: width))
+    ///
+    /// - Parameters:
+    ///   - color: Stroke color. Defaults to `MWColor.ink`.
+    ///   - width: Stroke width in points. Defaults to `MWBorder.defaultWidth`.
+    ///   - cornerRadius: Corner radius for the overlay shape. Defaults to `0`
+    ///     (sharp rectangle). Pass the same value used in an upstream
+    ///     `mwCornerRadius` so the stroke hugs the rounded clip.
+    func mwStroke(
+        color: Color = MWColor.ink,
+        width: CGFloat = MWBorder.defaultWidth,
+        cornerRadius: CGFloat = 0
+    ) -> some View {
+        modifier(MWStroke(color: color, width: width, cornerRadius: cornerRadius))
     }
 }

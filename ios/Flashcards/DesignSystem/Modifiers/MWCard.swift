@@ -10,8 +10,11 @@
 //  Key concepts: The card is a composition of design-system tokens rather than
 //                raw SwiftUI values — padding, corner radius, and border width
 //                all route through the token layer so one change at the token
-//                site propagates everywhere. Calling `.mwStroke()` with no
-//                arguments intentionally relies on its ink / 1.5pt defaults.
+//                site propagates everywhere. `.mwStroke(cornerRadius:)` is
+//                passed `MWRadius.m` to match the `.mwCornerRadius(.m)` applied
+//                just above it, so the ink border traces the rounded clip
+//                instead of drawing a sharp rectangle that the clip then eats
+//                into at each corner.
 //
 
 import SwiftUI
@@ -28,7 +31,7 @@ public struct MWCardStyle: ViewModifier {
             .mwPadding(.all, .l)
             .background(MWColor.paper)
             .mwCornerRadius(.m)
-            .mwStroke()
+            .mwStroke(cornerRadius: MWRadius.m)
     }
 }
 
