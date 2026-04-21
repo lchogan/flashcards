@@ -10062,6 +10062,501 @@ git -C /Users/lukehogan/Code/flashcards push origin main phase-2
 
 ---
 
+## Phase 2.5: Design Fidelity Pass (weeks 9-11, overlapping early Phase 3)
+
+**Goal:** Every screen written in Phase 2 — currently a functional scaffold composing the design system — is refined into a **pixel-match translation of the Modernist Workshop mockups** at 1x, 2x, and dark. The designer drives this phase; the engineer's job is to take notes and close the gap. Each task ends with designer sign-off in a shared Figma-like review channel.
+
+**Working method for every task:**
+1. Open the referenced JSX mockup side-by-side with the running SwiftUI simulator (both at the same device width).
+2. Walk top-to-bottom. Note every delta: eyebrow position, vertical rhythm, type weight, grid overlay presence, micro-icon placement, border weight, motion timing, empty states, loading states.
+3. Fix each delta in the corresponding SwiftUI view. Use only tokens — any new hard-coded value requires first adding or extending a token.
+4. Update or add snapshot tests. Snapshot at iPhone 15 Pro Max 6.7" + iPhone SE 5.4" + iPhone 15 Pro 6.1", light and dark.
+5. Share a screen recording to `#flashcards-design-review`. Engineer commits when designer gives an explicit 👍.
+
+**Non-negotiable rules (reinforced):**
+- Zero literal colors, sizes, padding, radii, durations in view files. SwiftLint from Task 0.12 enforces.
+- No new one-off views. Anything that appears twice becomes a component. If a pattern already exists as an atom/molecule, use it.
+- Motion uses `MWMotion.*` tokens exclusively. Any timing that isn't in the token scale means extending the scale first.
+
+---
+
+### Task 2.5.1: Token polish pass — grid, eyebrow tracking, motion curves
+
+**Files:**
+- Modify: `ios/Flashcards/DesignSystem/Tokens/Colors.swift`, `Typography.swift`, `Motion.swift`
+- Modify: `ios/Flashcards/DesignSystem/Components/Layout/MWScreen.swift`
+
+**Mockup reference:** `Mockup/mw/01-tokens.jsx` (authoritative token source).
+
+- [ ] **Step 1:** Open `01-tokens.jsx` alongside each token file. Diff every value. Fix any drift — hex codes, font weights, line heights, tracking, stroke widths, shadow opacity, motion easing curves.
+
+- [ ] **Step 2:** Verify `MWScreen`'s grid overlay is a 1:1 match with the mockup — step (currently 4pt), opacity (currently 0.4), color (`grid` token), `borderHair` stroke. Adjust until the two renderings are visually indistinguishable at 1x.
+
+- [ ] **Step 3:** Add any missing micro-tokens the mockup relies on that the original Phase 0 pass missed (e.g. `strokeMicro` = 0.33pt, `motionFlip` = custom card-flip spring). Name them; don't inline values.
+
+- [ ] **Step 4:** Designer sign-off on `#flashcards-design-review` with side-by-side screen recording.
+
+- [ ] **Step 5: Commit**
+
+```bash
+git -C /Users/lukehogan/Code/flashcards checkout -b phase/2.5-design-fidelity
+git -C /Users/lukehogan/Code/flashcards add ios
+git -C /Users/lukehogan/Code/flashcards commit -m "refactor(ds): token pass against 01-tokens.jsx — close color/type/motion drift (2.5.1)"
+```
+
+---
+
+### Task 2.5.2: Onboarding — Splash + Intro 1 + Intro 2 + Welcome
+
+**Files:**
+- Modify: `ios/Flashcards/Features/Onboarding/SplashView.swift`
+- Modify: `ios/Flashcards/Features/Onboarding/Intro1View.swift`
+- Modify: `ios/Flashcards/Features/Onboarding/Intro2View.swift`
+- Create: `ios/Flashcards/Features/Onboarding/WelcomeView.swift`
+
+**Mockup reference:** Splash + intro patterns in `Mockup/mw/Modernist.jsx` onboarding section. Welcome screen is new — designer-owned composition, mirror Intro layout.
+
+- [ ] **Step 1:** Splash: add the centered lockup with fine vertical micro-motion (a `motionSettled`-timed opacity fade on the wordmark as the app settles).
+
+- [ ] **Step 2:** Intro 1 + 2: numbered eyebrow (`01 — WELCOME`), headline in `display` weight, body in `bodyL`, CTA at bottom with bottom-safe-area padding of `xxl`. Add a page-indicator (2 dots, current one filled).
+
+- [ ] **Step 3:** Welcome (post-signup): add "You're in" eyebrow, one-liner, "Create your first deck" primary CTA, "Explore starter decks" secondary CTA (disabled in v1 — inline a feature-flag gate via `FeatureFlags.starterDecks`).
+
+- [ ] **Step 4:** Snapshot each at iPhone 15 Pro Max + iPhone SE + iPhone 15 Pro, light + dark.
+
+- [ ] **Step 5:** Designer sign-off + commit.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards add ios
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(onboarding): splash + intros + welcome mockup-fidelity pass (2.5.2)"
+```
+
+---
+
+### Task 2.5.3: Sign-up wall — exact spec copy + opt-in layout
+
+**Files:**
+- Modify: `ios/Flashcards/Features/Onboarding/SignUpWallView.swift`
+
+**Mockup reference:** New — spec §5 contains the locked copy. Layout mirrors Intro layout.
+
+- [ ] **Step 1:** Enforce the exact copy block from spec §5 (headline, body, buttons, footer line, checkbox) verbatim. Nothing improvised.
+
+- [ ] **Step 2:** Vertical rhythm: eyebrow `s` → headline `m` → body `l` → Apple button `l` → email field `s` → email button `xs` → footer `l` → opt-in `m`. Enforce via explicit `VStack(spacing:)` values pulled from `MWSpacingToken`.
+
+- [ ] **Step 3:** Error text slot is always reserved (not conditionally appearing) to prevent layout shift — render empty `Text("")` with the error's minimum height using `ScaledMetric`.
+
+- [ ] **Step 4:** Snapshot light + dark at all three device widths.
+
+- [ ] **Step 5:** Designer sign-off + commit.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards add ios
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(onboarding): sign-up wall — locked copy + non-shifting error slot (2.5.3)"
+```
+
+---
+
+### Task 2.5.4: Home — deck grid with stacked-paper metaphor
+
+**Files:**
+- Modify: `ios/Flashcards/Features/Home/HomeView.swift`
+- Modify: `ios/Flashcards/DesignSystem/Components/Molecules/MWDeckCard.swift`
+- Modify: `ios/Flashcards/DesignSystem/Components/Molecules/MWStackedDeckPaper.swift`
+
+**Mockup reference:** `Mockup/mw/02-screens-a.jsx` line 13.
+
+- [ ] **Step 1:** Refine `MWStackedDeckPaper`: three stacked sheets with exact offsets from the JSX (top sheet 0/0, middle sheet 3/3, back sheet 6/6), each with `borderDefault`, each progressively dimmed via opacity from token scale. Shadow only on deepest sheet via `MWShadow.deck`.
+
+- [ ] **Step 2:** Refine `MWDeckCard`: accent swatch rendered as a left-edge rule (not a standalone rectangle), exact type rhythm, due pill top-right aligned to eyebrow baseline.
+
+- [ ] **Step 3:** `HomeView` grid: 2 columns with `m` gutter on iPhone Pro / Pro Max, 1 column on SE. Use `ViewThatFits` so layout degrades gracefully.
+
+- [ ] **Step 4:** Empty state: large illustrated typographic composition (just type, no illustration — Modernist). "Start by making your first deck." + primary CTA. Mirror the empty-state proportions from the JSX.
+
+- [ ] **Step 5:** Top bar: search icon left, settings icon right, wordmark centered (NOT the word "Decks" — correct the Phase 2 placeholder).
+
+- [ ] **Step 6:** Snapshot 4 states: empty, 1 deck, 6 decks (scroll), dark. Designer sign-off + commit.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards add ios
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(home): deck grid + stacked-paper + empty state mockup-fidelity (2.5.4)"
+```
+
+---
+
+### Task 2.5.5: Deck detail — History + Cards tabs
+
+**Files:**
+- Modify: `ios/Flashcards/Features/DeckDetail/DeckDetailView.swift`
+- Modify: `ios/Flashcards/Features/DeckDetail/HistoryTabView.swift`
+- Modify: `ios/Flashcards/Features/DeckDetail/CardsTabView.swift`
+
+**Mockup references:** History tab `mw/02-screens-a.jsx` line 136; Cards tab line 236.
+
+- [ ] **Step 1:** Deck header: accent-color rule above title, eyebrow (accent name, uppercased + tracked), title in `headingL`, due pill + "Study now" CTA inline (not separated like Phase 2 stub).
+
+- [ ] **Step 2:** Tab switcher: use `MWChip` row (already spec'd in Phase 2), underline active tab with `borderBold` of accent color.
+
+- [ ] **Step 3:** History tab: per-session card with accuracy bar (use `MWProgressBar` in accent tint), relative date right-aligned in `inkFaint`. Match the mockup's micro-icons for rating distribution (Again/Hard/Good/Easy counts as mini bars in session summary rows).
+
+- [ ] **Step 4:** Cards tab: tighter row spacing than Phase 2 stub, sub-topic chips wrapping correctly, due label in mockup's exact position. Bulk-select mode reveals a persistent bottom toolbar with `MWStroke` above.
+
+- [ ] **Step 5:** Snapshot empty, 5 rows, 50 rows (scroll), dark. Designer sign-off + commit.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards add ios
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(deck-detail): History + Cards tabs fidelity pass (2.5.5)"
+```
+
+---
+
+### Task 2.5.6: Create deck sheet
+
+**Files:**
+- Modify: `ios/Flashcards/Features/Deck/CreateDeckView.swift`
+
+**Mockup reference:** `mw/03-screens-b.jsx` line 235.
+
+- [ ] **Step 1:** Sheet detent: `.large` only (not medium) — the accent palette needs room. Top drag indicator visible.
+
+- [ ] **Step 2:** Accent picker: 5-swatch row with 44pt hit targets, selected state = `borderBold` in accent color, unselected = `borderHair` in `inkFaint`.
+
+- [ ] **Step 3:** Study mode picker: two `MWChip`s, selected state carries the deck's accent color fill.
+
+- [ ] **Step 4:** Primary CTA pinned to bottom, respecting safe area. Form scrolls behind it with content inset.
+
+- [ ] **Step 5:** Snapshot empty form, partially-filled, dark. Designer sign-off + commit.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards add ios
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(deck): CreateDeck sheet fidelity pass (2.5.6)"
+```
+
+---
+
+### Task 2.5.7: Create card + Card edit sheets
+
+**Files:**
+- Modify: `ios/Flashcards/Features/Card/CreateCardView.swift`
+- Modify: `ios/Flashcards/Features/Card/CardEditView.swift`
+
+**Mockup reference:** Create card `mw/03-screens-b.jsx` line 299; Card edit is a variant.
+
+- [ ] **Step 1:** Front + Back editors use `MWTextArea` with mockup-matched min heights (front: 120, back: 120). Monospaced "Front" / "Back" eyebrow labels with tracking.
+
+- [ ] **Step 2:** Markdown preview toggle: small tab switcher above each field ("Edit" / "Preview"). Preview renders with `swift-markdown-ui` in `bodyL` ink color.
+
+- [ ] **Step 3:** Sub-topic chip row: wraps to multiple lines via `Layout` protocol (use SwiftUI's native `Layout` not the Phase 2 placeholder `HStack`). Plus chip at end opens inline text entry.
+
+- [ ] **Step 4:** Character count: `bodyS` counter bottom-right of each field, transitions to `again` tint at 4000 chars.
+
+- [ ] **Step 5:** Card edit adds a destructive footer section with `MWDivider` + "Reset progress" (secondary) + "Delete card" (destructive).
+
+- [ ] **Step 6:** Snapshot empty, filled, dark. Designer sign-off + commit.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards add ios
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(card): Create + Edit fidelity + markdown preview toggle + wrap Layout (2.5.7)"
+```
+
+---
+
+### Task 2.5.8: Smart Study — front + back + flip motion
+
+**Files:**
+- Modify: `ios/Flashcards/Features/Session/SmartStudyView.swift`
+
+**Mockup references:** Front `mw/03-screens-b.jsx` line 5; back with ratings line 53.
+
+- [ ] **Step 1:** Card surface: `MWStackedDeckPaper` at full-viewport size with `xxl` horizontal padding. Front shows the question centered; back shows question small + answer large. Mockup's exact vertical rhythm.
+
+- [ ] **Step 2:** Flip motion: extend `MWMotion` with `motionFlip = .interpolatingSpring(stiffness: 120, damping: 16)`. Apply via `.rotation3DEffect(.degrees(isFlipped ? 180 : 0), axis: (0,1,0))` with back text inverse-rotated.
+
+- [ ] **Step 3:** Rating buttons row: full-width, four equal cells, `s` gutter, accent tint per rating. Interval labels ("6m", "1d", "4d", "12d") computed live from `FsrsScheduler.intervalPreview` and rendered in `bodyS` below each label.
+
+- [ ] **Step 4:** Progress rail at top: `MWProgressBar` showing `index / queue.count`. Eyebrow: "Smart Study · deck name".
+
+- [ ] **Step 5:** Swipe-down gesture dismisses to a confirm dialog ("End session? Progress is saved.").
+
+- [ ] **Step 6:** Snapshot front, back, mid-flip (0.5 rotation), dark. Reduce-motion variant (no rotation). Designer sign-off + commit.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards add ios
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(session): SmartStudy card flip motion + rating rail fidelity (2.5.8)"
+```
+
+---
+
+### Task 2.5.9: Basic Study + Session summary
+
+**Files:**
+- Modify: `ios/Flashcards/Features/Session/BasicStudyView.swift`
+- Modify: `ios/Flashcards/Features/Session/SessionSummaryView.swift`
+
+**Mockup references:** Basic `mw/03-screens-b.jsx` line 117; summary line 148.
+
+- [ ] **Step 1:** Basic Study: same card surface as Smart, but bottom controls are "Got it" / "Skip" / "Shuffle" instead of rating row. Shuffle pill upper-right.
+
+- [ ] **Step 2:** Session summary: large stat block — "12 cards reviewed" in `display`, "88% accuracy" in `headingL`, "+5 mastery" in `bodyL`. Rating distribution visualized as a 4-segment horizontal bar (again/hard/good/easy widths proportional to counts).
+
+- [ ] **Step 3:** Streak context: "3 days in a row" eyebrow + flame micro-icon if active streak. Fetch from `StreakMonitor` (added in Phase 3 — add a stub on the session summary that fills once StreakMonitor ships; use a feature flag `FeatureFlag.streakBadge`).
+
+- [ ] **Step 4:** "Done" CTA + "Study again" secondary CTA (starts another session on same deck).
+
+- [ ] **Step 5:** Snapshot with and without streak badge, with 0/1/12 cards reviewed, dark. Designer sign-off + commit.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards add ios
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(session): Basic + Summary fidelity — rating distribution bar + streak slot (2.5.9)"
+```
+
+---
+
+### Task 2.5.10: Search
+
+**Files:**
+- Modify: `ios/Flashcards/Features/Home/SearchView.swift`
+
+**Mockup reference:** `mw/02-screens-a.jsx` line 77.
+
+- [ ] **Step 1:** Search field: prominent top slot with trailing clear-button, `MWStroke` below as divider. Auto-focus keyboard on presentation.
+
+- [ ] **Step 2:** Results sections: "Decks (3)" and "Cards (17)" eyebrow headers. Each result row hoverable/pressable with `mwCard` surface.
+
+- [ ] **Step 3:** Empty states: initial (no query) shows recent decks grid; <2 chars shows "Keep typing…" hint; no-results shows "Nothing for \"\(query)\"." with suggestion to broaden.
+
+- [ ] **Step 4:** Snapshot all three states + dark. Designer sign-off + commit.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards add ios
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(search): Search screen fidelity — 3 states + sectioned results (2.5.10)"
+```
+
+---
+
+### Task 2.5.11: Settings hub
+
+**Files:**
+- Modify: `ios/Flashcards/Features/Settings/SettingsRootView.swift`
+- Modify: `ios/Flashcards/Features/Settings/ProfileSettingsView.swift`
+- Modify: `ios/Flashcards/Features/Settings/StudySettingsView.swift`
+- Modify: `ios/Flashcards/Features/Settings/AppearanceSettingsView.swift`
+
+**Mockup reference:** Settings root `mw/03-screens-b.jsx` line 350.
+
+- [ ] **Step 1:** Root: not a List; a grouped stack of `MWSection`s with `MWDivider` between. Section headers in eyebrow tracked style. Rows are `MWFormRow`s with consistent `l` vertical padding.
+
+- [ ] **Step 2:** Profile: avatar slot (initials circle in accent color for v1; image in v1.5), display name, email (read-only).
+
+- [ ] **Step 3:** Study settings: steppers styled with `MWStroke`, not native iOS stepper chrome. New-card-limit stepper integrates with entitlements paywall via existing hook from Task 3.11.
+
+- [ ] **Step 4:** Appearance: segmented picker styled as `MWChip` row.
+
+- [ ] **Step 5:** Snapshot each + dark. Designer sign-off + commit.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards add ios
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(settings): root + profile + study + appearance fidelity (2.5.11)"
+```
+
+---
+
+### Task 2.5.12: Subscription + Account + About
+
+**Files:**
+- Modify: `ios/Flashcards/Features/Settings/SubscriptionSettingsView.swift`
+- Modify: `ios/Flashcards/Features/Settings/AccountSettingsView.swift`
+- Modify: `ios/Flashcards/Features/Settings/AboutView.swift`
+
+**Mockup reference:** New — designer composes using the settings pattern established in 2.5.11.
+
+- [ ] **Step 1:** Subscription: plan-status hero card (`mwCard` with `headingL` plan name, `bodyL` renewal date, plan benefits listed as bullets with `MWIcon(.check)`), upgrade/manage button depending on state.
+
+- [ ] **Step 2:** Account: email row, "Sign out" (secondary), divider, "Delete account" (destructive) with `inkMuted` explanation copy below.
+
+- [ ] **Step 3:** About: app version, attribution list for OSS dependencies (auto-generated from SPM manifest — add a build script that emits `Acknowledgements.plist`), legal links.
+
+- [ ] **Step 4:** Snapshot active plan, free plan, in-grace, dark. Designer sign-off + commit.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards add ios
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(settings): Subscription + Account + About fidelity + OSS attribution (2.5.12)"
+```
+
+---
+
+### Task 2.5.13: Paywall sheet
+
+**Files:**
+- Modify: `ios/Flashcards/DesignSystem/Components/Molecules/MWPaywallScreen.swift`
+- Modify: `ios/Flashcards/Features/Paywall/PaywallView.swift`
+- Modify: `ios/Flashcards/Features/Paywall/PaywallCopy.swift`
+
+**Mockup reference:** `Mockup/mw/04-modals.jsx` paywall sheet.
+
+- [ ] **Step 1:** Sheet layout: top eyebrow (keyed to `reason`), hero headline in `display`, illustration slot (reserved — empty for v1 per Modernist "type is the illustration" principle), bullets with `MWIcon(.check)`, monthly/annual toggle row, primary CTA, restore button, fine print with auto-renew disclosure.
+
+- [ ] **Step 2:** Monthly/annual toggle: side-by-side `MWChip`s showing price + period + "SAVE 50%" eyebrow on annual.
+
+- [ ] **Step 3:** Fine print: legal text (auto-renew, managed via Apple ID, terms + privacy links) in `bodyS inkFaint` — required by App Review 3.1.2.
+
+- [ ] **Step 4:** Sheet presentation: `.large` detent only. Swipe-down dismiss returns user to prior context; analytics event `paywall.screen.dismissed` fires.
+
+- [ ] **Step 5:** Snapshot for each `EntitlementKey` reason (deck, card-in-deck, card-total, new-card-limit, reminder) + dark. Designer sign-off + commit.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards add ios
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(paywall): mockup-fidelity + monthly/annual toggle + legal fine print (2.5.13)"
+```
+
+---
+
+### Task 2.5.14: Modals — Quick Actions, Sort, Context menu, Delete confirm, Topic picker, Filter drawer
+
+**Files:**
+- Create: `ios/Flashcards/DesignSystem/Components/Molecules/MWQuickActionsSheet.swift`
+- Create: `ios/Flashcards/DesignSystem/Components/Molecules/MWSortDropdown.swift`
+- Create: `ios/Flashcards/DesignSystem/Components/Molecules/MWContextMenu.swift`
+- Create: `ios/Flashcards/DesignSystem/Components/Molecules/MWDeleteConfirmSheet.swift`
+- Create: `ios/Flashcards/DesignSystem/Components/Molecules/MWTopicPickerSheet.swift`
+- Create: `ios/Flashcards/DesignSystem/Components/Molecules/MWFilterDrawer.swift`
+
+**Mockup reference:** `Mockup/mw/04-modals.jsx` — all six variants.
+
+- [ ] **Step 1:** Extract each modal pattern from the JSX into a reusable component. Each component takes typed inputs, returns a `View` — no feature-level logic inside the DS layer.
+
+- [ ] **Step 2:** Wire each into its corresponding feature view (Quick Actions → Home top bar; Sort → Cards tab; Context menu → long-press on `MWCardTile`; Delete confirm → replaces generic `confirmationDialog` in edit views; Topic picker → deck create + deck detail header; Filter drawer → Cards tab filter affordance).
+
+- [ ] **Step 3:** Topic picker: per spec §8.2, `no suggested topics section` — remove from any earlier draft. Show only user-created topics + "Create new topic" field at bottom.
+
+- [ ] **Step 4:** Snapshot each modal open state, light + dark. Designer sign-off + commit.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards add ios
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(ds): 6 modal molecules (Quick, Sort, Context, Delete, TopicPicker, Filter) (2.5.14)"
+```
+
+---
+
+### Task 2.5.15: Manage sub-topics refinement
+
+**Files:**
+- Modify: `ios/Flashcards/Features/DeckDetail/ManageSubTopicsView.swift`
+
+**Mockup reference:** New — designer composes.
+
+- [ ] **Step 1:** Replace native `List` with a custom `ReorderableStack` using SwiftUI `Layout` + drag gesture. Each row uses `MWFormRow` with drag handle on leading and delete on trailing.
+
+- [ ] **Step 2:** Rename happens inline on tap — the row swaps to an editable `MWTextField` with auto-focus and "Done" / "Cancel" buttons below.
+
+- [ ] **Step 3:** Add-new row is persistently present at the bottom, matching the Apple Reminders "new item" UX.
+
+- [ ] **Step 4:** Snapshot empty, 3-rows, 10-rows (scroll), rename-mode, dark. Designer sign-off + commit.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards add ios
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(deck): ManageSubTopics — inline rename + custom reorder layout (2.5.15)"
+```
+
+---
+
+### Task 2.5.16: Motion + haptics audit across all screens
+
+**Files:**
+- Create: `ios/Flashcards/Util/Haptics.swift`
+- Modify: selected views across `Features/**`
+
+**Mockup reference:** Mockups are static — this task is designer-specified motion; record decisions in a new `docs/motion-spec.md` during the task.
+
+- [ ] **Step 1:** Define `Haptics` enum:
+
+```swift
+import UIKit
+
+public enum Haptics {
+    public static func tap() { UIImpactFeedbackGenerator(style: .soft).impactOccurred() }
+    public static func success() { UINotificationFeedbackGenerator().notificationOccurred(.success) }
+    public static func warn() { UINotificationFeedbackGenerator().notificationOccurred(.warning) }
+    public static func select() { UISelectionFeedbackGenerator().selectionChanged() }
+}
+```
+
+- [ ] **Step 2:** Wire haptics at four locations: card flip (select), rate button (tap), session complete (success), delete confirmation (warn).
+
+- [ ] **Step 3:** Motion audit: every screen transition uses a `MWMotion` token. Long-press actions use `motionQuick`. Sheet dismissals use `motionStandard`. Card-flip uses `motionFlip` (added in 2.5.1). Paywall presentation uses `motionSettled`.
+
+- [ ] **Step 4:** Record every motion decision in `docs/motion-spec.md` so future edits are non-destructive:
+
+```markdown
+# Motion spec (v1)
+
+| Surface | Motion token | Trigger |
+|---|---|---|
+| Card flip | motionFlip | Tap card body |
+| Rating button press | motionInstant | Button down |
+| Sheet present | motionStandard | System default |
+| Sheet dismiss | motionStandard | Drag-down |
+| Paywall present | motionSettled | Entitlement block |
+| Deck grid scroll-to-top | motionStandard | Tap top bar |
+| Select mode enter | motionQuick | Long-press any card tile |
+```
+
+- [ ] **Step 5:** Respect `UIAccessibility.isReduceMotionEnabled` — switch to `.linear(duration: 0)` via `MWMotion.respecting(...)` everywhere motion is applied. Audit every `.animation(` call site.
+
+- [ ] **Step 6:** Designer sign-off + commit.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards add ios docs/motion-spec.md
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(motion): app-wide haptics + motion audit + docs/motion-spec.md (2.5.16)"
+```
+
+---
+
+### Task 2.5.17: Full a11y + typography scale regression
+
+**Files:**
+- Modify: selected views across `Features/**`
+
+- [ ] **Step 1:** For every screen in 2.5.2-2.5.15, run a Dynamic Type audit at `.accessibility3` (largest) and `.xSmall`. Fix any truncation, horizontal scrolling, or overlapping elements.
+
+- [ ] **Step 2:** VoiceOver audit: traverse every screen with the Accessibility Inspector. Label every interactive element. Group related text into single a11y elements where appropriate.
+
+- [ ] **Step 3:** Verify WCAG AA contrast on every token pair used (ink on paper, inkMuted on canvas, again/hard/good/easy on paper). Use a contrast checker tool; any fails get retuned in `Colors.swift`.
+
+- [ ] **Step 4:** Expand DesignSystemSnapshotTests with `.xSmall` + `.accessibility3` variants for every composite screen (not just atoms).
+
+- [ ] **Step 5:** Designer + engineer dual sign-off + commit.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards add ios
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(a11y): full Dynamic Type + VoiceOver + contrast audit across screens (2.5.17)"
+```
+
+---
+
+### Task 2.5.18: Phase 2.5 acceptance — merge to main
+
+- [ ] **Step 1:** Schedule a 90-minute design review. Designer walks every screen at 1x/2x/dark, comparing to JSX mockup. Any remaining deltas become sev-2 tickets, triaged against launch timeline.
+
+- [ ] **Step 2:** Full CI green.
+
+- [ ] **Step 3:** PR, merge, tag.
+
+```bash
+git -C /Users/lukehogan/Code/flashcards tag -a phase-2.5 -m "Phase 2.5: design fidelity pass"
+git -C /Users/lukehogan/Code/flashcards push origin main phase-2.5
+```
+
+**Phase 2.5 acceptance:**
+- Every screen in [Mockup/mw/](Mockup/mw/) has a corresponding SwiftUI view that the designer signs off as a pixel-match at 1x / 2x / dark.
+- All motion decisions documented in `docs/motion-spec.md`, driven entirely by `MWMotion` tokens.
+- Haptics wired at four key moments (flip, rate, complete, warn).
+- Full a11y audit passed: Dynamic Type `.xSmall` through `.accessibility3`, VoiceOver traversal complete, WCAG AA contrast verified.
+- Snapshot suite expanded to include composite screens at multiple text sizes.
+
+---
+
 ## Phase 3: Monetization + Settings + Notifications (weeks 8-12)
 
 **Goal:** Entitlements system live on both sides; StoreKit 2 + Cashier wired; settings flows complete; local reminders + APNs renewal pushes.
