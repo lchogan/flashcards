@@ -44,7 +44,8 @@ targets:
     sources:
       - path: Flashcards
         createIntermediateGroups: true
-    resources: []
+    resources:
+      - Flashcards/Assets.xcassets
     info:
       path: Flashcards/Info.plist
       properties:
@@ -94,6 +95,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.lukehogan.flashcards.tests
+        GENERATE_INFOPLIST_FILE: YES
 
   FlashcardsUITests:
     type: bundle.ui-testing
@@ -105,6 +107,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.lukehogan.flashcards.uitests
+        GENERATE_INFOPLIST_FILE: YES
 
 schemes:
   Flashcards:
