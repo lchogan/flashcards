@@ -520,8 +520,10 @@ git -C /Users/lukehogan/Code/flashcards commit -m "test: configure Pest with Ref
 - [ ] **Step 1: Install**
 
 ```bash
-cd /Users/lukehogan/Code/flashcards/api && composer require --dev laravel/pint:^1.0 larastan/larastan:^2.0
+cd /Users/lukehogan/Code/flashcards/api && composer require --dev laravel/pint:^1.0 larastan/larastan:^3.0
 ```
+
+> **Note (verified 2026-04-21):** Larastan `^2.0` targets Laravel 10 and won't resolve against Laravel 11. Use `^3.0` (Larastan 3 supports Laravel 11 + PHPStan 2).
 
 - [ ] **Step 2: Create `api/pint.json`:**
 
@@ -552,8 +554,9 @@ parameters:
     ignoreErrors:
     excludePaths:
         - ./*/*/FileToBeExcluded.php
-    checkMissingIterableValueType: false
 ```
+
+> **Note (verified 2026-04-21):** PHPStan 2.x removed the `checkMissingIterableValueType` key (it's now always-on at level 6+). The config is otherwise unchanged.
 
 - [ ] **Step 4: Run both**
 
