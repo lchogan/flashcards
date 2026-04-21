@@ -8,9 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		1D3B8506D046FAD46CE79849 /* FlashcardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898ED96388E1C5A38EB3EC56 /* FlashcardsApp.swift */; };
+		24189012899F3CED7AB44E5E /* PostHog in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF295D3928BC732211057E9 /* PostHog */; };
+		4F357D7944554375AB0165EC /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1F414A0711619C5FDF3269DD /* MarkdownUI */; };
+		677876272A9353657D56BC78 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = B2E7B02A2283DBE098796542 /* Sentry */; };
 		A8E27F73C8E678C996E113CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0CFBF239CF41720591C315 /* ContentView.swift */; };
 		BBFBE898C41CC4D089E2D26E /* FlashcardsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E40CD64F095A8BA4D1644DE /* FlashcardsUITests.swift */; };
 		C155DBC0A9054986EC3BC984 /* FlashcardsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD49C9447BB17F91C561040F /* FlashcardsTests.swift */; };
+		D8DB67DD30007FBA6A0F6258 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = E27D9141CA237CB70AE1FF5D /* SnapshotTesting */; };
+		EAF6EBF27A4ABC187CA6F186 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 9A85F47B4666B3448616D1FF /* KeychainAccess */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +45,28 @@
 		DD49C9447BB17F91C561040F /* FlashcardsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsTests.swift; sourceTree = "<group>"; };
 		F760E860CA556E45A8229982 /* FlashcardsUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = FlashcardsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		70CBEE8B89D3ED886F2E8BCE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8DB67DD30007FBA6A0F6258 /* SnapshotTesting in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9190A102B33B13994342CCFF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAF6EBF27A4ABC187CA6F186 /* KeychainAccess in Frameworks */,
+				4F357D7944554375AB0165EC /* MarkdownUI in Frameworks */,
+				24189012899F3CED7AB44E5E /* PostHog in Frameworks */,
+				677876272A9353657D56BC78 /* Sentry in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		05DF7C4E8846537AD6E1EEA7 /* FlashcardsTests */ = {
@@ -114,6 +141,7 @@
 			buildConfigurationList = CE79D582715594345ADD9246 /* Build configuration list for PBXNativeTarget "Flashcards" */;
 			buildPhases = (
 				B5E77E6414FBCAEFBCAD1F6A /* Sources */,
+				9190A102B33B13994342CCFF /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -121,6 +149,10 @@
 			);
 			name = Flashcards;
 			packageProductDependencies = (
+				9A85F47B4666B3448616D1FF /* KeychainAccess */,
+				1F414A0711619C5FDF3269DD /* MarkdownUI */,
+				6BF295D3928BC732211057E9 /* PostHog */,
+				B2E7B02A2283DBE098796542 /* Sentry */,
 			);
 			productName = Flashcards;
 			productReference = 070938971B6DA36EDC8B8668 /* Flashcards.app */;
@@ -131,6 +163,7 @@
 			buildConfigurationList = 56804C049048C3B8FFBD59E1 /* Build configuration list for PBXNativeTarget "FlashcardsTests" */;
 			buildPhases = (
 				9B54C8F1797D2A5D1DDF8D58 /* Sources */,
+				70CBEE8B89D3ED886F2E8BCE /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -139,6 +172,7 @@
 			);
 			name = FlashcardsTests;
 			packageProductDependencies = (
+				E27D9141CA237CB70AE1FF5D /* SnapshotTesting */,
 			);
 			productName = FlashcardsTests;
 			productReference = 0D5E661B31CAD40E670B867A /* FlashcardsTests.xctest */;
@@ -177,6 +211,13 @@
 			);
 			mainGroup = DBFB1E547D31343C7FD8370D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				84C37652AFCF2A169E22D8FE /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				10B5D53691149BBEE4E45018 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+				2E1C9F75BDB2EB25CEE1A9D3 /* XCRemoteSwiftPackageReference "posthog-ios" */,
+				BECAC7FCCB520905766D9B35 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				8AC4348E17BF70F61168C72F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 687FF79CBD690C1BD72D7B86 /* Products */;
 			projectDirPath = "";
@@ -506,6 +547,77 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		10B5D53691149BBEE4E45018 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		2E1C9F75BDB2EB25CEE1A9D3 /* XCRemoteSwiftPackageReference "posthog-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/PostHog/posthog-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		84C37652AFCF2A169E22D8FE /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.2;
+			};
+		};
+		8AC4348E17BF70F61168C72F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.17.0;
+			};
+		};
+		BECAC7FCCB520905766D9B35 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.40.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1F414A0711619C5FDF3269DD /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 10B5D53691149BBEE4E45018 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
+		6BF295D3928BC732211057E9 /* PostHog */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2E1C9F75BDB2EB25CEE1A9D3 /* XCRemoteSwiftPackageReference "posthog-ios" */;
+			productName = PostHog;
+		};
+		9A85F47B4666B3448616D1FF /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 84C37652AFCF2A169E22D8FE /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		B2E7B02A2283DBE098796542 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BECAC7FCCB520905766D9B35 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+		E27D9141CA237CB70AE1FF5D /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8AC4348E17BF70F61168C72F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 99F96BF0A775FB829E9E9FEA /* Project object */;
 }

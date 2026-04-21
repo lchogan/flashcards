@@ -19,6 +19,23 @@ settings:
     MARKETING_VERSION: "0.1.0"
     CURRENT_PROJECT_VERSION: "1"
 
+packages:
+  KeychainAccess:
+    url: https://github.com/kishikawakatsumi/KeychainAccess
+    from: 4.2.2
+  MarkdownUI:
+    url: https://github.com/gonzalezreal/swift-markdown-ui
+    from: 2.0.0
+  SnapshotTesting:
+    url: https://github.com/pointfreeco/swift-snapshot-testing
+    from: 1.17.0
+  PostHog:
+    url: https://github.com/PostHog/posthog-ios
+    from: 3.0.0
+  Sentry:
+    url: https://github.com/getsentry/sentry-cocoa
+    from: 8.40.0
+
 targets:
   Flashcards:
     type: application
@@ -46,6 +63,15 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.lukehogan.flashcards
         TARGETED_DEVICE_FAMILY: "1"
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait"
+    dependencies:
+      - package: KeychainAccess
+        product: KeychainAccess
+      - package: MarkdownUI
+        product: MarkdownUI
+      - package: PostHog
+        product: PostHog
+      - package: Sentry
+        product: Sentry
 
   FlashcardsTests:
     type: bundle.unit-test
@@ -54,6 +80,8 @@ targets:
     sources: [FlashcardsTests]
     dependencies:
       - target: Flashcards
+      - package: SnapshotTesting
+        product: SnapshotTesting
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.lukehogan.flashcards.tests
