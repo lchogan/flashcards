@@ -35,4 +35,23 @@ final class ColorsTokenTests: XCTestCase {
             XCTAssertNotNil(uiColor, "Color 'mw/\(name)' not found in Asset Catalog")
         }
     }
+
+    /// Probe each `mw/accent/*` asset via UIKit so a missing colorset fails
+    /// loudly (SwiftUI's `Color(_:)` would otherwise fall back silently).
+    func test_accentPalette_loadsFromAssetCatalog() {
+        for accent in MWAccent.allCases {
+            let uiColor = UIColor(named: "mw/accent/\(accent.rawValue)")
+            XCTAssertNotNil(uiColor, "Color 'mw/accent/\(accent.rawValue)' not found in Asset Catalog")
+        }
+    }
+
+    /// Lock the palette's shape: size and ordering are part of the contract
+    /// (persisted `rawValue`s must stay stable, and iteration order drives UI).
+    func test_accentPalette_hasFiveCasesInExpectedOrder() {
+        XCTAssertEqual(MWAccent.allCases.count, 5)
+        XCTAssertEqual(
+            MWAccent.allCases.map(\.rawValue),
+            ["amber", "moss", "iris", "rust", "slate"]
+        )
+    }
 }

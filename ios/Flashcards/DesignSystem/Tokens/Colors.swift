@@ -74,3 +74,15 @@ extension MWColor {
         .init(name: "easy", color: easy),
     ]
 }
+
+/// Per-deck accent palette. Each case resolves to a light + dark asset pair
+/// under `mw/accent/<rawValue>` in `Assets.xcassets`.
+///
+/// Decks persist their accent by storing the `rawValue`; the UI reads the
+/// resulting `Color` via `.mwAccent(_:)` (see `MWAccentKey`).
+public enum MWAccent: String, CaseIterable, Codable {
+    case amber, moss, iris, rust, slate
+
+    /// Resolved `Color` backed by the Asset Catalog.
+    public var color: Color { Color("mw/accent/\(rawValue)") }
+}
