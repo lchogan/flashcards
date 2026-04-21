@@ -437,13 +437,21 @@ cd /Users/lukehogan/Code/flashcards/api && composer require -W \
 >
 > `-W` flag required because `edamov/pushok` (APN transitive) needs `brick/math` downgraded from 0.14 → 0.12 to be compatible with `web-token/jwt-library ^3.0`.
 
-- [ ] **Step 2: Publish Sanctum**
+- [ ] **Step 2: Install API + publish Sanctum**
+
+Laravel 11 ships without `routes/api.php` by default. Run `php artisan install:api` to scaffold the API route file, wire the `api` routing group in `bootstrap/app.php`, and publish Sanctum's migration. When it asks whether to run pending migrations, answer `no` (we want to run them together once Postgres is provisioned):
 
 ```bash
-cd /Users/lukehogan/Code/flashcards/api && php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+cd /Users/lukehogan/Code/flashcards/api && echo "no" | php artisan install:api
 ```
 
 **After publishing**, open the generated `database/migrations/*_create_personal_access_tokens_table.php` and change `$table->morphs('tokenable');` to `$table->uuidMorphs('tokenable');`. Our `users` table uses a UUID primary key (Task 0.31), and the default `morphs()` creates a `BIGINT UNSIGNED tokenable_id` which would silently corrupt token issuance. Add an inline comment so future re-reads know why.
+
+Run Pint once on the newly scaffolded `routes/api.php` to apply `declare(strict_types=1)` and the standard blank-line-after-opening-tag rule:
+
+```bash
+./vendor/bin/pint routes/api.php
+```
 
 **Also**: in `app/Providers/HorizonServiceProvider.php`, the scaffolded `viewHorizon` gate ships with an empty email allow-list, so Horizon's dashboard 403s everyone in non-local environments. Add a `TODO(deploy)` comment inside the gate pointing at Task 5.2 so ops remembers to populate it before first staging deploy.
 
