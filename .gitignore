@@ -59,3 +59,18 @@ out/
 *.ipa
 *.dSYM.zip
 *.dSYM
+
+# API local
+/api/.env
+/api/.env.backup
+/api/vendor/
+/api/node_modules/
+/api/storage/logs/*
+/api/bootstrap/cache/*.php
+
+# iOS local
+ios/.build/
+ios/DerivedData/
+ios/Flashcards.xcodeproj/xcuserdata/
+ios/Flashcards.xcworkspace/xcuserdata/
+ios/**/*.xcuserstate
