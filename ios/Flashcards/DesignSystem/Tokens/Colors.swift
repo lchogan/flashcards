@@ -18,18 +18,27 @@ import SwiftUI
 /// Never reference `Color(hex:)` or SwiftUI's named colors (`.red`, `.black`, …)
 /// from outside this file — SwiftLint (Task 0.12) enforces this at build time.
 public enum MWColor {
-    public static let paper     = Color("mw/paper")
-    public static let canvas    = Color("mw/canvas")
-    public static let ink       = Color("mw/ink")
-    public static let inkMuted  = Color("mw/inkMuted")
-    public static let inkFaint  = Color("mw/inkFaint")
-    public static let grid      = Color("mw/grid")
+    /// Primary surface — off-white "paper" used for cards and chrome.
+    public static let paper = Color("mw/paper")
+    /// Root canvas — slightly darker than paper; used for screen backgrounds.
+    public static let canvas = Color("mw/canvas")
+    /// Ink — primary text + borders.
+    public static let ink = Color("mw/ink")
+    /// Secondary ink for subtitles, meta labels, eyebrows.
+    public static let inkMuted = Color("mw/inkMuted")
+    /// Tertiary ink for de-emphasized helper text.
+    public static let inkFaint = Color("mw/inkFaint")
+    /// Hairline grid overlay used by `MWScreen` for the Modernist backdrop.
+    public static let grid = Color("mw/grid")
 
-    /// Confidence accents for FSRS ratings (Again/Hard/Good/Easy).
+    /// "Again" rating tint — rust red.
     public static let again = Color("mw/again")
-    public static let hard  = Color("mw/hard")
-    public static let good  = Color("mw/good")
-    public static let easy  = Color("mw/easy")
+    /// "Hard" rating tint — amber.
+    public static let hard = Color("mw/hard")
+    /// "Good" rating tint — moss green.
+    public static let good = Color("mw/good")
+    /// "Easy" rating tint — slate blue.
+    public static let easy = Color("mw/easy")
 }
 
 #Preview("Color swatches") {
