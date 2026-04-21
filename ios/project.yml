@@ -32,18 +32,19 @@ targets:
       path: Flashcards/Info.plist
       properties:
         CFBundleDisplayName: Flashcards
-        UILaunchScreen:
-          UIColorName: ""
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen: {}
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
         UIRequiredDeviceCapabilities:
-          - armv7
+          - arm64
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.lukehogan.flashcards
-        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        TARGETED_DEVICE_FAMILY: "1"
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait"
 
   FlashcardsTests:
