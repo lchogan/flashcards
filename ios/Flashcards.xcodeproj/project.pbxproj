@@ -26,6 +26,7 @@
 		E4E6973A11C056D294601697 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8601E71EC6CC580329D9D3A /* Colors.swift */; };
 		E7648228F66E1B871F8CACDE /* ColorsTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75AEF6EC4869BDEED745175 /* ColorsTokenTests.swift */; };
 		EAF6EBF27A4ABC187CA6F186 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 9A85F47B4666B3448616D1FF /* KeychainAccess */; };
+		F1642B745813ABE669A91B85 /* MWCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5666B85823F4898EAB769C5A /* MWCard.swift */; };
 		F25E11BD413D3218216BB972 /* Borders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4233F9E69A788D61C2D472C0 /* Borders.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,7 @@
 		3E40CD64F095A8BA4D1644DE /* FlashcardsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsUITests.swift; sourceTree = "<group>"; };
 		40590CEF9514F130D9EB7101 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4233F9E69A788D61C2D472C0 /* Borders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Borders.swift; sourceTree = "<group>"; };
+		5666B85823F4898EAB769C5A /* MWCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCard.swift; sourceTree = "<group>"; };
 		57D2CD70838F57E5188414E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		898ED96388E1C5A38EB3EC56 /* FlashcardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsApp.swift; sourceTree = "<group>"; };
 		9B3925292F9A0F8A65D5ADA9 /* MWAccentKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAccentKey.swift; sourceTree = "<group>"; };
@@ -100,6 +102,14 @@
 			path = FlashcardsTests;
 			sourceTree = "<group>";
 		};
+		0845A647B3CAF3654CB82254 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				5666B85823F4898EAB769C5A /* MWCard.swift */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
 		14F395A1EDCFA7C9108D63B4 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +123,7 @@
 			children = (
 				14F395A1EDCFA7C9108D63B4 /* Components */,
 				638229C348DAB0712F8D39C4 /* EnvironmentKeys */,
+				0845A647B3CAF3654CB82254 /* Modifiers */,
 				4792559B161866F590E6EFEA /* Tokens */,
 			);
 			path = DesignSystem;
@@ -365,6 +376,7 @@
 				A8E27F73C8E678C996E113CA /* ContentView.swift in Sources */,
 				1D3B8506D046FAD46CE79849 /* FlashcardsApp.swift in Sources */,
 				19BF3CEF62F523AA152B339F /* MWAccentKey.swift in Sources */,
+				F1642B745813ABE669A91B85 /* MWCard.swift in Sources */,
 				319BDA71D9F0A272D6841EDA /* MWScreen.swift in Sources */,
 				A200308DB65D7AC28BF3AB87 /* Motion.swift in Sources */,
 				D9DD838304ED3D163450007C /* Radii.swift in Sources */,
