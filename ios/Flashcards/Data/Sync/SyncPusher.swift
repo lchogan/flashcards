@@ -16,6 +16,7 @@
 //                transport failure, every mutation in the batch is retry-
 //                queued; on partial rejection, only the rejected IDs are
 //                retry-queued. Successful IDs are deleted.
+//                Emits sync.push.{ok,fail} analytics events.
 //
 
 import Foundation
@@ -108,6 +109,13 @@ public final class SyncPusher {
                     try q.markSuccess(m)
                 }
             }
+            AnalyticsClient.track(
+                "sync.push.ok",
+                properties: [
+                    "accepted": resp.accepted,
+                    "rejected": resp.rejected.count,
+                ]
+            )
             return resp.accepted
         } catch {
             // Transport failure: retry-queue every mutation in this batch so
@@ -116,6 +124,10 @@ public final class SyncPusher {
             for m in batch {
                 try? q.markFailure(m, now: nowMs)
             }
+            AnalyticsClient.track(
+                "sync.push.fail",
+                properties: ["error": String(describing: error)]
+            )
             throw error
         }
     }

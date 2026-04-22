@@ -15,6 +15,8 @@
 //                self but never rethrown — sync is fire-and-forget from
 //                the caller's perspective. Cursor (lastSyncedAtMs) is
 //                persisted to UserDefaults so it survives app relaunches.
+//                sync.queue.stuck is emitted when >100 mutations are pending
+//                and the last successful sync was more than 10 minutes ago.
 //
 
 import Foundation
@@ -61,6 +63,17 @@ public final class SyncManager {
         }
         isSyncing = true
         defer { isSyncing = false }
+
+        let pending = (try? MutationQueue(context: context).pendingCount()) ?? 0
+        if pending > 100,
+           let last = lastSyncedAt,
+           Date().timeIntervalSince(last) > 600
+        {
+            AnalyticsClient.track(
+                "sync.queue.stuck",
+                properties: ["pending": pending]
+            )
+        }
 
         do {
             _ = try await pusher.pushOnce()
