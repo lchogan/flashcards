@@ -21,7 +21,8 @@ class User extends Authenticatable
         'email', 'name', 'avatar_url', 'auth_provider', 'auth_provider_id',
         'daily_goal_cards', 'reminder_time_local', 'reminder_enabled',
         'theme_preference', 'fsrs_weights', 'subscription_status',
-        'subscription_expires_at', 'subscription_product_id', 'plan_key',
+        'subscription_expires_at', 'subscription_product_id',
+        'subscription_original_transaction_id', 'plan_key',
         'image_quota_used_bytes', 'marketing_opt_in', 'updated_at_ms', 'deleted_at_ms',
     ];
 

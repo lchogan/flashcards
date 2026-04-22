@@ -3,10 +3,12 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Api\V1\AppleAuthController;
+use App\Http\Controllers\Api\V1\AppStoreNotificationsController;
 use App\Http\Controllers\Api\V1\EntitlementsController;
 use App\Http\Controllers\Api\V1\MagicLinkController;
 use App\Http\Controllers\Api\V1\MeController;
 use App\Http\Controllers\Api\V1\ReminderController;
+use App\Http\Controllers\Api\V1\SubscriptionController;
 use App\Http\Controllers\Api\V1\SyncPullController;
 use App\Http\Controllers\Api\V1\SyncPushController;
 use App\Http\Controllers\Api\V1\TokenController;
@@ -29,7 +31,12 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::post('/reminders', [ReminderController::class, 'store']);
     Route::patch('/reminders/{id}', [ReminderController::class, 'update']);
     Route::delete('/reminders/{id}', [ReminderController::class, 'destroy']);
+
+    Route::post('/subscriptions/verify', [SubscriptionController::class, 'verify']);
 });
+
+// Apple App Store Server Notifications v2 — unauthenticated, signed by Apple.
+Route::post('/v1/webhooks/app-store', [AppStoreNotificationsController::class, 'store']);
 
 Route::prefix('v1')->group(function () {
     Route::post('/auth/apple', [AppleAuthController::class, 'store']);
