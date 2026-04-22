@@ -1,0 +1,87 @@
+included:
+  - Flashcards
+excluded:
+  - Flashcards/DesignSystem/Icons/Generated
+  - Flashcards/Preview Content
+
+disabled_rules:
+  - trailing_whitespace
+  # swift-format (Swift 6 default) requires trailing commas in multi-line
+  # collection literals. SwiftLint's `trailing_comma` rule forbids them by
+  # default, which conflicts. swift-format is authoritative — disable here.
+  - trailing_comma
+
+# Design-system token names (MWSpacing.s, MWRadius.m, …) intentionally use
+# one- and two-character identifiers to match the canonical t-shirt scale.
+identifier_name:
+  min_length:
+    warning: 1
+    error: 1
+  excluded:
+    - id
+
+opt_in_rules:
+  - empty_count
+  - first_where
+  - toggle_bool
+  - redundant_nil_coalescing
+  - closure_spacing
+  - conditional_returns_on_newline
+
+line_length:
+  warning: 140
+  error: 200
+
+type_body_length:
+  warning: 300
+  error: 500
+
+file_length:
+  warning: 450
+  error: 700
+
+custom_rules:
+  no_literal_color_hex:
+    name: "No hardcoded hex colors in views"
+    regex: 'Color\(\s*hex\s*:'
+    match_kinds: [identifier, argument]
+    included: "Flashcards/Features/.*\\.swift"
+    message: "Use a token from DesignSystem/Tokens/Colors instead of Color(hex:)."
+    severity: error
+
+  no_system_color_literals:
+    name: "No .black/.white literals in Features"
+    regex: '\.foregroundColor\(\.\s*(black|white|red|blue|green|orange|yellow|purple|pink|gray|grey)\b'
+    included: "Flashcards/Features/.*\\.swift"
+    message: "Use MW color tokens (MWColor.ink, MWColor.accent, …) not SwiftUI named colors."
+    severity: error
+
+  no_system_font_literal:
+    name: "No .system(size:) in views"
+    regex: '\.font\(\s*\.system\s*\(\s*size\s*:'
+    included: "Flashcards/(Features|DesignSystem/Components)/.*\\.swift"
+    excluded: "Flashcards/DesignSystem/Tokens/Typography\\.swift"
+    message: "Use a typography token (MWType.headingL etc)."
+    severity: error
+
+  no_literal_padding:
+    name: "No literal padding values"
+    regex: '\.padding\(\s*(\.[a-zA-Z]+\s*,\s*)?\d+(\.\d+)?\s*\)'
+    included: "Flashcards/(Features|DesignSystem/Components)/.*\\.swift"
+    message: "Use a spacing token (.padding(.s), .padding(.l)) via the MW padding modifier."
+    severity: error
+
+  no_literal_corner_radius:
+    name: "No literal cornerRadius"
+    regex: '\.cornerRadius\(\s*\d'
+    included: "Flashcards/(Features|DesignSystem/Components)/.*\\.swift"
+    excluded: "Flashcards/DesignSystem/Tokens/Radii\\.swift"
+    message: "Use radius token (.cornerRadius(.m) via MW wrapper)."
+    severity: error
+
+  no_literal_animation_duration:
+    name: "No literal animation durations"
+    regex: '\.animation\(.*duration\s*:\s*\d'
+    included: "Flashcards/(Features|DesignSystem/Components)/.*\\.swift"
+    message: "Use a motion token (MWMotion.quick, MWMotion.card)."
+    severity: error

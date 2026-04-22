@@ -356,8 +356,7 @@ DB_DATABASE=flashcards
 DB_USERNAME=flashcards
 DB_PASSWORD=flashcards
 
-BROADCAST_DRIVER=log
-CACHE_DRIVER=redis
+CACHE_STORE=redis
 FILESYSTEM_DISK=r2
 QUEUE_CONNECTION=redis
 SESSION_DRIVER=database
@@ -422,23 +421,39 @@ git -C /Users/lukehogan/Code/flashcards commit -m "chore: add .env.example with 
 - [ ] **Step 1: Install packages**
 
 ```bash
-cd /Users/lukehogan/Code/flashcards/api && composer require \
+cd /Users/lukehogan/Code/flashcards/api && composer require -W \
   laravel/sanctum:^4.0 \
   laravel/horizon:^5.0 \
-  laravel/cashier-paddle:^2.0 \
+  laravel/cashier:^15.0 \
   spatie/laravel-query-builder:^6.0 \
   spatie/url-signer:^2.0 \
   sentry/sentry-laravel:^4.0 \
-  laravel-notification-channels/apn:^6.0
+  laravel-notification-channels/apn:^5.5
 ```
 
-> Note on Cashier: at time of writing Laravel has `laravel/cashier` (Stripe), `laravel/cashier-paddle`, and `laravel/cashier-apple`. Replace the above with `laravel/cashier-apple:^1.0` when installing; if unavailable at install time, install base Cashier and wire the StoreKit hooks manually in Task 3.17.
+> **Cashier note (verified 2026-04-21):** `laravel/cashier-apple` does not exist on Packagist. We install base Cashier (Stripe) for the subscription/webhook/receipt scaffolding and wire StoreKit manually in Task 3.10. If a `cashier-apple` package ships later, swap the require line and reassess Task 3.10.
+>
+> **APN note (verified 2026-04-21):** `laravel-notification-channels/apn ^6.0` requires PHP 8.4 + Laravel 12. We pin to `^5.5` which supports PHP 8.3 + Laravel 11. Revisit when the project moves to PHP 8.4 / Laravel 12.
+>
+> `-W` flag required because `edamov/pushok` (APN transitive) needs `brick/math` downgraded from 0.14 → 0.12 to be compatible with `web-token/jwt-library ^3.0`.
 
-- [ ] **Step 2: Publish Sanctum**
+- [ ] **Step 2: Install API + publish Sanctum**
+
+Laravel 11 ships without `routes/api.php` by default. Run `php artisan install:api` to scaffold the API route file, wire the `api` routing group in `bootstrap/app.php`, and publish Sanctum's migration. When it asks whether to run pending migrations, answer `no` (we want to run them together once Postgres is provisioned):
 
 ```bash
-cd /Users/lukehogan/Code/flashcards/api && php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+cd /Users/lukehogan/Code/flashcards/api && echo "no" | php artisan install:api
 ```
+
+**After publishing**, open the generated `database/migrations/*_create_personal_access_tokens_table.php` and change `$table->morphs('tokenable');` to `$table->uuidMorphs('tokenable');`. Our `users` table uses a UUID primary key (Task 0.31), and the default `morphs()` creates a `BIGINT UNSIGNED tokenable_id` which would silently corrupt token issuance. Add an inline comment so future re-reads know why.
+
+Run Pint once on the newly scaffolded `routes/api.php` to apply `declare(strict_types=1)` and the standard blank-line-after-opening-tag rule:
+
+```bash
+./vendor/bin/pint routes/api.php
+```
+
+**Also**: in `app/Providers/HorizonServiceProvider.php`, the scaffolded `viewHorizon` gate ships with an empty email allow-list, so Horizon's dashboard 403s everyone in non-local environments. Add a `TODO(deploy)` comment inside the gate pointing at Task 5.2 so ops remembers to populate it before first staging deploy.
 
 - [ ] **Step 3: Publish Horizon**
 
@@ -471,9 +486,11 @@ git -C /Users/lukehogan/Code/flashcards commit -m "feat: install Sanctum, Horizo
 - [ ] **Step 1: Install Pest**
 
 ```bash
-cd /Users/lukehogan/Code/flashcards/api && composer require --dev pestphp/pest:^3.0 pestphp/pest-plugin-laravel:^3.0
-cd /Users/lukehogan/Code/flashcards/api && php artisan pest:install
+cd /Users/lukehogan/Code/flashcards/api && composer require --dev -W pestphp/pest:^3.0 pestphp/pest-plugin-laravel:^3.0
+cd /Users/lukehogan/Code/flashcards/api && ./vendor/bin/pest --init
 ```
+
+> **Note (verified 2026-04-21):** Pest v3 dropped the `php artisan pest:install` command — use `./vendor/bin/pest --init` instead. The `-W` flag is needed to downgrade phpunit (11.5.55 → 11.5.50) to satisfy Pest v3's constraint. Also: uncomment `DB_CONNECTION=sqlite` and `DB_DATABASE=:memory:` in `api/phpunit.xml` so `RefreshDatabase` can run without a local Postgres.
 
 - [ ] **Step 2: Replace `api/tests/Pest.php` with:**
 
@@ -511,8 +528,10 @@ git -C /Users/lukehogan/Code/flashcards commit -m "test: configure Pest with Ref
 - [ ] **Step 1: Install**
 
 ```bash
-cd /Users/lukehogan/Code/flashcards/api && composer require --dev laravel/pint:^1.0 larastan/larastan:^2.0
+cd /Users/lukehogan/Code/flashcards/api && composer require --dev laravel/pint:^1.0 larastan/larastan:^3.0
 ```
+
+> **Note (verified 2026-04-21):** Larastan `^2.0` targets Laravel 10 and won't resolve against Laravel 11. Use `^3.0` (Larastan 3 supports Laravel 11 + PHPStan 2).
 
 - [ ] **Step 2: Create `api/pint.json`:**
 
@@ -543,8 +562,9 @@ parameters:
     ignoreErrors:
     excludePaths:
         - ./*/*/FileToBeExcluded.php
-    checkMissingIterableValueType: false
 ```
+
+> **Note (verified 2026-04-21):** PHPStan 2.x removed the `checkMissingIterableValueType` key (it's now always-on at level 6+). The config is otherwise unchanged.
 
 - [ ] **Step 4: Run both**
 
@@ -774,9 +794,9 @@ git -C /Users/lukehogan/Code/flashcards commit -m "ci: enable Dependabot for com
 
 In Xcode → File → New → Project → iOS → App.
 - Product Name: `Flashcards`
-- Team: (owner's team)
-- Organization Identifier: `app.flashcards`
-- Bundle Identifier: `app.flashcards`
+- Team: UWK6JHFFGJ
+- Organization Identifier: `com.lukehogan`
+- Bundle Identifier: `com.lukehogan.flashcards`
 - Interface: **SwiftUI**
 - Language: **Swift**
 - Storage: **SwiftData**
@@ -1035,7 +1055,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.0.app
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
       - name: Install SwiftLint
         run: brew install swiftlint
       - name: swift-format lint
@@ -1046,7 +1068,7 @@ jobs:
         run: |
           xcodebuild \
             -scheme Flashcards \
-            -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
+            -destination 'platform=iOS Simulator,OS=latest' \
             -configuration Debug \
             -enableCodeCoverage YES \
             clean test | xcbeautify --is-ci
@@ -2192,10 +2214,10 @@ use App\Services\Auth\AppleIdentityVerifier;
 
 test('verifies a valid Apple identity token and returns subject + email', function () {
     $mockJwksResponse = [/* stub JWKS — filled in when ci runs mock server; for unit test, inject a public key pair */];
-    $verifier = new AppleIdentityVerifier(clientId: 'app.flashcards', jwksFetcher: fn () => $mockJwksResponse);
+    $verifier = new AppleIdentityVerifier(clientId: 'com.lukehogan.flashcards', jwksFetcher: fn () => $mockJwksResponse);
 
     // Sign a fake token with a matching private key in the test harness (firebase/php-jwt).
-    $token = makeFakeAppleIdentityToken(sub: 'APPLE_UID_123', email: 'user@example.com', aud: 'app.flashcards');
+    $token = makeFakeAppleIdentityToken(sub: 'APPLE_UID_123', email: 'user@example.com', aud: 'com.lukehogan.flashcards');
 
     $claims = $verifier->verify($token);
 
@@ -2204,7 +2226,7 @@ test('verifies a valid Apple identity token and returns subject + email', functi
 });
 
 test('rejects a token with wrong audience', function () {
-    $verifier = new AppleIdentityVerifier(clientId: 'app.flashcards', jwksFetcher: fn () => []);
+    $verifier = new AppleIdentityVerifier(clientId: 'com.lukehogan.flashcards', jwksFetcher: fn () => []);
     $token = makeFakeAppleIdentityToken(sub: 'x', email: 'x@x', aud: 'wrong.audience');
     expect(fn () => $verifier->verify($token))->toThrow(RuntimeException::class, 'Audience mismatch');
 });
@@ -2427,7 +2449,7 @@ class AppleAuthController extends Controller
 ```php
 $this->app->singleton(\App\Services\Auth\AppleIdentityVerifier::class, function () {
     return new \App\Services\Auth\AppleIdentityVerifier(
-        clientId: config('services.apple.client_id', 'app.flashcards'),
+        clientId: config('services.apple.client_id', 'com.lukehogan.flashcards'),
         jwksFetcher: fn () => json_decode(file_get_contents('https://appleid.apple.com/auth/keys'), true),
     );
 });
@@ -3044,7 +3066,7 @@ import KeychainAccess
 public actor TokenStore {
     private let keychain: Keychain
 
-    public init(service: String = "app.flashcards.tokens") {
+    public init(service: String = "com.lukehogan.flashcards.tokens") {
         self.keychain = Keychain(service: service).accessibility(.afterFirstUnlockThisDeviceOnly)
     }
 
@@ -3476,7 +3498,7 @@ Create `api/public/.well-known/apple-app-site-association` (no extension):
   "applinks": {
     "details": [
       {
-        "appIDs": ["TEAMID.app.flashcards"],
+        "appIDs": ["UWK6JHFFGJ.com.lukehogan.flashcards"],
         "components": [
           { "/": "/auth/consume", "?": { "t": "*" } }
         ]
@@ -11616,8 +11638,8 @@ git -C /Users/lukehogan/Code/flashcards commit -m "feat(paywall): MWPaywallScree
 
 | Product ID | Type | Price |
 |---|---|---|
-| `app.flashcards.plus.monthly` | Auto-renew | $4.99 / month |
-| `app.flashcards.plus.annual`  | Auto-renew | $29.99 / year (7-day free trial) |
+| `com.lukehogan.flashcards.plus.monthly` | Auto-renew | $4.99 / month |
+| `com.lukehogan.flashcards.plus.annual`  | Auto-renew | $29.99 / year (7-day free trial) |
 
 Wire into the scheme as StoreKit Configuration.
 
@@ -11638,10 +11660,10 @@ public final class PurchasesManager {
     public var isProcessing = false
 
     public var formattedMonthlyPrice: String? {
-        products.first(where: { $0.id == "app.flashcards.plus.monthly" })?.displayPrice
+        products.first(where: { $0.id == "com.lukehogan.flashcards.plus.monthly" })?.displayPrice
     }
     public var formattedAnnualPrice: String? {
-        products.first(where: { $0.id == "app.flashcards.plus.annual" })?.displayPrice
+        products.first(where: { $0.id == "com.lukehogan.flashcards.plus.annual" })?.displayPrice
     }
 
     private var updatesTask: Task<Void, Never>?
@@ -11655,7 +11677,7 @@ public final class PurchasesManager {
     public func load() async {
         do {
             products = try await Product.products(for: [
-                "app.flashcards.plus.monthly", "app.flashcards.plus.annual"
+                "com.lukehogan.flashcards.plus.monthly", "com.lukehogan.flashcards.plus.annual"
             ])
             for await entitlement in Transaction.currentEntitlements {
                 if case .verified(let tx) = entitlement {
@@ -11667,8 +11689,8 @@ public final class PurchasesManager {
         }
     }
 
-    public func purchaseAnnual() async { await purchase(id: "app.flashcards.plus.annual") }
-    public func purchaseMonthly() async { await purchase(id: "app.flashcards.plus.monthly") }
+    public func purchaseAnnual() async { await purchase(id: "com.lukehogan.flashcards.plus.annual") }
+    public func purchaseMonthly() async { await purchase(id: "com.lukehogan.flashcards.plus.monthly") }
 
     private func purchase(id: String) async {
         guard let product = products.first(where: { $0.id == id }) else { return }
@@ -11841,7 +11863,7 @@ test('POST /v1/subscriptions/verify flips user to plus', function () {
     $token = $u->createToken('t')->plainTextToken;
 
     $payload = base64_encode(json_encode([
-        'productID' => 'app.flashcards.plus.annual',
+        'productID' => 'com.lukehogan.flashcards.plus.annual',
         'originalTransactionID' => 'TX123',
         'expirationDate' => now()->addYear()->valueOf(),
         'environment' => 'Sandbox',
@@ -11881,7 +11903,7 @@ class AppStoreNotificationsController extends Controller
         if (!$origTxId) { return response()->json(status: 200); }
 
         $user = User::where('subscription_product_id', '!=', null)
-            ->where('subscription_product_id', 'like', 'app.flashcards.%')
+            ->where('subscription_product_id', 'like', 'com.lukehogan.flashcards.%')
             ->first(); // In prod, map via originalTransactionId → user
 
         if (!$user) { return response()->json(status: 200); }
@@ -12415,7 +12437,7 @@ git -C /Users/lukehogan/Code/flashcards commit -m "feat(notifications): Notifica
 - [ ] **Step 1: In Xcode: File → New → Target → Notification Content Extension.**
 
 - Name: `MWReminderContent`
-- Bundle ID: `app.flashcards.ReminderContent`
+- Bundle ID: `com.lukehogan.flashcards.ReminderContent`
 
 - [ ] **Step 2: Configure `Info.plist` of the extension:**
 
@@ -12450,7 +12472,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
 
     func didReceive(_ notification: UNNotification) {
         // Access shared container for due count persisted by the app.
-        let shared = UserDefaults(suiteName: "group.app.flashcards")
+        let shared = UserDefaults(suiteName: "group.com.lukehogan.flashcards")
         let dueCount = shared?.integer(forKey: "mw.dueCount") ?? 0
         label.text = dueCount == 0
             ? "All caught up. Nothing due right now."
@@ -12459,7 +12481,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
 }
 ```
 
-- [ ] **Step 4: Configure App Group.** In both Flashcards target and extension target → Signing → + Capability → App Groups → `group.app.flashcards`.
+- [ ] **Step 4: Configure App Group.** In both Flashcards target and extension target → Signing → + Capability → App Groups → `group.com.lukehogan.flashcards`.
 
 - [ ] **Step 5: App writes due count on background fetch + foreground update.** In a new helper `ios/Flashcards/Notifications/DueCountPublisher.swift`:
 
@@ -12468,7 +12490,7 @@ import Foundation
 
 public enum DueCountPublisher {
     public static func publish(_ count: Int) {
-        UserDefaults(suiteName: "group.app.flashcards")?.set(count, forKey: "mw.dueCount")
+        UserDefaults(suiteName: "group.com.lukehogan.flashcards")?.set(count, forKey: "mw.dueCount")
     }
 }
 ```

@@ -1,0 +1,23 @@
+version: 2
+updates:
+  - package-ecosystem: "composer"
+    directory: "/api"
+    schedule: { interval: "weekly" }
+    groups:
+      patches:
+        update-types: ["patch"]
+        applies-to: version-updates
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: "swift"
+    directory: "/ios"
+    schedule: { interval: "weekly" }
+    groups:
+      patches:
+        update-types: ["patch"]
+        applies-to: version-updates
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule: { interval: "weekly" }

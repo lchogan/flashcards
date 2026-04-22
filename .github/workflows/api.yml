@@ -1,0 +1,44 @@
+name: API
+
+on:
+  push:
+    branches: [main]
+    paths: ['api/**', '.github/workflows/api.yml']
+  pull_request:
+    paths: ['api/**', '.github/workflows/api.yml']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: flashcards
+          POSTGRES_PASSWORD: flashcards
+          POSTGRES_DB: flashcards
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd="pg_isready -U flashcards"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+      redis:
+        image: redis:7
+        ports: ['6379:6379']
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: xdebug
+          tools: composer:v2
+      - run: composer install --prefer-dist --no-interaction --no-progress
+      - run: cp .env.example .env && php artisan key:generate
+      - run: ./vendor/bin/pint --test
+      - run: ./vendor/bin/phpstan analyse --memory-limit=1G
+      - run: php artisan migrate --force
+      - run: ./vendor/bin/pest --ci
