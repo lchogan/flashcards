@@ -51,6 +51,8 @@ public struct MWRatingButton: View {
             .mwCornerRadius(.s)
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(rating.label)
+        .accessibilityIdentifier(rating.label)
     }
 
     private var tint: Color {

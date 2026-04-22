@@ -30,6 +30,9 @@ struct SmartStudyView: View {
             cardBody
                 .mwCard()
                 .mwPadding(.horizontal, .xl)
+                .contentShape(Rectangle())
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("mw.session.card")
                 .onTapGesture {
                     isFlipped.toggle()
                     updatePreview()

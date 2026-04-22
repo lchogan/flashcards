@@ -33,6 +33,8 @@ public struct MWTextArea: View {
                 .background(MWColor.paper)
                 .mwCornerRadius(.s)
                 .mwStroke(color: MWColor.ink, width: MWBorder.defaultWidth, cornerRadius: MWRadius.s)
+                .accessibilityLabel(label)
+                .accessibilityIdentifier(label)
         }
     }
 }

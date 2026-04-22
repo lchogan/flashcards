@@ -34,12 +34,24 @@ struct FlashcardsApp: App {
 
     init() {
         AnalyticsClient.configure()
+        let schema: [any PersistentModel.Type] = [
+            UserEntity.self, TopicEntity.self, DeckEntity.self, SubTopicEntity.self,
+            CardEntity.self, CardSubTopicEntity.self, ReviewEntity.self,
+            SessionEntity.self, AssetEntity.self, PendingMutationEntity.self,
+        ]
         do {
-            container = try ModelContainer(
-                for: UserEntity.self, TopicEntity.self, DeckEntity.self, SubTopicEntity.self,
-                CardEntity.self, CardSubTopicEntity.self, ReviewEntity.self,
-                SessionEntity.self, AssetEntity.self, PendingMutationEntity.self
-            )
+            if UITestLaunch.isActive {
+                // UI tests run against an in-memory store for deterministic,
+                // clean-slate state on every launch.
+                let config = ModelConfiguration(isStoredInMemoryOnly: true)
+                container = try ModelContainer(for: Schema(schema), configurations: [config])
+            } else {
+                container = try ModelContainer(
+                    for: UserEntity.self, TopicEntity.self, DeckEntity.self, SubTopicEntity.self,
+                    CardEntity.self, CardSubTopicEntity.self, ReviewEntity.self,
+                    SessionEntity.self, AssetEntity.self, PendingMutationEntity.self
+                )
+            }
         } catch {
             fatalError("Failed to initialise SwiftData ModelContainer: \(error)")
         }

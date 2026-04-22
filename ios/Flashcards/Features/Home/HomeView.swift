@@ -35,6 +35,7 @@ struct HomeView: View {
                         Button {
                             showingCreate = true
                         } label: { MWIcon(.add) }
+                        .accessibilityIdentifier("mw.home.create")
                     }
                 )
 
