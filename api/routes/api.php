@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Api\V1\AppleAuthController;
 use App\Http\Controllers\Api\V1\MagicLinkController;
+use App\Http\Controllers\Api\V1\TokenController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +19,6 @@ Route::prefix('v1')->group(function () {
         ->middleware('throttle:5,60');
 
     Route::post('/auth/magic-link/consume', [MagicLinkController::class, 'consume']);
+
+    Route::post('/auth/refresh', [TokenController::class, 'refresh']);
 });
