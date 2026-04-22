@@ -90,8 +90,11 @@ public final class MutationQueue {
     ///   - now: Current time in milliseconds since Unix epoch.
     /// - Throws: `ModelContext` save errors.
     public func markFailure(_ m: PendingMutationEntity, now: Int64) throws {
-        m.retryCount += 1
+        // Compute backoff using the pre-increment retryCount so the first failure
+        // uses the 2s step (plan line 3864). Original plan text had the increment
+        // above this line, which skipped the 2s step; fixed 2026-04-21.
         m.nextAttemptAtMs = now + Self.backoffMs(retry: m.retryCount)
+        m.retryCount += 1
         try context.save()
     }
 

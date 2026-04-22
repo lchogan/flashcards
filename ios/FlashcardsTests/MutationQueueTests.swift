@@ -47,4 +47,25 @@ final class MutationQueueTests: XCTestCase {
         XCTAssertEqual(MutationQueue.backoffMs(retry: 3), 120_000)
         XCTAssertEqual(MutationQueue.backoffMs(retry: 99), 900_000) // cap 15 min
     }
+
+    @MainActor
+    func test_markFailure_schedules_first_retry_at_2s() throws {
+        let q = MutationQueue(context: container.mainContext)
+        try q.enqueue(entityKey: "decks", recordId: "r1", payload: ["id": "r1"])
+        let m = try q.allPending().first!
+        try q.markFailure(m, now: 1_000)
+        XCTAssertEqual(m.nextAttemptAtMs, 1_000 + 2_000)
+        XCTAssertEqual(m.retryCount, 1)
+    }
+
+    @MainActor
+    func test_markFailure_second_retry_is_8s() throws {
+        let q = MutationQueue(context: container.mainContext)
+        try q.enqueue(entityKey: "decks", recordId: "r1", payload: ["id": "r1"])
+        let m = try q.allPending().first!
+        try q.markFailure(m, now: 0)
+        try q.markFailure(m, now: 10_000)
+        XCTAssertEqual(m.nextAttemptAtMs, 10_000 + 8_000)
+        XCTAssertEqual(m.retryCount, 2)
+    }
 }
