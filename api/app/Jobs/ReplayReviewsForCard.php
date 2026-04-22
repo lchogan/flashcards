@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Services\Fsrs\ReviewReplayer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -13,13 +14,15 @@ use Illuminate\Queue\SerializesModels;
 /**
  * Replay a card's review history into its FSRS state cache.
  *
- * Enqueued by ReviewUpserter after a successful Review insert. The handle()
- * body is wired in Task 1.13 — in Task 1.12 this is a stub so the upserter
- * dispatch call resolves without a class-not-found error.
+ * Enqueued by ReviewUpserter after a successful Review insert. Delegates to
+ * ReviewReplayer, which sorts reviews by rated_at_ms and applies the latest
+ * state_after to the Card, keeping the cache consistent when reviews arrive
+ * out-of-order from multiple devices.
  *
  * Dependencies:
- *   - App\Models\Card (updated with recomputed FSRS state in Task 1.13)
- *   - App\Models\Review (source of replay truth in Task 1.13)
+ *   - App\Services\Fsrs\ReviewReplayer (performs the replay logic)
+ *   - App\Models\Card (updated with recomputed FSRS state)
+ *   - App\Models\Review (source of replay truth)
  *
  * Key concepts:
  *   - The card_id is passed by value (string) rather than as a model instance
@@ -38,10 +41,11 @@ final class ReplayReviewsForCard implements ShouldQueue
     /**
      * Execute the job.
      *
-     * Wired in Task 1.13 — currently a no-op stub.
+     * Delegates to ReviewReplayer, which applies "last state_after wins"
+     * logic over the card's full review log to recompute the Card cache.
      */
     public function handle(): void
     {
-        // Wired in Task 1.13.
+        app(ReviewReplayer::class)->replay($this->cardId);
     }
 }
