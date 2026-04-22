@@ -87,6 +87,7 @@ final class CardUpserter implements RecordUpserter
             'deck_id' => $deckId,
             'front_text' => (string) ($row['front_text'] ?? ''),
             'back_text' => (string) ($row['back_text'] ?? ''),
+            // TODO(1.15): validate asset ownership and add FK constraint after assets table exists.
             'front_image_asset_id' => $row['front_image_asset_id'] ?? null,
             'back_image_asset_id' => $row['back_image_asset_id'] ?? null,
             'position' => (int) ($row['position'] ?? 0),

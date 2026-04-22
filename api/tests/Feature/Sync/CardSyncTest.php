@@ -62,3 +62,27 @@ test('card pull does not leak cards belonging to other users', function () {
     expect($res->json('records.cards'))->toHaveCount(1)
         ->and($res->json('records.cards.0.front_text'))->toBe('Mine');
 });
+
+test('card push rejects stale update older than existing', function () {
+    $u = User::factory()->create();
+    $d = Deck::factory()->for($u)->create();
+    $c = Card::factory()->for($d)->create([
+        'front_text' => 'Current',
+        'updated_at_ms' => 2000,
+    ]);
+    $token = $u->createToken('t')->plainTextToken;
+
+    $this->withHeader('Authorization', "Bearer {$token}")
+        ->postJson('/api/v1/sync/push', [
+            'client_clock_ms' => 1500,
+            'records' => ['cards' => [[
+                'id' => $c->id, 'deck_id' => $d->id,
+                'front_text' => 'Stale',
+                'back_text' => $c->back_text,
+                'state' => 'new',
+                'updated_at_ms' => 1000,
+            ]]],
+        ])->assertOk()->assertJson(['accepted' => 0]);
+
+    expect($c->fresh()->front_text)->toBe('Current');
+});
