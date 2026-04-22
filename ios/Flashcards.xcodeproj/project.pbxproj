@@ -27,6 +27,7 @@
 		7469D2561DCEC06499A1C483 /* MWSecondaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A16BDB6D28578249699970F /* MWSecondaryButtonStyle.swift */; };
 		8B1C8DA5B9FFA67E666742C9 /* MWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C21C770B2B3AF3347CF2284 /* MWButton.swift */; };
 		A200308DB65D7AC28BF3AB87 /* Motion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F3D467E2E539FF66D566E /* Motion.swift */; };
+		A732FD46039CA285EC45CB06 /* DesignSystemSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08B320524436C5B4CCC4CD9 /* DesignSystemSnapshotTests.swift */; };
 		A8E27F73C8E678C996E113CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0CFBF239CF41720591C315 /* ContentView.swift */; };
 		BBFBE898C41CC4D089E2D26E /* FlashcardsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E40CD64F095A8BA4D1644DE /* FlashcardsUITests.swift */; };
 		C155DBC0A9054986EC3BC984 /* FlashcardsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD49C9447BB17F91C561040F /* FlashcardsTests.swift */; };
@@ -82,6 +83,7 @@
 		9B3925292F9A0F8A65D5ADA9 /* MWAccentKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAccentKey.swift; sourceTree = "<group>"; };
 		9D49E4AA2AE135563BBDA46A /* MWPrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWPrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		A6D19E2DA08AE57F2E891450 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		B08B320524436C5B4CCC4CD9 /* DesignSystemSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemSnapshotTests.swift; sourceTree = "<group>"; };
 		B164C49CB882DD2A86A4F46E /* MWScreenChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScreenChrome.swift; sourceTree = "<group>"; };
 		BB0EDBD405DDBA367BDF1503 /* Radii.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radii.swift; sourceTree = "<group>"; };
 		BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScreen.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 			children = (
 				D75AEF6EC4869BDEED745175 /* ColorsTokenTests.swift */,
 				CB15FDE0C8DC4DAAAD34C765 /* ControlTokenTests.swift */,
+				B08B320524436C5B4CCC4CD9 /* DesignSystemSnapshotTests.swift */,
 				DD49C9447BB17F91C561040F /* FlashcardsTests.swift */,
 			);
 			path = FlashcardsTests;
@@ -419,6 +422,7 @@
 			files = (
 				E7648228F66E1B871F8CACDE /* ColorsTokenTests.swift in Sources */,
 				1B7A8C176DF9E0139D736634 /* ControlTokenTests.swift in Sources */,
+				A732FD46039CA285EC45CB06 /* DesignSystemSnapshotTests.swift in Sources */,
 				C155DBC0A9054986EC3BC984 /* FlashcardsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
