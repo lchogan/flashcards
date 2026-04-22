@@ -59,6 +59,11 @@ targets:
           - arm64
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
+        # Analytics keys — empty defaults committed; real values injected at
+        # build time via xcconfig/CI env (deferred until Phase 0 wrap).
+        POSTHOG_KEY: ""
+        POSTHOG_HOST: "https://us.i.posthog.com"
+        SENTRY_DSN: ""
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.lukehogan.flashcards

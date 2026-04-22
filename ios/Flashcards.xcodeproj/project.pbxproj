@@ -11,6 +11,7 @@
 		17EF0C4A3171AF043E4BAC80 /* Shadows.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1D480537F787B33D90D3D7 /* Shadows.swift */; };
 		190FCD89EB06257558CF3844 /* MWButtonPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76798B4897CAC276448E489B /* MWButtonPress.swift */; };
 		19BF3CEF62F523AA152B339F /* MWAccentKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3925292F9A0F8A65D5ADA9 /* MWAccentKey.swift */; };
+		1B722014A736E1A696F9CE42 /* AnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DED8C932C8C55A94E71D0C0 /* AnalyticsClient.swift */; };
 		1B7A8C176DF9E0139D736634 /* ControlTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15FDE0C8DC4DAAAD34C765 /* ControlTokenTests.swift */; };
 		1D3B8506D046FAD46CE79849 /* FlashcardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898ED96388E1C5A38EB3EC56 /* FlashcardsApp.swift */; };
 		24189012899F3CED7AB44E5E /* PostHog in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF295D3928BC732211057E9 /* PostHog */; };
@@ -87,6 +88,7 @@
 		088B7E1F4FEA8DB8F1829EC2 /* MWDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDivider.swift; sourceTree = "<group>"; };
 		0A2046EA17B9CF3B81354EBB /* MWEyebrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWEyebrow.swift; sourceTree = "<group>"; };
 		0D5E661B31CAD40E670B867A /* FlashcardsTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = FlashcardsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DED8C932C8C55A94E71D0C0 /* AnalyticsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsClient.swift; sourceTree = "<group>"; };
 		131236E5F791B958F6E5BDEA /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		1A2F6309A56C16DB54F4E208 /* MWDestructiveButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDestructiveButtonStyle.swift; sourceTree = "<group>"; };
 		300F3D467E2E539FF66D566E /* Motion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Motion.swift; sourceTree = "<group>"; };
@@ -187,6 +189,14 @@
 			path = Modifiers;
 			sourceTree = "<group>";
 		};
+		0A05C347E58406AA34A532F5 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				0DED8C932C8C55A94E71D0C0 /* AnalyticsClient.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
 		0D4AC95A19DAE805B4205B56 /* __Snapshots__ */ = {
 			isa = PBXGroup;
 			children = (
@@ -273,6 +283,7 @@
 		82A71E13467E00276E837B5A /* Flashcards */ = {
 			isa = PBXGroup;
 			children = (
+				0A05C347E58406AA34A532F5 /* Analytics */,
 				F5F58FEB583413C13FFB468F /* App */,
 				379B282C25770B71CD958878 /* DesignSystem */,
 				E6CC567D895B707D164840A7 /* Features */,
@@ -567,6 +578,7 @@
 				C45A1DA5C023840AC121EC36 /* APIClient.swift in Sources */,
 				505C92450AB7F77F836170B1 /* APIEndpoint.swift in Sources */,
 				C1AF58DAA850D137B77B139B /* APIError.swift in Sources */,
+				1B722014A736E1A696F9CE42 /* AnalyticsClient.swift in Sources */,
 				F5202C28945C431FAF54FBC5 /* AppState.swift in Sources */,
 				2FBB276265F68FA8374898A6 /* AppleSignInService.swift in Sources */,
 				E086CE937F972443F1E2A40D /* AuthManager.swift in Sources */,
