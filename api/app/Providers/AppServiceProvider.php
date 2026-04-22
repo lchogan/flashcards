@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Services\Auth\AppleIdentityVerifier;
+use App\Services\Sync\SyncPushService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
                 jwksFetcher: fn () => json_decode(file_get_contents('https://appleid.apple.com/auth/keys'), true),
             );
         });
+
+        $this->app->singleton(SyncPushService::class);
     }
 
     /**
