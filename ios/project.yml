@@ -64,6 +64,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.lukehogan.flashcards
         TARGETED_DEVICE_FAMILY: "1"
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait"
+        CODE_SIGN_ENTITLEMENTS: Flashcards/Flashcards.entitlements
     dependencies:
       - package: KeychainAccess
         product: KeychainAccess

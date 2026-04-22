@@ -16,9 +16,11 @@
 //                lifetime for the scene. `step` is the onboarding
 //                cursor; once `auth.state` becomes `.signedIn` the
 //                `switch` short-circuits past it entirely and the
-//                cursor becomes irrelevant. Magic-link completion does
-//                NOT happen here — the universal-link handler (future
-//                task) will call `AuthManager.consumeMagicLink(token:)`,
+//                cursor becomes irrelevant. Magic-link completion is
+//                driven from the App-level `.onOpenURL` handler, which
+//                posts `Notification.Name.mwMagicLinkToken`; the
+//                notification observer `.task` below awaits that
+//                stream and calls `AuthManager.consumeMagicLink(token:)`,
 //                which flips `auth.state` and causes this view to
 //                re-route. `appState` is kept in scope for downstream
 //                tasks that will read subscription / sync projections
@@ -80,5 +82,18 @@ struct RootView: View {
             }
         }
         .task { await auth.restore() }
+        .task {
+            // Magic-link fan-in: `FlashcardsApp`'s `.onOpenURL` posts
+            // `mwMagicLinkToken` with the parsed token as `object`. We
+            // await that stream here and hand the token to
+            // `AuthManager.consumeMagicLink(token:)`. Errors are
+            // currently swallowed — a later task will surface a
+            // user-visible failure state for a bad/expired token.
+            for await note in NotificationCenter.default.notifications(named: .mwMagicLinkToken) {
+                if let token = note.object as? String {
+                    try? await auth.consumeMagicLink(token: token)
+                }
+            }
+        }
     }
 }

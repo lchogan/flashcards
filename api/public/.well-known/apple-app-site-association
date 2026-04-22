@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["UWK6JHFFGJ.com.lukehogan.flashcards"],
+        "components": [
+          { "/": "/auth/consume", "?": { "t": "*" } }
+        ]
+      }
+    ]
+  }
+}
