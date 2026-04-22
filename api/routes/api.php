@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Api\V1\AppleAuthController;
+use App\Http\Controllers\Api\V1\EntitlementsController;
 use App\Http\Controllers\Api\V1\MagicLinkController;
 use App\Http\Controllers\Api\V1\MeController;
 use App\Http\Controllers\Api\V1\SyncPullController;
@@ -20,6 +21,8 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::get('/sync/pull', SyncPullController::class);
     Route::get('/me', [MeController::class, 'show']);
     Route::patch('/me', [MeController::class, 'update']);
+
+    Route::get('/me/entitlements', [EntitlementsController::class, 'show']);
 });
 
 Route::prefix('v1')->group(function () {
