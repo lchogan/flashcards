@@ -51,7 +51,7 @@ final class DesignSystemSnapshotTests: XCTestCase {
     @MainActor
     func test_MWButton_primary_dark() {
         let view = MWButton("Continue") {}.frame(width: 340).padding()
-            .preferredColorScheme(.dark)
+            .environment(\.colorScheme, .dark)
         assertSnapshot(
             of: UIHostingController(rootView: view),
             as: .image(on: .iPhone13Pro),
