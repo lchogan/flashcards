@@ -15,6 +15,12 @@
 //                JSON coders live as static properties on `JSONDecoder`
 //                / `JSONEncoder` so every call uses identical
 //                snake_case↔camelCase settings without duplication.
+//                Empty-body responses (HTTP 204 No Content, or any 2xx
+//                with a zero-length payload) are special-cased: if the
+//                caller's `Response` generic is `Empty204`, the client
+//                returns a freshly-constructed `Empty204()` and skips
+//                JSON decoding entirely — otherwise an empty body on a
+//                success response is still an error (`.decoding`).
 //                No retries, no middleware, no logging — those layer on
 //                top once we know what we actually need.
 //
@@ -96,6 +102,16 @@ public actor APIClient: APIClientProtocol {
                 status: http.statusCode,
                 body: String(data: data, encoding: .utf8) ?? ""
             )
+        }
+
+        // 204 No Content (or any 2xx with an empty body). Only valid if
+        // the caller asked for `Empty204` — anything else is a contract
+        // mismatch and surfaces as `.decoding`.
+        if data.isEmpty {
+            if let empty = Empty204() as? R {
+                return empty
+            }
+            throw APIError.decoding("empty response body cannot decode to \(R.self)")
         }
 
         do {

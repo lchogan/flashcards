@@ -14,6 +14,7 @@
 		1B7A8C176DF9E0139D736634 /* ControlTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15FDE0C8DC4DAAAD34C765 /* ControlTokenTests.swift */; };
 		1D3B8506D046FAD46CE79849 /* FlashcardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898ED96388E1C5A38EB3EC56 /* FlashcardsApp.swift */; };
 		24189012899F3CED7AB44E5E /* PostHog in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF295D3928BC732211057E9 /* PostHog */; };
+		2FBB276265F68FA8374898A6 /* AppleSignInService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A12C1B6BE8A6235B115D87 /* AppleSignInService.swift */; };
 		319BDA71D9F0A272D6841EDA /* MWScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */; };
 		343AAB64A5721C045E9EE719 /* MWDot.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB0E68B8D3541EC7636DEFC /* MWDot.swift */; };
 		37DE4CDC872A96BF66F19D8F /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFBCFA88524780D98CE086 /* Spacing.swift */; };
@@ -43,6 +44,7 @@
 		D8DB67DD30007FBA6A0F6258 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = E27D9141CA237CB70AE1FF5D /* SnapshotTesting */; };
 		D9DD838304ED3D163450007C /* Radii.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0EDBD405DDBA367BDF1503 /* Radii.swift */; };
 		DF68FC3FC3330E8A257D5B34 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7468B7B18BF5DB2D3E671D /* RootView.swift */; };
+		E086CE937F972443F1E2A40D /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4046CD24470CE2356BFFCF4 /* AuthManager.swift */; };
 		E3285325AD1DBFBA14A0C225 /* test_MWCard.1.png in Resources */ = {isa = PBXBuildFile; fileRef = F040D73BB3A94134B162AE1B /* test_MWCard.1.png */; };
 		E4E6973A11C056D294601697 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8601E71EC6CC580329D9D3A /* Colors.swift */; };
 		E7648228F66E1B871F8CACDE /* ColorsTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75AEF6EC4869BDEED745175 /* ColorsTokenTests.swift */; };
@@ -103,6 +105,8 @@
 		BB0EDBD405DDBA367BDF1503 /* Radii.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radii.swift; sourceTree = "<group>"; };
 		BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScreen.swift; sourceTree = "<group>"; };
 		C0779B8D6E61E0FA843454D6 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
+		C4046CD24470CE2356BFFCF4 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		C7A12C1B6BE8A6235B115D87 /* AppleSignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInService.swift; sourceTree = "<group>"; };
 		CB15FDE0C8DC4DAAAD34C765 /* ControlTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlTokenTests.swift; sourceTree = "<group>"; };
 		CC46401E4827495FB1C0CED9 /* TokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStore.swift; sourceTree = "<group>"; };
 		CD59D377B2406AE1BC80E481 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -275,6 +279,8 @@
 		A7C7D1A8F0526AE0ACC967A6 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				C7A12C1B6BE8A6235B115D87 /* AppleSignInService.swift */,
+				C4046CD24470CE2356BFFCF4 /* AuthManager.swift */,
 				CC46401E4827495FB1C0CED9 /* TokenStore.swift */,
 			);
 			path = Auth;
@@ -530,6 +536,8 @@
 				505C92450AB7F77F836170B1 /* APIEndpoint.swift in Sources */,
 				C1AF58DAA850D137B77B139B /* APIError.swift in Sources */,
 				F5202C28945C431FAF54FBC5 /* AppState.swift in Sources */,
+				2FBB276265F68FA8374898A6 /* AppleSignInService.swift in Sources */,
+				E086CE937F972443F1E2A40D /* AuthManager.swift in Sources */,
 				F25E11BD413D3218216BB972 /* Borders.swift in Sources */,
 				E4E6973A11C056D294601697 /* Colors.swift in Sources */,
 				0517803C799830F5D2612199 /* Control.swift in Sources */,
