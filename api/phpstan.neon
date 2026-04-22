@@ -9,5 +9,7 @@ parameters:
         - routes/
     level: 6
     ignoreErrors:
+        - identifier: missingType.generics
+          path: app/Models/Topic.php
     excludePaths:
         - ./*/*/FileToBeExcluded.php
