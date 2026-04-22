@@ -21,6 +21,7 @@
 		6BC96A54318A7EC43FB27FC3 /* MWDestructiveButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2F6309A56C16DB54F4E208 /* MWDestructiveButtonStyle.swift */; };
 		7046D80BB7E05D4488B8E620 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40590CEF9514F130D9EB7101 /* Assets.xcassets */; };
 		7469D2561DCEC06499A1C483 /* MWSecondaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A16BDB6D28578249699970F /* MWSecondaryButtonStyle.swift */; };
+		8B1C8DA5B9FFA67E666742C9 /* MWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C21C770B2B3AF3347CF2284 /* MWButton.swift */; };
 		A200308DB65D7AC28BF3AB87 /* Motion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F3D467E2E539FF66D566E /* Motion.swift */; };
 		A8E27F73C8E678C996E113CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0CFBF239CF41720591C315 /* ContentView.swift */; };
 		BBFBE898C41CC4D089E2D26E /* FlashcardsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E40CD64F095A8BA4D1644DE /* FlashcardsUITests.swift */; };
@@ -67,6 +68,7 @@
 		5E1E904C0BB96CFDF0B549B4 /* Control.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Control.swift; sourceTree = "<group>"; };
 		76798B4897CAC276448E489B /* MWButtonPress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWButtonPress.swift; sourceTree = "<group>"; };
 		7A16BDB6D28578249699970F /* MWSecondaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSecondaryButtonStyle.swift; sourceTree = "<group>"; };
+		7C21C770B2B3AF3347CF2284 /* MWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWButton.swift; sourceTree = "<group>"; };
 		898ED96388E1C5A38EB3EC56 /* FlashcardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsApp.swift; sourceTree = "<group>"; };
 		9B3925292F9A0F8A65D5ADA9 /* MWAccentKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAccentKey.swift; sourceTree = "<group>"; };
 		9D49E4AA2AE135563BBDA46A /* MWPrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWPrimaryButtonStyle.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 		14F395A1EDCFA7C9108D63B4 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E9A8002D09B6C062BBAB94E8 /* Atoms */,
 				934DD600AB566F95B6904B97 /* Layout */,
 			);
 			path = Components;
@@ -223,6 +226,14 @@
 				3E40CD64F095A8BA4D1644DE /* FlashcardsUITests.swift */,
 			);
 			path = FlashcardsUITests;
+			sourceTree = "<group>";
+		};
+		E9A8002D09B6C062BBAB94E8 /* Atoms */ = {
+			isa = PBXGroup;
+			children = (
+				7C21C770B2B3AF3347CF2284 /* MWButton.swift */,
+			);
+			path = Atoms;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -404,6 +415,7 @@
 				0517803C799830F5D2612199 /* Control.swift in Sources */,
 				1D3B8506D046FAD46CE79849 /* FlashcardsApp.swift in Sources */,
 				19BF3CEF62F523AA152B339F /* MWAccentKey.swift in Sources */,
+				8B1C8DA5B9FFA67E666742C9 /* MWButton.swift in Sources */,
 				190FCD89EB06257558CF3844 /* MWButtonPress.swift in Sources */,
 				F1642B745813ABE669A91B85 /* MWCard.swift in Sources */,
 				6BC96A54318A7EC43FB27FC3 /* MWDestructiveButtonStyle.swift in Sources */,
