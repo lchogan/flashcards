@@ -82,7 +82,8 @@ public final class AppleSignInService:
     NSObject,
     ObservableObject,
     ASAuthorizationControllerDelegate,
-    ASAuthorizationControllerPresentationContextProviding {
+    ASAuthorizationControllerPresentationContextProviding
+{
     /// Pending continuation for the in-flight `signIn()` call. Lives on
     /// the instance because the delegate callbacks can't capture it
     /// directly. Cleared the moment it is resumed.

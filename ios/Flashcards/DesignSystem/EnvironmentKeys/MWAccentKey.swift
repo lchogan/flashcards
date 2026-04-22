@@ -32,5 +32,7 @@ public extension EnvironmentValues {
 public extension View {
     /// Scopes the `mwAccent` environment value for the receiver and its descendants.
     /// - Parameter color: The accent color (usually an `MWAccent.color`).
+    /// - Returns: A view whose subtree reads the supplied accent colour via
+    ///   `@Environment(\.mwAccent)`.
     func mwAccent(_ color: Color) -> some View { environment(\.mwAccent, color) }
 }
