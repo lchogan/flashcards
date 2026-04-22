@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0120C864D9E70F38E640E3AD /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52B0821B604B4E6D1211664 /* SearchView.swift */; };
+		0168437CE76333591F37053C /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AB5D090D947683FAD37D71 /* NotificationViewController.swift */; };
 		01C3A196D5ED274925B6C58F /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ECD351B727AA8F6A2FB1F5 /* AccountSettingsView.swift */; };
 		02DD8B9EE0C3BC3336D2D9C5 /* EntitlementsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C22E78FEFE48AC04F4832 /* EntitlementsManager.swift */; };
 		034B1AD5FF44E65062615B47 /* SessionQueueBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48C55A0C36640F3F80A4346 /* SessionQueueBuilderTests.swift */; };
@@ -16,6 +17,7 @@
 		0663734BD2CB80C862FB72B4 /* MutationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C541DE92720101FECDDBFDF /* MutationQueue.swift */; };
 		08587D58067C0A312630DA8D /* RatingMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF2A62213E52FA682809B1B /* RatingMapping.swift */; };
 		08CDD3732EDAFE1C60B0B926 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC88DBBFD5579BED38C6C052 /* Clock.swift */; };
+		09641B8D5F3C677F4BEF3149 /* MWReminderContent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C8FEC5FD8EDE153F9070FF76 /* MWReminderContent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		09E626CEFFD279643612951A /* ReviewEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28278995FCCF84EB0A23F25E /* ReviewEntity.swift */; };
 		0B74F651D3DFD81C346B4BF8 /* BulkActionsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A5FCDCF59EA98B403E6950 /* BulkActionsSheet.swift */; };
 		0CE9FF860E161A9FAE5EEB2C /* CardEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260DE1302BED01867EB042A4 /* CardEditView.swift */; };
@@ -52,6 +54,7 @@
 		362318A2FBB835F4F325DCA4 /* MWEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D03B0AD8048DEC4380CC6F /* MWEmptyState.swift */; };
 		37DE4CDC872A96BF66F19D8F /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFBCFA88524780D98CE086 /* Spacing.swift */; };
 		38D5739924BAD001DFD8E6ED /* CardSubTopicEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AF568BF32CAB05DD5ED053 /* CardSubTopicEntity.swift */; };
+		38E04964F920EBC5867CE164 /* StreakMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC536E373440811930D08772 /* StreakMonitor.swift */; };
 		3C0A04027670D60D6C90DF14 /* MagicLinkSentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB119C7EA6CDB08651643EC5 /* MagicLinkSentView.swift */; };
 		3EE3CE174FA0C82FC94EC066 /* PurchasesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954ADF49C1C6177C87B965F4 /* PurchasesManager.swift */; };
 		4202B146CCA490A0CAC26E09 /* SignUpWallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D51F2962DF1E93EA9668E4 /* SignUpWallView.swift */; };
@@ -75,6 +78,7 @@
 		5D67882376226C37CCEDBDED /* MagicLinkConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2EEF58ABB8E128D7C31244 /* MagicLinkConsumer.swift */; };
 		60CE3ABF4DCA85511909BDA1 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6944DDE653DA2FDC75F8FA1B /* Reachability.swift */; };
 		61E3A6707A721022A5241E94 /* MWRatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829365D41AABE8389B3A7FDC /* MWRatingButton.swift */; };
+		627EE855F38320C6A8DA2D10 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B70FE48D59D1CA437A2D14 /* NotificationManager.swift */; };
 		6621BD3199DA11A08EAFE665 /* MWPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB8DD260175A68C1CA1FCEA /* MWPill.swift */; };
 		66BA7BE6211476E8F91EC20A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B6A37BC87F9636592B2299 /* HomeView.swift */; };
 		677876272A9353657D56BC78 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = B2E7B02A2283DBE098796542 /* Sentry */; };
@@ -82,6 +86,7 @@
 		6BC96A54318A7EC43FB27FC3 /* MWDestructiveButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2F6309A56C16DB54F4E208 /* MWDestructiveButtonStyle.swift */; };
 		6D7E3BF8947D24D9C2C8A064 /* MWDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088B7E1F4FEA8DB8F1829EC2 /* MWDivider.swift */; };
 		7046D80BB7E05D4488B8E620 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40590CEF9514F130D9EB7101 /* Assets.xcassets */; };
+		72A95E60C67E631EB3FD2DBE /* DueCountPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215707E42657BB52122090F1 /* DueCountPublisher.swift */; };
 		72C41A07DC840AA76BAB53AA /* TokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC46401E4827495FB1C0CED9 /* TokenStore.swift */; };
 		739E324D69B53136DBA2C4D8 /* FsrsScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A6C997AC419320FA6B3516 /* FsrsScheduler.swift */; };
 		7469D2561DCEC06499A1C483 /* MWSecondaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A16BDB6D28578249699970F /* MWSecondaryButtonStyle.swift */; };
@@ -106,6 +111,7 @@
 		A72996DA8E1FF8E4F7D5CCC1 /* SyncPullerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1769328EFBFFB86212C962 /* SyncPullerTests.swift */; };
 		A732FD46039CA285EC45CB06 /* DesignSystemSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08B320524436C5B4CCC4CD9 /* DesignSystemSnapshotTests.swift */; };
 		AF3BFB36C7F1217E4491C3D9 /* DeckDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F32B7393E6D76DD2E8D5EC /* DeckDetailViewModel.swift */; };
+		B07BDB6723F8E46E17DC40E8 /* ReminderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48057B503BCD39E3AAFBC4C4 /* ReminderScheduler.swift */; };
 		B2C77177B66F7A679762D200 /* CreateCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73399284F3ED1C2018079C5E /* CreateCardView.swift */; };
 		B632620852D90304CF7F1510 /* MagicLinkConsumerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359B4E74E5113D4D8EE1518E /* MagicLinkConsumerTests.swift */; };
 		BA4E03F328232716EE9E3F5E /* SwiftFSRS in Frameworks */ = {isa = PBXBuildFile; productRef = BF1B96FCCAF511A81AA62687 /* SwiftFSRS */; };
@@ -150,6 +156,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		519AD522035648B051AA9DD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99F96BF0A775FB829E9E9FEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E421F640D87B168CAD5CE1D7;
+			remoteInfo = MWReminderContent;
+		};
 		7DAB8A8DC8F95045F32724BD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 99F96BF0A775FB829E9E9FEA /* Project object */;
@@ -166,6 +179,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		95140BC165DA302361C3FD00 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				09641B8D5F3C677F4BEF3149 /* MWReminderContent.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		024DB898250E2F1003715C3C /* MWStackedDeckPaper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWStackedDeckPaper.swift; sourceTree = "<group>"; };
 		026338AE29FD796E495EB78B /* Intro1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intro1View.swift; sourceTree = "<group>"; };
@@ -179,7 +206,9 @@
 		0F4549AF5E4A8FF1B8BBBF31 /* SyncIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncIntegrationTests.swift; sourceTree = "<group>"; };
 		10AF568BF32CAB05DD5ED053 /* CardSubTopicEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSubTopicEntity.swift; sourceTree = "<group>"; };
 		131236E5F791B958F6E5BDEA /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		18AB5D090D947683FAD37D71 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		1A2F6309A56C16DB54F4E208 /* MWDestructiveButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDestructiveButtonStyle.swift; sourceTree = "<group>"; };
+		215707E42657BB52122090F1 /* DueCountPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueCountPublisher.swift; sourceTree = "<group>"; };
 		256DB2415229AA61623D381B /* UITestLaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestLaunch.swift; sourceTree = "<group>"; };
 		260DE1302BED01867EB042A4 /* CardEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardEditView.swift; sourceTree = "<group>"; };
 		265F581C55D868A8B31A0ACE /* SmartStudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartStudyView.swift; sourceTree = "<group>"; };
@@ -198,6 +227,7 @@
 		4233F9E69A788D61C2D472C0 /* Borders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Borders.swift; sourceTree = "<group>"; };
 		45807D51F144F68F37E66550 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		47C26893A62EE8644CF55B3A /* PlansCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansCache.swift; sourceTree = "<group>"; };
+		48057B503BCD39E3AAFBC4C4 /* ReminderScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderScheduler.swift; sourceTree = "<group>"; };
 		48B6A37BC87F9636592B2299 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		490ECA2DC834EBB5DCEAFD89 /* test_MWTextField.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_MWTextField.1.png; sourceTree = "<group>"; };
 		4AB8DD260175A68C1CA1FCEA /* MWPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWPill.swift; sourceTree = "<group>"; };
@@ -251,6 +281,7 @@
 		B69BE1712FF228283528309B /* SessionQueueBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionQueueBuilder.swift; sourceTree = "<group>"; };
 		B82C4A4AA1D82A8B89FB92E8 /* PendingMutationEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMutationEntity.swift; sourceTree = "<group>"; };
 		BB0EDBD405DDBA367BDF1503 /* Radii.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radii.swift; sourceTree = "<group>"; };
+		BC536E373440811930D08772 /* StreakMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakMonitor.swift; sourceTree = "<group>"; };
 		BD1F88FBAA3DD311B27072C7 /* EntitlementKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitlementKey.swift; sourceTree = "<group>"; };
 		BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScreen.swift; sourceTree = "<group>"; };
 		BFDA16CADF647B3B6848CB1A /* MWTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWTopBar.swift; sourceTree = "<group>"; };
@@ -259,6 +290,7 @@
 		C4046CD24470CE2356BFFCF4 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		C7A12C1B6BE8A6235B115D87 /* AppleSignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInService.swift; sourceTree = "<group>"; };
 		C8E104C4B0517745446B1DD7 /* CardFormModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFormModel.swift; sourceTree = "<group>"; };
+		C8FEC5FD8EDE153F9070FF76 /* MWReminderContent.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = MWReminderContent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB15FDE0C8DC4DAAAD34C765 /* ControlTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlTokenTests.swift; sourceTree = "<group>"; };
 		CBC69613C1B6A205B4F07A10 /* Intro2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intro2View.swift; sourceTree = "<group>"; };
 		CC46401E4827495FB1C0CED9 /* TokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStore.swift; sourceTree = "<group>"; };
@@ -302,6 +334,7 @@
 		F5CDDABFB08660589DAC7564 /* APIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
 		F65F3B472528E2553505E0D1 /* SessionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEngine.swift; sourceTree = "<group>"; };
 		F760E860CA556E45A8229982 /* FlashcardsUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = FlashcardsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8B70FE48D59D1CA437A2D14 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		F8BD4C5AD2B7B6777590445B /* MutationQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutationQueueTests.swift; sourceTree = "<group>"; };
 		FA292D13A4FD4DFA9AAE6053 /* MWTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWTextField.swift; sourceTree = "<group>"; };
 		FDEE3ED2340A6253A42ACEC2 /* MWChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWChip.swift; sourceTree = "<group>"; };
@@ -416,6 +449,25 @@
 				4304CCAD52294A3AD9BD92B7 /* Sync */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		2A0B1FBEE981B69727CECB7D /* MWReminderContent */ = {
+			isa = PBXGroup;
+			children = (
+				18AB5D090D947683FAD37D71 /* NotificationViewController.swift */,
+			);
+			path = MWReminderContent;
+			sourceTree = "<group>";
+		};
+		2F5532E1FA4E3D2559AB169D /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				215707E42657BB52122090F1 /* DueCountPublisher.swift */,
+				F8B70FE48D59D1CA437A2D14 /* NotificationManager.swift */,
+				48057B503BCD39E3AAFBC4C4 /* ReminderScheduler.swift */,
+				BC536E373440811930D08772 /* StreakMonitor.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		379B282C25770B71CD958878 /* DesignSystem */ = {
@@ -534,6 +586,7 @@
 				070938971B6DA36EDC8B8668 /* Flashcards.app */,
 				0D5E661B31CAD40E670B867A /* FlashcardsTests.xctest */,
 				F760E860CA556E45A8229982 /* FlashcardsUITests.xctest */,
+				C8FEC5FD8EDE153F9070FF76 /* MWReminderContent.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -586,6 +639,7 @@
 				E6CC567D895B707D164840A7 /* Features */,
 				B8FDB318C62DB64023DA2741 /* Fsrs */,
 				AC22C941271FA71AE6097241 /* Networking */,
+				2F5532E1FA4E3D2559AB169D /* Notifications */,
 				CFA7A7626B4BB603C2A29791 /* Purchases */,
 				9900C377598C7E6AC1D4372F /* Util */,
 				40590CEF9514F130D9EB7101 /* Assets.xcassets */,
@@ -718,6 +772,7 @@
 				82A71E13467E00276E837B5A /* Flashcards */,
 				05DF7C4E8846537AD6E1EEA7 /* FlashcardsTests */,
 				E0659CC025722761CA54A138 /* FlashcardsUITests */,
+				2A0B1FBEE981B69727CECB7D /* MWReminderContent */,
 				687FF79CBD690C1BD72D7B86 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -818,10 +873,12 @@
 				B5E77E6414FBCAEFBCAD1F6A /* Sources */,
 				602C9176F2311B36D7144862 /* Resources */,
 				9190A102B33B13994342CCFF /* Frameworks */,
+				95140BC165DA302361C3FD00 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				506DFA230076DDA8C19D5616 /* PBXTargetDependency */,
 			);
 			name = Flashcards;
 			packageProductDependencies = (
@@ -856,6 +913,23 @@
 			productReference = 0D5E661B31CAD40E670B867A /* FlashcardsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		E421F640D87B168CAD5CE1D7 /* MWReminderContent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CAA4A72624AB6178D5A8E064 /* Build configuration list for PBXNativeTarget "MWReminderContent" */;
+			buildPhases = (
+				6D6811588777DA8B1893E8A5 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MWReminderContent;
+			packageProductDependencies = (
+			);
+			productName = MWReminderContent;
+			productReference = C8FEC5FD8EDE153F9070FF76 /* MWReminderContent.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -875,6 +949,10 @@
 						ProvisioningStyle = Automatic;
 					};
 					9122069652D89DB3BEB2CE32 = {
+						DevelopmentTeam = UWK6JHFFGJ;
+						ProvisioningStyle = Automatic;
+					};
+					E421F640D87B168CAD5CE1D7 = {
 						DevelopmentTeam = UWK6JHFFGJ;
 						ProvisioningStyle = Automatic;
 					};
@@ -905,6 +983,7 @@
 				2CC6795DD59D1A2501280D40 /* Flashcards */,
 				9122069652D89DB3BEB2CE32 /* FlashcardsTests */,
 				19A7A8683D1DFC581E8EA584 /* FlashcardsUITests */,
+				E421F640D87B168CAD5CE1D7 /* MWReminderContent */,
 			);
 		};
 /* End PBXProject section */
@@ -963,6 +1042,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6D6811588777DA8B1893E8A5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0168437CE76333591F37053C /* NotificationViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9B54C8F1797D2A5D1DDF8D58 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1018,6 +1105,7 @@
 				AF3BFB36C7F1217E4491C3D9 /* DeckDetailViewModel.swift in Sources */,
 				92748C6CB52C39BBAE52F0A3 /* DeckEntity.swift in Sources */,
 				586FEAF9A3BAF8A87F8DB4E2 /* DeckRepository.swift in Sources */,
+				72A95E60C67E631EB3FD2DBE /* DueCountPublisher.swift in Sources */,
 				96F2B0B1239C69AD2B52AD75 /* EntitlementKey.swift in Sources */,
 				02DD8B9EE0C3BC3336D2D9C5 /* EntitlementsManager.swift in Sources */,
 				1D3B8506D046FAD46CE79849 /* FlashcardsApp.swift in Sources */,
@@ -1063,6 +1151,7 @@
 				D3741E0B6CE09CF567AB2656 /* ManageSubTopicsView.swift in Sources */,
 				A200308DB65D7AC28BF3AB87 /* Motion.swift in Sources */,
 				0663734BD2CB80C862FB72B4 /* MutationQueue.swift in Sources */,
+				627EE855F38320C6A8DA2D10 /* NotificationManager.swift in Sources */,
 				9CCEE286FE8DD0B56734C011 /* PaywallView.swift in Sources */,
 				910979C7FC9DF8B27330B6B6 /* PendingMutationEntity.swift in Sources */,
 				29376E648562E2D0E155C238 /* PlansCache.swift in Sources */,
@@ -1071,6 +1160,7 @@
 				D9DD838304ED3D163450007C /* Radii.swift in Sources */,
 				08587D58067C0A312630DA8D /* RatingMapping.swift in Sources */,
 				60CE3ABF4DCA85511909BDA1 /* Reachability.swift in Sources */,
+				B07BDB6723F8E46E17DC40E8 /* ReminderScheduler.swift in Sources */,
 				09E626CEFFD279643612951A /* ReviewEntity.swift in Sources */,
 				DF68FC3FC3330E8A257D5B34 /* RootView.swift in Sources */,
 				0120C864D9E70F38E640E3AD /* SearchView.swift in Sources */,
@@ -1085,6 +1175,7 @@
 				4BA1E22E2A1302D2EEF72C8A /* SmartStudyView.swift in Sources */,
 				37DE4CDC872A96BF66F19D8F /* Spacing.swift in Sources */,
 				4F3739FD8C07B8D27B0A7FF6 /* SplashView.swift in Sources */,
+				38E04964F920EBC5867CE164 /* StreakMonitor.swift in Sources */,
 				BF6E5E742067C24663EC7FBF /* StudySettingsView.swift in Sources */,
 				4AE24E4F978227D3FEAF428B /* SubTopicEntity.swift in Sources */,
 				1A8CBACAA7D7C3CE6949ACBA /* SubTopicRepository.swift in Sources */,
@@ -1111,6 +1202,11 @@
 			isa = PBXTargetDependency;
 			target = 2CC6795DD59D1A2501280D40 /* Flashcards */;
 			targetProxy = 7DAB8A8DC8F95045F32724BD /* PBXContainerItemProxy */;
+		};
+		506DFA230076DDA8C19D5616 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E421F640D87B168CAD5CE1D7 /* MWReminderContent */;
+			targetProxy = 519AD522035648B051AA9DD0 /* PBXContainerItemProxy */;
 		};
 		B9596DBF86640C31DBB3DBE0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1225,6 +1321,44 @@
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
+		};
+		2BCE6BBE701B1481E1737DC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MWReminderContent/MWReminderContent.entitlements;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MWReminderContent/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lukehogan.flashcards.ReminderContent;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		316AFAA022473EE8C3D0ABD2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MWReminderContent/MWReminderContent.entitlements;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MWReminderContent/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lukehogan.flashcards.ReminderContent;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
 		};
 		35FDCF4E448B74BB01E00B31 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1387,6 +1521,15 @@
 			buildConfigurations = (
 				DE50FBBD413E469A1B98A2E3 /* Debug */,
 				66CC3294F0797668461280C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CAA4A72624AB6178D5A8E064 /* Build configuration list for PBXNativeTarget "MWReminderContent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BCE6BBE701B1481E1737DC6 /* Debug */,
+				316AFAA022473EE8C3D0ABD2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

@@ -88,6 +88,7 @@ public final class SyncManager {
             lastSyncedAt = Date()
             setLastSyncedAtMs(Clock.nowMs())
             lastError = nil
+            publishDueCount()
             AnalyticsClient.track("sync.cycle.ok")
         } catch {
             lastError = String(describing: error)
@@ -111,5 +112,22 @@ public final class SyncManager {
     /// - Parameter ms: Milliseconds since Unix epoch to store as the cursor.
     private func setLastSyncedAtMs(_ ms: Int64) {
         UserDefaults.standard.set(Int(ms), forKey: Self.lastSyncCursorKey)
+    }
+
+    /// Writes the latest due-card count to the shared App Group so the
+    /// Notification Content Extension can render it on the next daily
+    /// reminder without a second database read.
+    private func publishDueCount() {
+        let now = Clock.nowMs()
+        let descriptor = FetchDescriptor<CardEntity>(
+            predicate: #Predicate { card in
+                card.syncDeletedAtMs == nil
+                    && card.state != "new"
+                    && card.dueAtMs != nil
+                    && (card.dueAtMs ?? now) <= now
+            },
+        )
+        let count = (try? context.fetchCount(descriptor)) ?? 0
+        DueCountPublisher.publish(count)
     }
 }
