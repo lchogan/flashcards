@@ -26,6 +26,7 @@
 		6BC96A54318A7EC43FB27FC3 /* MWDestructiveButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2F6309A56C16DB54F4E208 /* MWDestructiveButtonStyle.swift */; };
 		6D7E3BF8947D24D9C2C8A064 /* MWDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088B7E1F4FEA8DB8F1829EC2 /* MWDivider.swift */; };
 		7046D80BB7E05D4488B8E620 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40590CEF9514F130D9EB7101 /* Assets.xcassets */; };
+		72C41A07DC840AA76BAB53AA /* TokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC46401E4827495FB1C0CED9 /* TokenStore.swift */; };
 		7469D2561DCEC06499A1C483 /* MWSecondaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A16BDB6D28578249699970F /* MWSecondaryButtonStyle.swift */; };
 		8B1C8DA5B9FFA67E666742C9 /* MWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C21C770B2B3AF3347CF2284 /* MWButton.swift */; };
 		908C1BA6C8BEFF7595F4E477 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40CC12E5F4D662B8D653E9 /* AppStateTests.swift */; };
@@ -103,6 +104,7 @@
 		BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScreen.swift; sourceTree = "<group>"; };
 		C0779B8D6E61E0FA843454D6 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
 		CB15FDE0C8DC4DAAAD34C765 /* ControlTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlTokenTests.swift; sourceTree = "<group>"; };
+		CC46401E4827495FB1C0CED9 /* TokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStore.swift; sourceTree = "<group>"; };
 		CD59D377B2406AE1BC80E481 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		CE40CC12E5F4D662B8D653E9 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
 		CF7468B7B18BF5DB2D3E671D /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 			children = (
 				F5F58FEB583413C13FFB468F /* App */,
 				379B282C25770B71CD958878 /* DesignSystem */,
+				E6CC567D895B707D164840A7 /* Features */,
 				AC22C941271FA71AE6097241 /* Networking */,
 				40590CEF9514F130D9EB7101 /* Assets.xcassets */,
 				898ED96388E1C5A38EB3EC56 /* FlashcardsApp.swift */,
@@ -267,6 +270,14 @@
 				BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */,
 			);
 			path = Layout;
+			sourceTree = "<group>";
+		};
+		A7C7D1A8F0526AE0ACC967A6 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				CC46401E4827495FB1C0CED9 /* TokenStore.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		AC22C941271FA71AE6097241 /* Networking */ = {
@@ -295,6 +306,14 @@
 				3E40CD64F095A8BA4D1644DE /* FlashcardsUITests.swift */,
 			);
 			path = FlashcardsUITests;
+			sourceTree = "<group>";
+		};
+		E6CC567D895B707D164840A7 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				A7C7D1A8F0526AE0ACC967A6 /* Auth */,
+			);
+			path = Features;
 			sourceTree = "<group>";
 		};
 		E9A8002D09B6C062BBAB94E8 /* Atoms */ = {
@@ -534,6 +553,7 @@
 				DF68FC3FC3330E8A257D5B34 /* RootView.swift in Sources */,
 				17EF0C4A3171AF043E4BAC80 /* Shadows.swift in Sources */,
 				37DE4CDC872A96BF66F19D8F /* Spacing.swift in Sources */,
+				72C41A07DC840AA76BAB53AA /* TokenStore.swift in Sources */,
 				D6716D000299EB9DA4283B57 /* Typography.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
