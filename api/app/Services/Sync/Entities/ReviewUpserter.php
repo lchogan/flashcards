@@ -28,6 +28,13 @@ declare(strict_types=1);
  *   - UUID preservation: id is not in $fillable, so we set $review->id explicitly
  *     before save() to prevent HasUuids from regenerating the client-supplied UUID.
  *   - Stateless: no constructor dependencies; safe to resolve per-request via app().
+ *
+ * Does NOT extend AbstractLwwUpserter:
+ *   AbstractLwwUpserter implements LWW (last-write-wins) update semantics with
+ *   a stale-check and an update path. Reviews are append-only — there is no update
+ *   path, no stale check, and duplicate detection uses "exists?" rather than
+ *   timestamp comparison. Inheriting the base class would require overriding the
+ *   entire upsert() method, defeating the purpose of the base class entirely.
  */
 
 namespace App\Services\Sync\Entities;

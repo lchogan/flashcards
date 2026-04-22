@@ -13,17 +13,16 @@ declare(strict_types=1);
  * Dependencies:
  *   - App\Models\SubTopic (Eloquent model, HasUuids)
  *   - App\Models\User (ownership scoping via decks() relation)
- *   - App\Services\Sync\RecordReader (interface contract)
+ *   - App\Services\Sync\AbstractCursorReader (base class; handles pagination,
+ *     cursor computation, and the [rows, hasMore, maxUpdatedMs] tuple)
  *
  * Key concepts:
  *   - Ownership: SubTopic has no direct user_id column. Ownership is enforced
  *     by constraining deck_id to the set of deck IDs owned by the user, resolved
  *     via a subquery on $user->decks()->select('id'). This is why the User model
  *     must expose a decks() HasMany relation.
- *   - Pagination: queries pageSize + 1 rows; if the result exceeds pageSize,
- *     hasMore=true is returned and the extra row is discarded before mapping.
- *   - nextSince: the maximum updated_at_ms in the returned page is passed back
- *     to the client as the cursor for the next pull request.
+ *   - Pagination: one-extra-row trick; see AbstractCursorReader.
+ *   - nextSince: max updated_at_ms in page → client's next `since`.
  *   - Ordered by updated_at_ms ASC so cursored pagination is stable.
  */
 
@@ -31,59 +30,60 @@ namespace App\Services\Sync\Entities;
 
 use App\Models\SubTopic;
 use App\Models\User;
-use App\Services\Sync\RecordReader;
+use App\Services\Sync\AbstractCursorReader;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Reads SubTopic records accessible to the authenticated user updated after a given timestamp.
  *
- * Implements the RecordReader contract for the "sub_topics" entity key.
- * Ownership is enforced via a subquery on the user's owned deck IDs.
+ * Implements the RecordReader contract for the "sub_topics" entity key via
+ * AbstractCursorReader. Ownership is enforced via a whereIn subquery on the
+ * user's owned deck IDs.
  */
-final class SubTopicReader implements RecordReader
+final class SubTopicReader extends AbstractCursorReader
 {
     /**
-     * Fetch SubTopic rows for the user changed after $since, up to $pageSize rows.
-     *
-     * Pagination contract: queries $pageSize + 1 rows. If the result set exceeds
-     * $pageSize, the extra row signals that more data exists (hasMore=true) and is
-     * discarded before serialisation. The returned maxUpdatedMs is the highest
-     * updated_at_ms in the page — the client sends this back as `since` on the
-     * next pull to advance the cursor.
-     *
-     * Ownership is enforced by restricting deck_id to the subquery
-     * $user->decks()->select('id'), which returns only decks owned by the user.
-     *
-     * @param  User  $user  Owner of the records; results are scoped to this user's decks.
-     * @param  int  $since  Millisecond timestamp lower-bound (exclusive); only rows updated after this are returned.
-     * @param  int  $pageSize  Maximum number of rows to include in the returned page.
-     * @return array{0: list<array<string, mixed>>, 1: bool, 2: int}
-     *                                                               [rows, hasMore, maxUpdatedMs]
+     * @return class-string<Model>
      */
-    public function read(User $user, int $since, int $pageSize): array
+    protected function modelClass(): string
     {
-        $rows = SubTopic::query()
-            ->whereIn('deck_id', $user->decks()->select('id'))
-            ->where('updated_at_ms', '>', $since)
-            ->orderBy('updated_at_ms')
-            ->limit($pageSize + 1)
-            ->get();
+        return SubTopic::class;
+    }
 
-        $hasMore = $rows->count() > $pageSize;
-        $page = $rows->take($pageSize);
-        $max = (int) ($page->max('updated_at_ms') ?? $since);
+    /**
+     * Scope the query to sub-topics belonging to decks owned by the user.
+     *
+     * Uses a whereIn subquery on $user->decks()->select('id') so that ownership
+     * is enforced without a JOIN — the User model must expose a decks() HasMany.
+     *
+     * @param  Builder<Model>  $query  Base query for the SubTopic model.
+     * @param  User  $user  Authenticated user.
+     * @return Builder<Model> Scoped query.
+     */
+    protected function scopeForUser(Builder $query, User $user): Builder
+    {
+        return $query->whereIn('deck_id', $user->decks()->select('id'));
+    }
+
+    /**
+     * Project a SubTopic model into the wire-format row.
+     *
+     * @param  Model  $model  Hydrated SubTopic instance.
+     * @return array<string, mixed> Wire-format row.
+     */
+    protected function projectRow(Model $model): array
+    {
+        assert($model instanceof SubTopic);
 
         return [
-            $page->map(fn (SubTopic $st) => [
-                'id' => $st->id,
-                'deck_id' => $st->deck_id,
-                'name' => $st->name,
-                'position' => $st->position,
-                'color_hint' => $st->color_hint,
-                'updated_at_ms' => $st->updated_at_ms,
-                'deleted_at_ms' => $st->deleted_at_ms,
-            ])->values()->all(),
-            $hasMore,
-            $max,
+            'id' => $model->id,
+            'deck_id' => $model->deck_id,
+            'name' => $model->name,
+            'position' => $model->position,
+            'color_hint' => $model->color_hint,
+            'updated_at_ms' => $model->updated_at_ms,
+            'deleted_at_ms' => $model->deleted_at_ms,
         ];
     }
 }
