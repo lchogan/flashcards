@@ -21,6 +21,7 @@
 		187FE4F00E40C3BF4E1A4740 /* MWDuePill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8355F6FE220725A6DAD560B3 /* MWDuePill.swift */; };
 		190FCD89EB06257558CF3844 /* MWButtonPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76798B4897CAC276448E489B /* MWButtonPress.swift */; };
 		19BF3CEF62F523AA152B339F /* MWAccentKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3925292F9A0F8A65D5ADA9 /* MWAccentKey.swift */; };
+		1A8CBACAA7D7C3CE6949ACBA /* SubTopicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC62BE8984796A6300F1A3A4 /* SubTopicRepository.swift */; };
 		1B722014A736E1A696F9CE42 /* AnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DED8C932C8C55A94E71D0C0 /* AnalyticsClient.swift */; };
 		1B7A8C176DF9E0139D736634 /* ControlTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15FDE0C8DC4DAAAD34C765 /* ControlTokenTests.swift */; };
 		1D3B8506D046FAD46CE79849 /* FlashcardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898ED96388E1C5A38EB3EC56 /* FlashcardsApp.swift */; };
@@ -36,6 +37,7 @@
 		2FBB276265F68FA8374898A6 /* AppleSignInService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A12C1B6BE8A6235B115D87 /* AppleSignInService.swift */; };
 		319BDA71D9F0A272D6841EDA /* MWScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */; };
 		343AAB64A5721C045E9EE719 /* MWDot.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB0E68B8D3541EC7636DEFC /* MWDot.swift */; };
+		3599F70D0B0838652ECA3538 /* CardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C087021FFDD8C1E5DDAA809 /* CardRepository.swift */; };
 		360921A20F0D645429BE2DC9 /* MWDeckCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5306AD88927E73E1EE08534B /* MWDeckCard.swift */; };
 		362318A2FBB835F4F325DCA4 /* MWEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D03B0AD8048DEC4380CC6F /* MWEmptyState.swift */; };
 		37DE4CDC872A96BF66F19D8F /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFBCFA88524780D98CE086 /* Spacing.swift */; };
@@ -53,6 +55,7 @@
 		50D528B50CDEA0E4A89FA353 /* MWTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA292D13A4FD4DFA9AAE6053 /* MWTextField.swift */; };
 		5151286603222647B1AACCB5 /* Intro1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026338AE29FD796E495EB78B /* Intro1View.swift */; };
 		52D5439183B9053C7E7404EB /* CardEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033AC2926EB4D961C4C424DC /* CardEntity.swift */; };
+		586FEAF9A3BAF8A87F8DB4E2 /* DeckRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB62B6A6F41C3A1E236E3C10 /* DeckRepository.swift */; };
 		58DB376C943A13A4DEB0F39C /* SyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A675AF8DB65EE2904C44D0B /* SyncScheduler.swift */; };
 		59F5DF420EF34A63C92C3CA5 /* MWFormRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC1DA0E68DA712D4F980330 /* MWFormRow.swift */; };
 		5D67882376226C37CCEDBDED /* MagicLinkConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2EEF58ABB8E128D7C31244 /* MagicLinkConsumer.swift */; };
@@ -101,6 +104,7 @@
 		E4E6973A11C056D294601697 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8601E71EC6CC580329D9D3A /* Colors.swift */; };
 		E7648228F66E1B871F8CACDE /* ColorsTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75AEF6EC4869BDEED745175 /* ColorsTokenTests.swift */; };
 		EAF6EBF27A4ABC187CA6F186 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 9A85F47B4666B3448616D1FF /* KeychainAccess */; };
+		EF428B202F59CAA1E3BC23CA /* TopicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD562A9D83B019069E4132A /* TopicRepository.swift */; };
 		F03144EE96CEA0A0C37E3256 /* MWEyebrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2046EA17B9CF3B81354EBB /* MWEyebrow.swift */; };
 		F1642B745813ABE669A91B85 /* MWCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5666B85823F4898EAB769C5A /* MWCard.swift */; };
 		F169AD878724E333007A4999 /* MWScreenChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = B164C49CB882DD2A86A4F46E /* MWScreenChrome.swift */; };
@@ -177,6 +181,7 @@
 		829365D41AABE8389B3A7FDC /* MWRatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWRatingButton.swift; sourceTree = "<group>"; };
 		8355F6FE220725A6DAD560B3 /* MWDuePill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDuePill.swift; sourceTree = "<group>"; };
 		898ED96388E1C5A38EB3EC56 /* FlashcardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsApp.swift; sourceTree = "<group>"; };
+		8C087021FFDD8C1E5DDAA809 /* CardRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRepository.swift; sourceTree = "<group>"; };
 		8FDD1D115541E030F53F11A8 /* UserEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
 		8FE7C8DABC4C17BDAD170ED4 /* MWProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWProgressBar.swift; sourceTree = "<group>"; };
 		9B3925292F9A0F8A65D5ADA9 /* MWAccentKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAccentKey.swift; sourceTree = "<group>"; };
@@ -201,8 +206,10 @@
 		CB15FDE0C8DC4DAAAD34C765 /* ControlTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlTokenTests.swift; sourceTree = "<group>"; };
 		CBC69613C1B6A205B4F07A10 /* Intro2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intro2View.swift; sourceTree = "<group>"; };
 		CC46401E4827495FB1C0CED9 /* TokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStore.swift; sourceTree = "<group>"; };
+		CC62BE8984796A6300F1A3A4 /* SubTopicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTopicRepository.swift; sourceTree = "<group>"; };
 		CCF8F77B9F27EABE94CD5BDA /* SessionEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEntity.swift; sourceTree = "<group>"; };
 		CD59D377B2406AE1BC80E481 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		CDD562A9D83B019069E4132A /* TopicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicRepository.swift; sourceTree = "<group>"; };
 		CE40CC12E5F4D662B8D653E9 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
 		CF7468B7B18BF5DB2D3E671D /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		CFB0E68B8D3541EC7636DEFC /* MWDot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDot.swift; sourceTree = "<group>"; };
@@ -219,6 +226,7 @@
 		E7D51F2962DF1E93EA9668E4 /* SignUpWallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpWallView.swift; sourceTree = "<group>"; };
 		E8601E71EC6CC580329D9D3A /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		EB119C7EA6CDB08651643EC5 /* MagicLinkSentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkSentView.swift; sourceTree = "<group>"; };
+		EB62B6A6F41C3A1E236E3C10 /* DeckRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckRepository.swift; sourceTree = "<group>"; };
 		ED2F2E000D8E52F893AB59AF /* Flashcards.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flashcards.entitlements; sourceTree = "<group>"; };
 		ED9D3C2D7338126C6D12C080 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		EF1D480537F787B33D90D3D7 /* Shadows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadows.swift; sourceTree = "<group>"; };
@@ -339,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				9287D0C7A9059A9FC7C4845B /* Models */,
+				3F11535558D1D93FC12CD5DB /* Repositories */,
 				4304CCAD52294A3AD9BD92B7 /* Sync */,
 			);
 			path = Data;
@@ -355,6 +364,17 @@
 				4792559B161866F590E6EFEA /* Tokens */,
 			);
 			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		3F11535558D1D93FC12CD5DB /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				8C087021FFDD8C1E5DDAA809 /* CardRepository.swift */,
+				EB62B6A6F41C3A1E236E3C10 /* DeckRepository.swift */,
+				CC62BE8984796A6300F1A3A4 /* SubTopicRepository.swift */,
+				CDD562A9D83B019069E4132A /* TopicRepository.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 		4304CCAD52294A3AD9BD92B7 /* Sync */ = {
@@ -809,11 +829,13 @@
 				E086CE937F972443F1E2A40D /* AuthManager.swift in Sources */,
 				F25E11BD413D3218216BB972 /* Borders.swift in Sources */,
 				52D5439183B9053C7E7404EB /* CardEntity.swift in Sources */,
+				3599F70D0B0838652ECA3538 /* CardRepository.swift in Sources */,
 				38D5739924BAD001DFD8E6ED /* CardSubTopicEntity.swift in Sources */,
 				08CDD3732EDAFE1C60B0B926 /* Clock.swift in Sources */,
 				E4E6973A11C056D294601697 /* Colors.swift in Sources */,
 				0517803C799830F5D2612199 /* Control.swift in Sources */,
 				92748C6CB52C39BBAE52F0A3 /* DeckEntity.swift in Sources */,
+				586FEAF9A3BAF8A87F8DB4E2 /* DeckRepository.swift in Sources */,
 				1D3B8506D046FAD46CE79849 /* FlashcardsApp.swift in Sources */,
 				739E324D69B53136DBA2C4D8 /* FsrsScheduler.swift in Sources */,
 				F7390A7F8147B1AB44D835A5 /* Icons.swift in Sources */,
@@ -867,6 +889,7 @@
 				37DE4CDC872A96BF66F19D8F /* Spacing.swift in Sources */,
 				4F3739FD8C07B8D27B0A7FF6 /* SplashView.swift in Sources */,
 				4AE24E4F978227D3FEAF428B /* SubTopicEntity.swift in Sources */,
+				1A8CBACAA7D7C3CE6949ACBA /* SubTopicRepository.swift in Sources */,
 				0E2A175C95F7ECC8C1D4F750 /* SyncManager.swift in Sources */,
 				1DA511CE98F369F45C800BD8 /* SyncPuller.swift in Sources */,
 				F39183B68ECCDEBD3578668B /* SyncPusher.swift in Sources */,
@@ -874,6 +897,7 @@
 				9068880F7AD7040BBD0B3E25 /* SyncableRecord.swift in Sources */,
 				72C41A07DC840AA76BAB53AA /* TokenStore.swift in Sources */,
 				C075985FF8E7C236A6FD49BD /* TopicEntity.swift in Sources */,
+				EF428B202F59CAA1E3BC23CA /* TopicRepository.swift in Sources */,
 				D6716D000299EB9DA4283B57 /* Typography.swift in Sources */,
 				243778810AF92E413F4A7823 /* UUIDv7.swift in Sources */,
 				4C32138A2EAD9217C9B1C039 /* UserEntity.swift in Sources */,
