@@ -35,6 +35,8 @@ public struct MWScreen<Content: View>: View {
         self.content = content
     }
 
+    /// Renders the canvas background, the optional grid overlay, and the
+    /// supplied `content()` stacked in a `ZStack`.
     public var body: some View {
         ZStack {
             MWColor.canvas.ignoresSafeArea()
