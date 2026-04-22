@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Services\Auth\AppleIdentityVerifier;
+use App\Services\Sync\SyncPullService;
 use App\Services\Sync\SyncPushService;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(SyncPushService::class);
+
+        $this->app->singleton(SyncPullService::class);
     }
 
     /**
