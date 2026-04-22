@@ -15,6 +15,7 @@ import SwiftUI
 
 /// Tappable rating button with label + next-interval caption.
 public struct MWRatingButton: View {
+    /// Size.
     public enum Size { case regular, compact }
 
     let rating: MWRating
@@ -39,6 +40,7 @@ public struct MWRatingButton: View {
         self.action = action
     }
 
+    /// View body.
     public var body: some View {
         Button(action: action) {
             VStack(spacing: MWSpacing.xs) {

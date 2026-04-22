@@ -15,8 +15,10 @@ import SwiftData
 public final class DeckRepository {
     private let context: ModelContext
 
+    /// Creates a new instance.
     public init(context: ModelContext) { self.context = context }
 
+    /// create(title:accentColor:userId:defaultStudyMode:topicId:description:.
     public func create(
         title: String,
         accentColor: MWAccent,
@@ -46,6 +48,7 @@ public final class DeckRepository {
         return deck
     }
 
+    /// update(_:apply:.
     public func update(_ deck: DeckEntity, apply: (DeckEntity) -> Void) throws {
         apply(deck)
         deck.syncUpdatedAtMs = Clock.nowMs()
@@ -57,6 +60,7 @@ public final class DeckRepository {
         )
     }
 
+    /// softDelete(_:.
     public func softDelete(_ deck: DeckEntity) throws {
         let now = Clock.nowMs()
         deck.syncDeletedAtMs = now
@@ -69,11 +73,13 @@ public final class DeckRepository {
         )
     }
 
+    /// liveDecksForUser(_:.
     public func liveDecksForUser(_ userId: String) throws -> [DeckEntity] {
-        try context.fetch(FetchDescriptor<DeckEntity>(
-            predicate: #Predicate { $0.userId == userId && $0.syncDeletedAtMs == nil },
-            sortBy: [SortDescriptor(\.lastStudiedAtMs, order: .reverse)]
-        ))
+        try context.fetch(
+            FetchDescriptor<DeckEntity>(
+                predicate: #Predicate { $0.userId == userId && $0.syncDeletedAtMs == nil },
+                sortBy: [SortDescriptor(\.lastStudiedAtMs, order: .reverse)]
+            ))
     }
 
     /// Duplicates a deck, carrying cards and sub-topics but NOT FSRS state
@@ -87,16 +93,22 @@ public final class DeckRepository {
             topicId: source.topicId,
             description: source.deckDescription
         )
+        try cloneCards(from: source.id, to: copy.id)
+        try cloneSubTopics(from: source.id, to: copy.id)
+        try context.save()
+        return copy
+    }
 
-        let sourceId = source.id
-        let cards = try context.fetch(FetchDescriptor<CardEntity>(
-            predicate: #Predicate { $0.deckId == sourceId && $0.syncDeletedAtMs == nil }
-        ))
+    private func cloneCards(from sourceId: String, to destId: String) throws {
+        let cards = try context.fetch(
+            FetchDescriptor<CardEntity>(
+                predicate: #Predicate { $0.deckId == sourceId && $0.syncDeletedAtMs == nil }
+            ))
         let queue = MutationQueue(context: context)
         for card in cards {
             let newCard = CardEntity(
                 id: UUIDv7.next(),
-                deckId: copy.id,
+                deckId: destId,
                 frontText: card.frontText,
                 backText: card.backText,
                 syncUpdatedAtMs: Clock.nowMs()
@@ -109,13 +121,18 @@ public final class DeckRepository {
                 payload: newCard.syncPayload()
             )
         }
-        let subs = try context.fetch(FetchDescriptor<SubTopicEntity>(
-            predicate: #Predicate { $0.deckId == sourceId && $0.syncDeletedAtMs == nil }
-        ))
+    }
+
+    private func cloneSubTopics(from sourceId: String, to destId: String) throws {
+        let subs = try context.fetch(
+            FetchDescriptor<SubTopicEntity>(
+                predicate: #Predicate { $0.deckId == sourceId && $0.syncDeletedAtMs == nil }
+            ))
+        let queue = MutationQueue(context: context)
         for sub in subs {
             let newSub = SubTopicEntity(
                 id: UUIDv7.next(),
-                deckId: copy.id,
+                deckId: destId,
                 name: sub.name,
                 position: sub.position,
                 syncUpdatedAtMs: Clock.nowMs()
@@ -127,7 +144,5 @@ public final class DeckRepository {
                 payload: newSub.syncPayload()
             )
         }
-        try context.save()
-        return copy
     }
 }

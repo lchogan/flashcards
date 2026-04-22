@@ -13,11 +13,13 @@ import SwiftUI
 /// A single action inside an MWActionSheet. `role: .destructive` applies SwiftUI's
 /// red-tinted treatment.
 public struct MWActionSheetAction: Identifiable {
+    /// Stable identifier.
     public let id = UUID()
     let label: String
     let role: ButtonRole?
     let action: () -> Void
 
+    /// Creates a new instance.
     public init(_ label: String, role: ButtonRole? = nil, action: @escaping () -> Void) {
         self.label = label
         self.role = role

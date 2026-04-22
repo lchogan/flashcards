@@ -22,6 +22,7 @@ public final class SessionEngine {
     private let scheduler: FsrsScheduler
     private let sessionId: String
 
+    /// Creates a new instance.
     public init(context: ModelContext, userId: String, scheduler: FsrsScheduler, sessionId: String) {
         self.context = context
         self.userId = userId

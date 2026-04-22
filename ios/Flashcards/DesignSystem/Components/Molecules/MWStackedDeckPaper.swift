@@ -14,10 +14,12 @@ import SwiftUI
 public struct MWStackedDeckPaper<Content: View>: View {
     @ViewBuilder let content: () -> Content
 
+    /// Creates a new instance.
     public init(@ViewBuilder content: @escaping () -> Content) {
         self.content = content
     }
 
+    /// View body.
     public var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: MWRadius.m)

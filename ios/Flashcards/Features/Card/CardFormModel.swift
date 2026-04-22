@@ -9,13 +9,18 @@
 import Foundation
 import Observation
 
+/// CardFormModel.
 @MainActor
 @Observable
 public final class CardFormModel {
+    /// frontText.
     public var frontText: String
+    /// backText.
     public var backText: String
+    /// selectedSubTopicIds.
     public var selectedSubTopicIds: Set<String>
 
+    /// Creates a new instance.
     public init(
         frontText: String = "",
         backText: String = "",
@@ -26,11 +31,13 @@ public final class CardFormModel {
         self.selectedSubTopicIds = selectedSubTopicIds
     }
 
+    /// isValid.
     public var isValid: Bool {
-        !frontText.trimmingCharacters(in: .whitespaces).isEmpty &&
-        !backText.trimmingCharacters(in: .whitespaces).isEmpty
+        !frontText.trimmingCharacters(in: .whitespaces).isEmpty
+            && !backText.trimmingCharacters(in: .whitespaces).isEmpty
     }
 
+    /// hasChanges.
     public var hasChanges: Bool {
         !frontText.isEmpty || !backText.isEmpty || !selectedSubTopicIds.isEmpty
     }

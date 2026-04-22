@@ -18,6 +18,7 @@ public struct MWTopBar<Leading: View, Trailing: View>: View {
     let leading: () -> Leading
     let trailing: () -> Trailing
 
+    /// Creates a new instance.
     public init(
         title: String? = nil,
         @ViewBuilder leading: @escaping () -> Leading = { EmptyView() },
@@ -28,6 +29,7 @@ public struct MWTopBar<Leading: View, Trailing: View>: View {
         self.trailing = trailing
     }
 
+    /// View body.
     public var body: some View {
         HStack {
             leading()

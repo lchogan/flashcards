@@ -7,6 +7,7 @@ import Foundation
 public enum MWRating: Int, Codable, CaseIterable, Sendable {
     case again = 1, hard = 2, good = 3, easy = 4
 
+    /// label.
     public var label: String {
         switch self {
         case .again: "Again"

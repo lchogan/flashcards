@@ -14,8 +14,10 @@ import SwiftUI
 public struct MWDuePill: View {
     let dueCount: Int
 
+    /// Creates a new instance.
     public init(count: Int) { self.dueCount = count }
 
+    /// View body.
     public var body: some View {
         HStack(spacing: MWSpacing.xs) {
             MWDot(color: dueCount >= 1 ? MWColor.good : MWColor.inkFaint)

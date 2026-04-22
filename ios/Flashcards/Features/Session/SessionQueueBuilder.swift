@@ -12,6 +12,7 @@ import SwiftData
 public final class SessionQueueBuilder {
     private let context: ModelContext
 
+    /// Creates a new instance.
     public init(context: ModelContext) {
         self.context = context
     }
@@ -34,13 +35,10 @@ public final class SessionQueueBuilder {
     }
 
     private func fetchDue(deckId: String, now: Int64) throws -> [CardEntity] {
-        let sentinel: Int64 = 9_223_372_036_854_775_807 // Int64.max as a literal for #Predicate compatibility
+        let sentinel: Int64 = 9_223_372_036_854_775_807  // Int64.max as a literal for #Predicate compatibility
         var descriptor = FetchDescriptor<CardEntity>(
             predicate: #Predicate {
-                $0.deckId == deckId &&
-                $0.syncDeletedAtMs == nil &&
-                $0.state != "new" &&
-                ($0.dueAtMs ?? sentinel) <= now
+                $0.deckId == deckId && $0.syncDeletedAtMs == nil && $0.state != "new" && ($0.dueAtMs ?? sentinel) <= now
             },
             sortBy: [SortDescriptor(\.dueAtMs)]
         )
@@ -51,9 +49,7 @@ public final class SessionQueueBuilder {
     private func fetchNew(deckId: String, limit: Int) throws -> [CardEntity] {
         var descriptor = FetchDescriptor<CardEntity>(
             predicate: #Predicate {
-                $0.deckId == deckId &&
-                $0.syncDeletedAtMs == nil &&
-                $0.state == "new"
+                $0.deckId == deckId && $0.syncDeletedAtMs == nil && $0.state == "new"
             },
             sortBy: [SortDescriptor(\.position)]
         )

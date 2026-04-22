@@ -24,11 +24,13 @@ public struct MWIcon: View {
     let name: MWIconName
     let size: CGFloat
 
+    /// Creates a new instance.
     public init(_ name: MWIconName, size: CGFloat = 20) {
         self.name = name
         self.size = size
     }
 
+    /// View body.
     public var body: some View {
         switch name {
         case .home: HomeIcon().frame(width: size, height: size)

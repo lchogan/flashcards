@@ -16,6 +16,7 @@ public struct MWBottomSheetModifier<SheetContent: View>: ViewModifier {
     let detents: Set<PresentationDetent>
     @ViewBuilder let sheetContent: () -> SheetContent
 
+    /// body(content:.
     public func body(content: Content) -> some View {
         content.sheet(isPresented: $isPresented) {
             sheetContent()

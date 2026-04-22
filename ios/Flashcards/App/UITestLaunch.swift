@@ -10,6 +10,7 @@
 
 import Foundation
 
+/// UITestLaunch.
 public enum UITestLaunch {
     /// True when the test harness requested a clean start with a stubbed
     /// auth identity. Release builds always return false.

@@ -50,15 +50,20 @@ struct SessionRootView: View {
 
     private func start() async throws {
         let targetId = deckId
-        guard let loaded = try context.fetch(FetchDescriptor<DeckEntity>(
-            predicate: #Predicate { $0.id == targetId }
-        )).first else {
+        guard
+            let loaded = try context.fetch(
+                FetchDescriptor<DeckEntity>(
+                    predicate: #Predicate { $0.id == targetId }
+                )
+            ).first
+        else {
             return
         }
         deck = loaded
         let mode = SessionMode(rawValue: loaded.defaultStudyMode) ?? .smart
         let builder = SessionQueueBuilder(context: context)
-        queue = try mode == .smart
+        queue =
+            try mode == .smart
             ? builder.smartQueue(deckId: loaded.id, now: Clock.nowMs(), dailyNewCardLimit: 10)
             : builder.basicQueue(deckId: loaded.id)
 
@@ -89,9 +94,11 @@ struct SessionRootView: View {
         session.endedAtMs = Clock.nowMs()
         session.cardsReviewed = index
         let targetSessionId = session.id
-        let reviews = (try? context.fetch(FetchDescriptor<ReviewEntity>(
-            predicate: #Predicate { $0.sessionId == targetSessionId }
-        ))) ?? []
+        let reviews =
+            (try? context.fetch(
+                FetchDescriptor<ReviewEntity>(
+                    predicate: #Predicate { $0.sessionId == targetSessionId }
+                ))) ?? []
         if !reviews.isEmpty {
             let positive = reviews.filter { $0.rating >= 3 }.count
             session.accuracyPct = Double(positive) / Double(reviews.count) * 100.0

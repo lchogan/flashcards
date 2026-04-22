@@ -19,6 +19,7 @@ public struct MWDeckCard: View {
     let dueCount: Int
     let accent: MWAccent
 
+    /// Creates a new instance.
     public init(title: String, subTopicCount: Int, cardCount: Int, dueCount: Int, accent: MWAccent) {
         self.title = title
         self.subTopicCount = subTopicCount
@@ -27,6 +28,7 @@ public struct MWDeckCard: View {
         self.accent = accent
     }
 
+    /// View body.
     public var body: some View {
         MWStackedDeckPaper {
             VStack(alignment: .leading, spacing: MWSpacing.m) {

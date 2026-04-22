@@ -37,8 +37,8 @@ struct DeckDetailView: View {
                     .mwPadding(.horizontal, .l)
 
                     switch tab {
-                    case .cards:    CardsTabView(viewModel: viewModel)
-                    case .history:  HistoryTabView(viewModel: viewModel)
+                    case .cards: CardsTabView(viewModel: viewModel)
+                    case .history: HistoryTabView(viewModel: viewModel)
                     }
 
                     HStack {
@@ -58,16 +58,20 @@ struct DeckDetailView: View {
         }
         .mwScreenChrome()
         .fullScreenCover(isPresented: $showingStudy) {
-            SessionRootView(deckId: deckId, onDismiss: {
-                showingStudy = false
-                try? viewModel?.load()
-            })
+            SessionRootView(
+                deckId: deckId,
+                onDismiss: {
+                    showingStudy = false
+                    try? viewModel?.load()
+                })
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     showingCreateCard = true
-                } label: { MWIcon(.add) }
+                } label: {
+                    MWIcon(.add)
+                }
             }
         }
         .sheet(isPresented: $showingCreateCard) {

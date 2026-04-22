@@ -17,12 +17,14 @@ public struct MWChip: View {
     let selected: Bool
     let onTap: () -> Void
 
+    /// Creates a new instance.
     public init(text: String, selected: Bool = false, onTap: @escaping () -> Void) {
         self.text = text
         self.selected = selected
         self.onTap = onTap
     }
 
+    /// View body.
     public var body: some View {
         Button(action: onTap) {
             Text(text)

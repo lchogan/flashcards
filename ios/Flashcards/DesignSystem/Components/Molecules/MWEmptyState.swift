@@ -17,6 +17,7 @@ public struct MWEmptyState: View {
     let ctaTitle: String?
     let onCtaTap: (() -> Void)?
 
+    /// Creates a new instance.
     public init(
         eyebrow: String? = nil,
         title: String,
@@ -31,6 +32,7 @@ public struct MWEmptyState: View {
         self.onCtaTap = onCtaTap
     }
 
+    /// View body.
     public var body: some View {
         VStack(spacing: MWSpacing.l) {
             if let eyebrow { MWEyebrow(eyebrow) }

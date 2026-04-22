@@ -14,8 +14,10 @@ import SwiftData
 public final class CardRepository {
     private let context: ModelContext
 
+    /// Creates a new instance.
     public init(context: ModelContext) { self.context = context }
 
+    /// create(deckId:frontText:backText:subTopicIds:.
     public func create(
         deckId: String,
         frontText: String,
@@ -59,6 +61,7 @@ public final class CardRepository {
         return card
     }
 
+    /// update(_:apply:.
     public func update(_ card: CardEntity, apply: (CardEntity) -> Void) throws {
         apply(card)
         card.syncUpdatedAtMs = Clock.nowMs()
@@ -70,6 +73,7 @@ public final class CardRepository {
         )
     }
 
+    /// softDelete(_:.
     public func softDelete(_ card: CardEntity) throws {
         let now = Clock.nowMs()
         card.syncDeletedAtMs = now
@@ -82,13 +86,16 @@ public final class CardRepository {
         )
     }
 
+    /// liveCards(deckId:.
     public func liveCards(deckId: String) throws -> [CardEntity] {
-        try context.fetch(FetchDescriptor<CardEntity>(
-            predicate: #Predicate { $0.deckId == deckId && $0.syncDeletedAtMs == nil },
-            sortBy: [SortDescriptor(\.position)]
-        ))
+        try context.fetch(
+            FetchDescriptor<CardEntity>(
+                predicate: #Predicate { $0.deckId == deckId && $0.syncDeletedAtMs == nil },
+                sortBy: [SortDescriptor(\.position)]
+            ))
     }
 
+    /// resetProgress(_:.
     public func resetProgress(_ card: CardEntity) throws {
         try update(card) { instance in
             instance.stability = nil
@@ -102,9 +109,10 @@ public final class CardRepository {
     }
 
     private func maxPosition(deckId: String) throws -> Int {
-        let all = try context.fetch(FetchDescriptor<CardEntity>(
-            predicate: #Predicate { $0.deckId == deckId }
-        ))
+        let all = try context.fetch(
+            FetchDescriptor<CardEntity>(
+                predicate: #Predicate { $0.deckId == deckId }
+            ))
         return all.map(\.position).max() ?? -1
     }
 }

@@ -17,6 +17,7 @@ public struct MWCardTile: View {
     let subTopics: [String]
     let dueLabel: String?
 
+    /// Creates a new instance.
     public init(
         frontText: String,
         backTextPreview: String? = nil,
@@ -29,6 +30,7 @@ public struct MWCardTile: View {
         self.dueLabel = dueLabel
     }
 
+    /// View body.
     public var body: some View {
         VStack(alignment: .leading, spacing: MWSpacing.s) {
             Text(frontText)

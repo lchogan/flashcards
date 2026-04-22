@@ -19,6 +19,7 @@ public struct MWFormRow<Accessory: View>: View {
     @ViewBuilder let accessory: () -> Accessory
     let onTap: (() -> Void)?
 
+    /// Creates a new instance.
     public init(
         title: String,
         value: String? = nil,
@@ -31,6 +32,7 @@ public struct MWFormRow<Accessory: View>: View {
         self.onTap = onTap
     }
 
+    /// View body.
     public var body: some View {
         Button {
             onTap?()

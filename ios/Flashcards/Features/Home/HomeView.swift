@@ -29,12 +29,16 @@ struct HomeView: View {
                     leading: {
                         Button {
                             showingSearch = true
-                        } label: { MWIcon(.search) }
+                        } label: {
+                            MWIcon(.search)
+                        }
                     },
                     trailing: {
                         Button {
                             showingCreate = true
-                        } label: { MWIcon(.add) }
+                        } label: {
+                            MWIcon(.add)
+                        }
                         .accessibilityIdentifier("mw.home.create")
                     }
                 )

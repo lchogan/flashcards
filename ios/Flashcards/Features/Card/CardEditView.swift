@@ -19,10 +19,11 @@ struct CardEditView: View {
 
     init(card: CardEntity) {
         self.card = card
-        _form = State(initialValue: CardFormModel(
-            frontText: card.frontText,
-            backText: card.backText
-        ))
+        _form = State(
+            initialValue: CardFormModel(
+                frontText: card.frontText,
+                backText: card.backText
+            ))
     }
 
     var body: some View {

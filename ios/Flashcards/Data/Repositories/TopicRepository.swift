@@ -12,8 +12,10 @@ import SwiftData
 public final class TopicRepository {
     private let context: ModelContext
 
+    /// Creates a new instance.
     public init(context: ModelContext) { self.context = context }
 
+    /// create(userId:name:.
     public func create(userId: String, name: String) throws -> TopicEntity {
         let topic = TopicEntity(
             id: UUIDv7.next(),
@@ -31,10 +33,12 @@ public final class TopicRepository {
         return topic
     }
 
+    /// list(userId:.
     public func list(userId: String) throws -> [TopicEntity] {
-        try context.fetch(FetchDescriptor<TopicEntity>(
-            predicate: #Predicate { $0.userId == userId && $0.syncDeletedAtMs == nil },
-            sortBy: [SortDescriptor(\.name)]
-        ))
+        try context.fetch(
+            FetchDescriptor<TopicEntity>(
+                predicate: #Predicate { $0.userId == userId && $0.syncDeletedAtMs == nil },
+                sortBy: [SortDescriptor(\.name)]
+            ))
     }
 }

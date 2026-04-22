@@ -14,8 +14,10 @@ import SwiftData
 public final class SubTopicRepository {
     private let context: ModelContext
 
+    /// Creates a new instance.
     public init(context: ModelContext) { self.context = context }
 
+    /// create(deckId:name:.
     public func create(deckId: String, name: String) throws -> SubTopicEntity {
         let pos = try maxPosition(deckId: deckId) + 1
         let subTopic = SubTopicEntity(
@@ -35,13 +37,16 @@ public final class SubTopicRepository {
         return subTopic
     }
 
+    /// list(deckId:.
     public func list(deckId: String) throws -> [SubTopicEntity] {
-        try context.fetch(FetchDescriptor<SubTopicEntity>(
-            predicate: #Predicate { $0.deckId == deckId && $0.syncDeletedAtMs == nil },
-            sortBy: [SortDescriptor(\.position)]
-        ))
+        try context.fetch(
+            FetchDescriptor<SubTopicEntity>(
+                predicate: #Predicate { $0.deckId == deckId && $0.syncDeletedAtMs == nil },
+                sortBy: [SortDescriptor(\.position)]
+            ))
     }
 
+    /// reorder(_:.
     public func reorder(_ subTopics: [SubTopicEntity]) throws {
         let now = Clock.nowMs()
         let queue = MutationQueue(context: context)
@@ -57,6 +62,7 @@ public final class SubTopicRepository {
         try context.save()
     }
 
+    /// rename(_:to:.
     public func rename(_ subTopic: SubTopicEntity, to name: String) throws {
         subTopic.name = name
         subTopic.syncUpdatedAtMs = Clock.nowMs()
@@ -68,6 +74,7 @@ public final class SubTopicRepository {
         )
     }
 
+    /// softDelete(_:.
     public func softDelete(_ subTopic: SubTopicEntity) throws {
         let now = Clock.nowMs()
         subTopic.syncDeletedAtMs = now

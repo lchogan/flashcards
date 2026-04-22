@@ -15,10 +15,12 @@ import SwiftUI
 public struct MWProgressBar: View {
     let progress: Double
 
+    /// Creates a new instance.
     public init(progress: Double) {
         self.progress = max(0, min(1, progress))
     }
 
+    /// View body.
     public var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .leading) {

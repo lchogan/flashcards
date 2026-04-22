@@ -62,13 +62,17 @@ struct SearchView: View {
             return
         }
         let needle = rawQuery.lowercased()
-        deckResults = (try? context.fetch(FetchDescriptor<DeckEntity>(
-            predicate: #Predicate { $0.syncDeletedAtMs == nil }
-        )))?.filter { $0.title.lowercased().contains(needle) } ?? []
-        cardResults = (try? context.fetch(FetchDescriptor<CardEntity>(
-            predicate: #Predicate { $0.syncDeletedAtMs == nil }
-        )))?.filter {
-            $0.frontText.lowercased().contains(needle) || $0.backText.lowercased().contains(needle)
-        } ?? []
+        deckResults =
+            (try? context.fetch(
+                FetchDescriptor<DeckEntity>(
+                    predicate: #Predicate { $0.syncDeletedAtMs == nil }
+                )))?.filter { $0.title.lowercased().contains(needle) } ?? []
+        cardResults =
+            (try? context.fetch(
+                FetchDescriptor<CardEntity>(
+                    predicate: #Predicate { $0.syncDeletedAtMs == nil }
+                )))?.filter {
+                $0.frontText.lowercased().contains(needle) || $0.backText.lowercased().contains(needle)
+            } ?? []
     }
 }

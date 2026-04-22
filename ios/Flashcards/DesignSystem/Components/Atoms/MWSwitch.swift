@@ -13,8 +13,10 @@ import SwiftUI
 public struct MWSwitch: View {
     @Binding var isOn: Bool
 
+    /// Creates a new instance.
     public init(isOn: Binding<Bool>) { self._isOn = isOn }
 
+    /// View body.
     public var body: some View {
         Toggle("", isOn: $isOn)
             .labelsHidden()

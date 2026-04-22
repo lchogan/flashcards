@@ -7,19 +7,29 @@ import SwiftFSRS
 /// Callers should never import `SwiftFSRS` directly — this wrapper is the single seam
 /// where the underlying FSRS implementation can be swapped without touching callers.
 public final class FsrsScheduler {
+    /// State.
     public enum State: String, Codable, Sendable {
         case new, learning, review, relearning
     }
 
+    /// CardState.
     public struct CardState: Equatable, Sendable {
+        /// stability.
         public var stability: Double?
+        /// difficulty.
         public var difficulty: Double?
+        /// state.
         public var state: State
+        /// lastReviewedAtMs.
         public var lastReviewedAtMs: Int64?
+        /// dueAtMs.
         public var dueAtMs: Int64?
+        /// reps.
         public var reps: Int
+        /// lapses.
         public var lapses: Int
 
+        /// Creates a new instance.
         public init(
             stability: Double? = nil,
             difficulty: Double? = nil,

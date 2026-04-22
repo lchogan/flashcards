@@ -15,12 +15,14 @@ public struct MWTextArea: View {
     @Binding var text: String
     let minHeight: CGFloat
 
+    /// Creates a new instance.
     public init(label: String, text: Binding<String>, minHeight: CGFloat = 120) {
         self.label = label
         self._text = text
         self.minHeight = minHeight
     }
 
+    /// View body.
     public var body: some View {
         VStack(alignment: .leading, spacing: MWSpacing.xs) {
             MWEyebrow(label)
