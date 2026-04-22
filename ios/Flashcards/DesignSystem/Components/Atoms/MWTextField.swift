@@ -73,6 +73,8 @@ public struct MWTextField: View {
                 .background(MWColor.paper)
                 .mwCornerRadius(.s)
                 .mwStroke(cornerRadius: MWRadius.s)
+                .accessibilityLabel(label)
+                .accessibilityIdentifier(label)
         }
     }
 }

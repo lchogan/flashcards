@@ -35,6 +35,9 @@ packages:
   Sentry:
     url: https://github.com/getsentry/sentry-cocoa
     from: 8.40.0
+  SwiftFSRS:
+    url: https://github.com/4rays/swift-fsrs
+    exactVersion: 0.9.2
 
 targets:
   Flashcards:
@@ -79,6 +82,8 @@ targets:
         product: PostHog
       - package: Sentry
         product: Sentry
+      - package: SwiftFSRS
+        product: SwiftFSRS
     preBuildScripts:
       - name: SwiftLint
         script: |

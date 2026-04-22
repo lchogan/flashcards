@@ -7396,76 +7396,52 @@ git -C /Users/lukehogan/Code/flashcards push origin main phase-1
 
 **Goal:** On-device FSRS scheduling + Smart/Basic study sessions + deck/card CRUD UI + search. User can install, create decks/cards, study, and see progress — all offline.
 
-### Task 2.1: Add `fsrs-rs` via UniFFI Swift bindings
+### Task 2.1: Add `SwiftFSRS` (pure-Swift FSRS v5) via SPM
+
+**Library choice** — revised from original plan:
+
+- Original plan called for `openSpacedRepetition/fsrs-rs` via UniFFI. That is not viable: `fsrs-rs` has no `uniffi` dependency, no `.udl` file, and no `#[uniffi::export]` annotations — `cargo swift package` would not produce Swift bindings. Would require authoring (and maintaining forever) a wrapper Rust crate.
+- `openSpacedRepetition/swift-fsrs` v5.0.0 is unusable as-is: its `FSRS.repeat`/`next`/`forget` methods are declared without `public` modifiers, so every call site requires `@testable import`.
+- **`4rays/swift-fsrs` v0.9.2** (MIT, pure Swift, FSRS V5) has a fully public, `Sendable`-conforming API that matches our strict-concurrency settings. Algorithm is identical to the one in the OSR `swift-fsrs` port (both follow the FSRS V5 reference).
 
 **Files:**
-- Create: `ios/Packages/FsrsKit/` (local SPM package wrapping generated UniFFI bindings)
+- Modify: `ios/project.yml` — add package + dependency entries.
 
-- [ ] **Step 1: Generate bindings locally.** Clone `openSpacedRepetition/fsrs-rs` at the chosen version (pin `v1.3.0` or latest stable at implementation time):
+- [ ] **Step 1: Declare the package in `ios/project.yml`.** Add to the top-level `packages:` map:
+
+```yaml
+SwiftFSRS:
+  url: https://github.com/4rays/swift-fsrs
+  exactVersion: 0.9.2
+```
+
+And add to the `Flashcards` target's `dependencies:` list:
+
+```yaml
+- package: SwiftFSRS
+  product: SwiftFSRS
+```
+
+- [ ] **Step 2: Regenerate the Xcode project.**
 
 ```bash
-git clone https://github.com/open-spaced-repetition/fsrs-rs /tmp/fsrs-rs
-cd /tmp/fsrs-rs && git checkout v1.3.0
+cd /Users/lukehogan/Code/flashcards/ios && xcodegen generate
 ```
 
-Build for all iOS targets and combine into an `.xcframework`:
+- [ ] **Step 3: Build — verify the package resolves.**
 
 ```bash
-cd /tmp/fsrs-rs
-cargo install cargo-swift
-cargo swift package --platforms ios --name FsrsRust --release
+cd /Users/lukehogan/Code/flashcards/ios && xcodebuild -scheme Flashcards -destination 'platform=iOS Simulator,name=iPhone 15' -skipPackagePluginValidation build 2>&1 | tail -n 20
 ```
 
-Expected output: `FsrsRust.xcframework` and generated `FsrsRust.swift`.
+(If `iPhone 15` is not available in your simulator list, substitute an installed model — `xcrun simctl list devices available iOS`.)
 
-- [ ] **Step 2: Copy artifacts into `ios/Packages/FsrsKit/`:**
-
-```
-ios/Packages/FsrsKit/
-  Package.swift
-  Sources/FsrsKit/FsrsRust.swift
-  Frameworks/FsrsRust.xcframework/
-```
-
-`Package.swift`:
-
-```swift
-// swift-tools-version: 5.9
-import PackageDescription
-
-let package = Package(
-    name: "FsrsKit",
-    platforms: [.iOS(.v17)],
-    products: [.library(name: "FsrsKit", targets: ["FsrsKit"])],
-    targets: [
-        .target(
-            name: "FsrsKit",
-            dependencies: ["FsrsRust"],
-            path: "Sources/FsrsKit"
-        ),
-        .binaryTarget(
-            name: "FsrsRust",
-            path: "Frameworks/FsrsRust.xcframework"
-        ),
-    ]
-)
-```
-
-- [ ] **Step 3: Add local package to Flashcards project.** File → Add Package Dependencies → Add Local → `ios/Packages/FsrsKit`.
-
-- [ ] **Step 4: Build — verify bindings resolve.**
+- [ ] **Step 4: Commit on branch `phase/2-fsrs-study`.**
 
 ```bash
-cd /Users/lukehogan/Code/flashcards/ios && xcodebuild -scheme Flashcards -destination 'platform=iOS Simulator,name=iPhone 15' build | tail -n 10
-```
-
-- [ ] **Step 5: Commit** (the xcframework is binary; add it to git-lfs if >50MB).
-
-```bash
-git -C /Users/lukehogan/Code/flashcards checkout -b phase/2-fsrs-study
-git -C /Users/lukehogan/Code/flashcards lfs track "*.xcframework" 2>/dev/null || true
+git -C /Users/lukehogan/Code/flashcards checkout -b phase/2-fsrs-study   # first task of Phase 2 cuts the branch
 git -C /Users/lukehogan/Code/flashcards add ios
-git -C /Users/lukehogan/Code/flashcards commit -m "feat(fsrs): add FsrsKit local SPM package (UniFFI bindings to fsrs-rs) (2.1)"
+git -C /Users/lukehogan/Code/flashcards commit -m "feat(fsrs): add SwiftFSRS (4rays, FSRS V5) SPM dependency (2.1)"
 ```
 
 ---
@@ -7537,7 +7513,7 @@ final class FsrsSchedulerTests: XCTestCase {
 
 ```swift
 import Foundation
-import FsrsKit
+import SwiftFSRS
 
 public final class FsrsScheduler {
     public enum State: String, Codable { case new, learning, review, relearning }
@@ -7560,31 +7536,32 @@ public final class FsrsScheduler {
         }
     }
 
-    private let core: FsrsCore
+    private let algorithm: FSRSAlgorithm
+    private let scheduler: any Scheduler
 
-    public init(weights: [Double]? = nil) {
-        self.core = FsrsCore(parameters: weights)
+    /// `weights` = custom FSRS parameter vector (length 17 or 19). Passing `nil` uses SwiftFSRS's
+    /// default v5 weights.
+    public init(weights: [Double]? = nil, useLongTerm: Bool = false) {
+        if let w = weights {
+            var algo = FSRSAlgorithm.v5
+            algo.parameters = w.count == 19 ? w : (w.count == 17 ? w + [0.0, 0.0] : algo.parameters)
+            self.algorithm = algo
+        } else {
+            self.algorithm = FSRSAlgorithm.v5
+        }
+        self.scheduler = useLongTerm ? LongTermScheduler() : ShortTermScheduler()
     }
 
     public func applyReview(to card: CardState, rating: MWRating, at nowMs: Int64) -> CardState {
-        let req = ReviewRequest(
-            stability: card.stability,
-            difficulty: card.difficulty,
-            state: mapStateToCore(card.state),
-            elapsedDays: elapsedDays(from: card.lastReviewedAtMs ?? nowMs, to: nowMs),
-            rating: UInt32(rating.rawValue)
+        let now = Date(timeIntervalSince1970: Double(nowMs) / 1000.0)
+        let input = toLibraryCard(card, nowMs: nowMs)
+        let review = scheduler.schedule(
+            card: input,
+            algorithm: algorithm,
+            reviewRating: toLibraryRating(rating),
+            reviewTime: now
         )
-        let r = core.schedule(request: req)
-
-        return CardState(
-            stability: r.stability,
-            difficulty: r.difficulty,
-            state: mapStateFromCore(r.state),
-            lastReviewedAtMs: nowMs,
-            dueAtMs: nowMs + Int64(r.scheduledDays * 86_400_000),
-            reps: card.reps + 1,
-            lapses: card.lapses + (rating == .again ? 1 : 0)
-        )
+        return fromLibraryCard(review.postReviewCard, reps: card.reps, lapses: card.lapses, rating: rating)
     }
 
     public func intervalPreview(for card: CardState, at nowMs: Int64) -> [MWRating: Int64] {
@@ -7596,20 +7573,59 @@ public final class FsrsScheduler {
         return preview
     }
 
-    private func elapsedDays(from: Int64, to: Int64) -> Double {
-        max(0, Double(to - from) / 86_400_000.0)
+    // MARK: - Bridging helpers
+
+    private func toLibraryCard(_ c: CardState, nowMs: Int64) -> Card {
+        Card(
+            due: Date(timeIntervalSince1970: Double(c.dueAtMs ?? nowMs) / 1000.0),
+            stability: c.stability ?? 0,
+            difficulty: c.difficulty ?? 0,
+            elapsedDays: 0, // scheduler recomputes from lastReview
+            scheduledDays: 0,
+            reps: c.reps,
+            lapses: c.lapses,
+            status: toLibraryStatus(c.state),
+            lastReview: c.lastReviewedAtMs.map { Date(timeIntervalSince1970: Double($0) / 1000.0) }
+        )
     }
 
-    private func mapStateToCore(_ s: State) -> UInt32 {
-        switch s { case .new: 0; case .learning: 1; case .review: 2; case .relearning: 3 }
+    private func fromLibraryCard(_ c: Card, reps: Int, lapses: Int, rating: MWRating) -> CardState {
+        CardState(
+            stability: c.stability,
+            difficulty: c.difficulty,
+            state: fromLibraryStatus(c.status),
+            lastReviewedAtMs: c.lastReview.map { Int64($0.timeIntervalSince1970 * 1000) },
+            dueAtMs: Int64(c.due.timeIntervalSince1970 * 1000),
+            reps: c.reps,
+            lapses: c.lapses
+        )
     }
-    private func mapStateFromCore(_ s: UInt32) -> State {
-        switch s { case 1: .learning; case 2: .review; case 3: .relearning; default: .new }
+
+    private func toLibraryStatus(_ s: State) -> Status {
+        switch s {
+        case .new: .new
+        case .learning: .learning
+        case .review: .review
+        case .relearning: .relearning
+        }
+    }
+
+    private func fromLibraryStatus(_ s: Status) -> State {
+        switch s {
+        case .new: .new
+        case .learning: .learning
+        case .review: .review
+        case .relearning: .relearning
+        }
+    }
+
+    private func toLibraryRating(_ r: MWRating) -> Rating {
+        switch r { case .again: .again; case .hard: .hard; case .good: .good; case .easy: .easy }
     }
 }
 ```
 
-> Note: `FsrsCore`, `ReviewRequest`, etc. are the UniFFI-generated Swift types. If the binding surface differs, adjust the adapter here only — keep the `FsrsScheduler` API stable for callers.
+> Note: SwiftFSRS drives itself off `Card.lastReview` and `reviewTime` — it computes `elapsedDays` internally. The adapter's job is just to round-trip our `Int64 ms` representation. Any future binding change is confined to this file; `FsrsScheduler` public API stays stable for callers.
 
 - [ ] **Step 4: Run tests — pass. Commit.**
 

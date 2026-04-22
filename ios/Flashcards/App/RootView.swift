@@ -55,9 +55,10 @@ struct RootView: View {
     var body: some View {
         Group {
             switch auth.state {
-            case .signedIn:
-                Text("Signed in — home coming in Phase 2.")
-                    .font(MWType.headingM).foregroundStyle(MWColor.ink)
+            case .signedIn(let userId, _):
+                NavigationStack {
+                    HomeView(userId: userId)
+                }
             default:
                 switch step {
                 case .splash:
@@ -83,7 +84,14 @@ struct RootView: View {
                 }
             }
         }
-        .task { await auth.restore() }
+        .task {
+            if UITestLaunch.isActive {
+                auth.state = .signedIn(userId: UITestLaunch.stubUserId, email: nil)
+                appState.authStatus = .authenticated(userId: UITestLaunch.stubUserId)
+                return
+            }
+            await auth.restore()
+        }
         // Magic-link fan-in: `FlashcardsApp`'s `.onOpenURL` posts
         // `mwMagicLinkToken` with the parsed token as `object`. We
         // subscribe here via `.onReceive` (Combine publisher) and hand
