@@ -6,6 +6,8 @@ namespace App\Providers;
 
 use App\Services\Auth\AppleIdentityVerifier;
 use App\Services\Sync\Entities\CardReader;
+use App\Services\Sync\Entities\CardSubTopicReader;
+use App\Services\Sync\Entities\CardSubTopicUpserter;
 use App\Services\Sync\Entities\CardUpserter;
 use App\Services\Sync\Entities\DeckReader;
 use App\Services\Sync\Entities\DeckUpserter;
@@ -65,5 +67,9 @@ class AppServiceProvider extends ServiceProvider
             ->register('cards', CardUpserter::class);
         app(SyncPullService::class)
             ->register('cards', CardReader::class);
+        app(SyncPushService::class)
+            ->register('card_sub_topics', CardSubTopicUpserter::class);
+        app(SyncPullService::class)
+            ->register('card_sub_topics', CardSubTopicReader::class);
     }
 }
