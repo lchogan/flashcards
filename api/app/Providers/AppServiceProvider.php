@@ -13,6 +13,8 @@ use App\Services\Sync\Entities\DeckReader;
 use App\Services\Sync\Entities\DeckUpserter;
 use App\Services\Sync\Entities\ReviewReader;
 use App\Services\Sync\Entities\ReviewUpserter;
+use App\Services\Sync\Entities\SessionReader;
+use App\Services\Sync\Entities\SessionUpserter;
 use App\Services\Sync\Entities\SubTopicReader;
 use App\Services\Sync\Entities\SubTopicUpserter;
 use App\Services\Sync\Entities\TopicReader;
@@ -77,5 +79,9 @@ class AppServiceProvider extends ServiceProvider
             ->register('reviews', ReviewUpserter::class);
         app(SyncPullService::class)
             ->register('reviews', ReviewReader::class);
+        app(SyncPushService::class)
+            ->register('sessions', SessionUpserter::class);
+        app(SyncPullService::class)
+            ->register('sessions', SessionReader::class);
     }
 }
