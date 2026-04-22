@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0517803C799830F5D2612199 /* Control.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1E904C0BB96CFDF0B549B4 /* Control.swift */; };
+		0663734BD2CB80C862FB72B4 /* MutationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C541DE92720101FECDDBFDF /* MutationQueue.swift */; };
+		08CDD3732EDAFE1C60B0B926 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC88DBBFD5579BED38C6C052 /* Clock.swift */; };
 		17EF0C4A3171AF043E4BAC80 /* Shadows.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1D480537F787B33D90D3D7 /* Shadows.swift */; };
 		190FCD89EB06257558CF3844 /* MWButtonPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76798B4897CAC276448E489B /* MWButtonPress.swift */; };
 		19BF3CEF62F523AA152B339F /* MWAccentKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3925292F9A0F8A65D5ADA9 /* MWAccentKey.swift */; };
@@ -39,6 +41,7 @@
 		8B1C8DA5B9FFA67E666742C9 /* MWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C21C770B2B3AF3347CF2284 /* MWButton.swift */; };
 		9068880F7AD7040BBD0B3E25 /* SyncableRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF568EFFD771971970B8D385 /* SyncableRecord.swift */; };
 		908C1BA6C8BEFF7595F4E477 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40CC12E5F4D662B8D653E9 /* AppStateTests.swift */; };
+		910979C7FC9DF8B27330B6B6 /* PendingMutationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C4A4AA1D82A8B89FB92E8 /* PendingMutationEntity.swift */; };
 		918FA4E3B46D91876C6A1ED6 /* test_MWButton_primary_dark.dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 7877A917EF68E9D82DE4ED2E /* test_MWButton_primary_dark.dark.png */; };
 		97BB3DE8DA72E45A9CF0DD8F /* test_MWTextField.1.png in Resources */ = {isa = PBXBuildFile; fileRef = 490ECA2DC834EBB5DCEAFD89 /* test_MWTextField.1.png */; };
 		A200308DB65D7AC28BF3AB87 /* Motion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F3D467E2E539FF66D566E /* Motion.swift */; };
@@ -64,6 +67,7 @@
 		F25E11BD413D3218216BB972 /* Borders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4233F9E69A788D61C2D472C0 /* Borders.swift */; };
 		F5202C28945C431FAF54FBC5 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD59D377B2406AE1BC80E481 /* AppState.swift */; };
 		FA19E35DDF7DCC4C3EA7E313 /* test_MWButton_primary_idle.1.png in Resources */ = {isa = PBXBuildFile; fileRef = 345D340AF68F033F6EE939F4 /* test_MWButton_primary_idle.1.png */; };
+		FF3E7BF78806CC52E924FE69 /* MutationQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD4C5AD2B7B6777590445B /* MutationQueueTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +108,7 @@
 		53FF0E03041A7DF5873A4E23 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		5666B85823F4898EAB769C5A /* MWCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCard.swift; sourceTree = "<group>"; };
 		57D2CD70838F57E5188414E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5C541DE92720101FECDDBFDF /* MutationQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutationQueue.swift; sourceTree = "<group>"; };
 		5E1E904C0BB96CFDF0B549B4 /* Control.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Control.swift; sourceTree = "<group>"; };
 		76798B4897CAC276448E489B /* MWButtonPress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWButtonPress.swift; sourceTree = "<group>"; };
 		7877A917EF68E9D82DE4ED2E /* test_MWButton_primary_dark.dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_MWButton_primary_dark.dark.png; sourceTree = "<group>"; };
@@ -114,8 +119,10 @@
 		9B3925292F9A0F8A65D5ADA9 /* MWAccentKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAccentKey.swift; sourceTree = "<group>"; };
 		9D49E4AA2AE135563BBDA46A /* MWPrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWPrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		A6D19E2DA08AE57F2E891450 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		AC88DBBFD5579BED38C6C052 /* Clock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
 		B08B320524436C5B4CCC4CD9 /* DesignSystemSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemSnapshotTests.swift; sourceTree = "<group>"; };
 		B164C49CB882DD2A86A4F46E /* MWScreenChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScreenChrome.swift; sourceTree = "<group>"; };
+		B82C4A4AA1D82A8B89FB92E8 /* PendingMutationEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMutationEntity.swift; sourceTree = "<group>"; };
 		BB0EDBD405DDBA367BDF1503 /* Radii.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radii.swift; sourceTree = "<group>"; };
 		BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScreen.swift; sourceTree = "<group>"; };
 		C0779B8D6E61E0FA843454D6 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
@@ -140,6 +147,7 @@
 		F040D73BB3A94134B162AE1B /* test_MWCard.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_MWCard.1.png; sourceTree = "<group>"; };
 		F5CDDABFB08660589DAC7564 /* APIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
 		F760E860CA556E45A8229982 /* FlashcardsUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = FlashcardsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8BD4C5AD2B7B6777590445B /* MutationQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutationQueueTests.swift; sourceTree = "<group>"; };
 		FA292D13A4FD4DFA9AAE6053 /* MWTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -177,6 +185,7 @@
 				B08B320524436C5B4CCC4CD9 /* DesignSystemSnapshotTests.swift */,
 				DD49C9447BB17F91C561040F /* FlashcardsTests.swift */,
 				359B4E74E5113D4D8EE1518E /* MagicLinkConsumerTests.swift */,
+				F8BD4C5AD2B7B6777590445B /* MutationQueueTests.swift */,
 			);
 			path = FlashcardsTests;
 			sourceTree = "<group>";
@@ -219,6 +228,7 @@
 		26B827142C4107CAD33D42AD /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				9287D0C7A9059A9FC7C4845B /* Models */,
 				4304CCAD52294A3AD9BD92B7 /* Sync */,
 			);
 			path = Data;
@@ -239,6 +249,8 @@
 		4304CCAD52294A3AD9BD92B7 /* Sync */ = {
 			isa = PBXGroup;
 			children = (
+				AC88DBBFD5579BED38C6C052 /* Clock.swift */,
+				5C541DE92720101FECDDBFDF /* MutationQueue.swift */,
 				EF568EFFD771971970B8D385 /* SyncableRecord.swift */,
 			);
 			path = Sync;
@@ -313,6 +325,14 @@
 				57D2CD70838F57E5188414E9 /* Info.plist */,
 			);
 			path = Flashcards;
+			sourceTree = "<group>";
+		};
+		9287D0C7A9059A9FC7C4845B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B82C4A4AA1D82A8B89FB92E8 /* PendingMutationEntity.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		934DD600AB566F95B6904B97 /* Layout */ = {
@@ -587,6 +607,7 @@
 				A732FD46039CA285EC45CB06 /* DesignSystemSnapshotTests.swift in Sources */,
 				C155DBC0A9054986EC3BC984 /* FlashcardsTests.swift in Sources */,
 				B632620852D90304CF7F1510 /* MagicLinkConsumerTests.swift in Sources */,
+				FF3E7BF78806CC52E924FE69 /* MutationQueueTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -602,6 +623,7 @@
 				2FBB276265F68FA8374898A6 /* AppleSignInService.swift in Sources */,
 				E086CE937F972443F1E2A40D /* AuthManager.swift in Sources */,
 				F25E11BD413D3218216BB972 /* Borders.swift in Sources */,
+				08CDD3732EDAFE1C60B0B926 /* Clock.swift in Sources */,
 				E4E6973A11C056D294601697 /* Colors.swift in Sources */,
 				0517803C799830F5D2612199 /* Control.swift in Sources */,
 				1D3B8506D046FAD46CE79849 /* FlashcardsApp.swift in Sources */,
@@ -624,6 +646,8 @@
 				5D67882376226C37CCEDBDED /* MagicLinkConsumer.swift in Sources */,
 				3C0A04027670D60D6C90DF14 /* MagicLinkSentView.swift in Sources */,
 				A200308DB65D7AC28BF3AB87 /* Motion.swift in Sources */,
+				0663734BD2CB80C862FB72B4 /* MutationQueue.swift in Sources */,
+				910979C7FC9DF8B27330B6B6 /* PendingMutationEntity.swift in Sources */,
 				D9DD838304ED3D163450007C /* Radii.swift in Sources */,
 				DF68FC3FC3330E8A257D5B34 /* RootView.swift in Sources */,
 				17EF0C4A3171AF043E4BAC80 /* Shadows.swift in Sources */,
