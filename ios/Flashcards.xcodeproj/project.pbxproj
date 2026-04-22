@@ -105,6 +105,7 @@
 		C8FE81070F62C04D06B24CD7 /* MWChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEE3ED2340A6253A42ACEC2 /* MWChip.swift */; };
 		C9D10B114F52606849C96E01 /* MWPrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D49E4AA2AE135563BBDA46A /* MWPrimaryButtonStyle.swift */; };
 		D2238FB3E7F73EA8ABE487FF /* SessionRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A69E4E67F72D477C40C2337 /* SessionRootView.swift */; };
+		D3741E0B6CE09CF567AB2656 /* ManageSubTopicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CEEC2AAF9781CEE487D44D /* ManageSubTopicsView.swift */; };
 		D6716D000299EB9DA4283B57 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D19E2DA08AE57F2E891450 /* Typography.swift */; };
 		D877F137C522A81E1C671DF5 /* SessionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65F3B472528E2553505E0D1 /* SessionEngine.swift */; };
 		D8DB67DD30007FBA6A0F6258 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = E27D9141CA237CB70AE1FF5D /* SnapshotTesting */; };
@@ -223,6 +224,7 @@
 		BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScreen.swift; sourceTree = "<group>"; };
 		BFDA16CADF647B3B6848CB1A /* MWTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWTopBar.swift; sourceTree = "<group>"; };
 		C0779B8D6E61E0FA843454D6 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
+		C0CEEC2AAF9781CEE487D44D /* ManageSubTopicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSubTopicsView.swift; sourceTree = "<group>"; };
 		C4046CD24470CE2356BFFCF4 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		C7A12C1B6BE8A6235B115D87 /* AppleSignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInService.swift; sourceTree = "<group>"; };
 		C8E104C4B0517745446B1DD7 /* CardFormModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFormModel.swift; sourceTree = "<group>"; };
@@ -432,6 +434,7 @@
 				32A13A898D5B48D77F9F05C2 /* DeckDetailView.swift */,
 				E7F32B7393E6D76DD2E8D5EC /* DeckDetailViewModel.swift */,
 				6948B9994028011FBBA79AAC /* HistoryTabView.swift */,
+				C0CEEC2AAF9781CEE487D44D /* ManageSubTopicsView.swift */,
 			);
 			path = DeckDetail;
 			sourceTree = "<group>";
@@ -959,6 +962,7 @@
 				8513744E217874560E72406D /* MWTopBar.swift in Sources */,
 				5D67882376226C37CCEDBDED /* MagicLinkConsumer.swift in Sources */,
 				3C0A04027670D60D6C90DF14 /* MagicLinkSentView.swift in Sources */,
+				D3741E0B6CE09CF567AB2656 /* ManageSubTopicsView.swift in Sources */,
 				A200308DB65D7AC28BF3AB87 /* Motion.swift in Sources */,
 				0663734BD2CB80C862FB72B4 /* MutationQueue.swift in Sources */,
 				910979C7FC9DF8B27330B6B6 /* PendingMutationEntity.swift in Sources */,
