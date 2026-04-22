@@ -47,6 +47,7 @@
 		58DB376C943A13A4DEB0F39C /* SyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A675AF8DB65EE2904C44D0B /* SyncScheduler.swift */; };
 		5D67882376226C37CCEDBDED /* MagicLinkConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2EEF58ABB8E128D7C31244 /* MagicLinkConsumer.swift */; };
 		60CE3ABF4DCA85511909BDA1 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6944DDE653DA2FDC75F8FA1B /* Reachability.swift */; };
+		61E3A6707A721022A5241E94 /* MWRatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829365D41AABE8389B3A7FDC /* MWRatingButton.swift */; };
 		6621BD3199DA11A08EAFE665 /* MWPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB8DD260175A68C1CA1FCEA /* MWPill.swift */; };
 		677876272A9353657D56BC78 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = B2E7B02A2283DBE098796542 /* Sentry */; };
 		677D011943A1A762FB875994 /* SessionEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1253B9488FFE8A7299500BC /* SessionEngineTests.swift */; };
@@ -150,6 +151,7 @@
 		7A675AF8DB65EE2904C44D0B /* SyncScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncScheduler.swift; sourceTree = "<group>"; };
 		7C21C770B2B3AF3347CF2284 /* MWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWButton.swift; sourceTree = "<group>"; };
 		7D954BBA4FC4F58D5450E56B /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		829365D41AABE8389B3A7FDC /* MWRatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWRatingButton.swift; sourceTree = "<group>"; };
 		898ED96388E1C5A38EB3EC56 /* FlashcardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsApp.swift; sourceTree = "<group>"; };
 		8FDD1D115541E030F53F11A8 /* UserEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
 		9B3925292F9A0F8A65D5ADA9 /* MWAccentKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAccentKey.swift; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 			children = (
 				E9A8002D09B6C062BBAB94E8 /* Atoms */,
 				934DD600AB566F95B6904B97 /* Layout */,
+				4D1C3520F0365FA23724CBDB /* Molecules */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -332,6 +335,14 @@
 				A6D19E2DA08AE57F2E891450 /* Typography.swift */,
 			);
 			path = Tokens;
+			sourceTree = "<group>";
+		};
+		4D1C3520F0365FA23724CBDB /* Molecules */ = {
+			isa = PBXGroup;
+			children = (
+				829365D41AABE8389B3A7FDC /* MWRatingButton.swift */,
+			);
+			path = Molecules;
 			sourceTree = "<group>";
 		};
 		638229C348DAB0712F8D39C4 /* EnvironmentKeys */ = {
@@ -753,6 +764,7 @@
 				F03144EE96CEA0A0C37E3256 /* MWEyebrow.swift in Sources */,
 				6621BD3199DA11A08EAFE665 /* MWPill.swift in Sources */,
 				C9D10B114F52606849C96E01 /* MWPrimaryButtonStyle.swift in Sources */,
+				61E3A6707A721022A5241E94 /* MWRatingButton.swift in Sources */,
 				319BDA71D9F0A272D6841EDA /* MWScreen.swift in Sources */,
 				F169AD878724E333007A4999 /* MWScreenChrome.swift in Sources */,
 				7469D2561DCEC06499A1C483 /* MWSecondaryButtonStyle.swift in Sources */,
