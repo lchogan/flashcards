@@ -15,6 +15,10 @@ disabled_rules:
   # SwiftLint's `opening_brace` insists the brace stay on the declaration
   # line. Same precedent as `trailing_comma` — swift-format is authoritative.
   - opening_brace
+  # `masteryDelta` / `mastery_delta` is the canonical API wire-format field
+  # name for the deck mastery score change. Renaming would break sync without
+  # any benefit — the term is a domain noun, not an HR policy term.
+  - inclusive_language
 
 # Design-system token names (MWSpacing.s, MWRadius.m, …) intentionally use
 # one- and two-character identifiers to match the canonical t-shirt scale.
