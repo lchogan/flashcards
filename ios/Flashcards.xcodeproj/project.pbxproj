@@ -75,6 +75,7 @@
 		72C41A07DC840AA76BAB53AA /* TokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC46401E4827495FB1C0CED9 /* TokenStore.swift */; };
 		739E324D69B53136DBA2C4D8 /* FsrsScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A6C997AC419320FA6B3516 /* FsrsScheduler.swift */; };
 		7469D2561DCEC06499A1C483 /* MWSecondaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A16BDB6D28578249699970F /* MWSecondaryButtonStyle.swift */; };
+		74E690F3B65905B02875F4A6 /* CardFormModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E104C4B0517745446B1DD7 /* CardFormModel.swift */; };
 		782DF0C67B844C19FA65CCFE /* SessionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF8F77B9F27EABE94CD5BDA /* SessionEntity.swift */; };
 		7C00A1D91D4886048AC8B54F /* Intro2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC69613C1B6A205B4F07A10 /* Intro2View.swift */; };
 		8513744E217874560E72406D /* MWTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDA16CADF647B3B6848CB1A /* MWTopBar.swift */; };
@@ -224,6 +225,7 @@
 		C0779B8D6E61E0FA843454D6 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
 		C4046CD24470CE2356BFFCF4 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		C7A12C1B6BE8A6235B115D87 /* AppleSignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInService.swift; sourceTree = "<group>"; };
+		C8E104C4B0517745446B1DD7 /* CardFormModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFormModel.swift; sourceTree = "<group>"; };
 		CB15FDE0C8DC4DAAAD34C765 /* ControlTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlTokenTests.swift; sourceTree = "<group>"; };
 		CBC69613C1B6A205B4F07A10 /* Intro2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intro2View.swift; sourceTree = "<group>"; };
 		CC46401E4827495FB1C0CED9 /* TokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStore.swift; sourceTree = "<group>"; };
@@ -588,6 +590,7 @@
 			isa = PBXGroup;
 			children = (
 				260DE1302BED01867EB042A4 /* CardEditView.swift */,
+				C8E104C4B0517745446B1DD7 /* CardFormModel.swift */,
 				73399284F3ED1C2018079C5E /* CreateCardView.swift */,
 			);
 			path = Card;
@@ -903,6 +906,7 @@
 				F25E11BD413D3218216BB972 /* Borders.swift in Sources */,
 				0CE9FF860E161A9FAE5EEB2C /* CardEditView.swift in Sources */,
 				52D5439183B9053C7E7404EB /* CardEntity.swift in Sources */,
+				74E690F3B65905B02875F4A6 /* CardFormModel.swift in Sources */,
 				3599F70D0B0838652ECA3538 /* CardRepository.swift in Sources */,
 				38D5739924BAD001DFD8E6ED /* CardSubTopicEntity.swift in Sources */,
 				4E642E0365B3BAE6E0C987A5 /* CardsTabView.swift in Sources */,
