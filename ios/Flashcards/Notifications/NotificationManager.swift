@@ -10,7 +10,7 @@
 //
 
 import Foundation
-import UserNotifications
+@preconcurrency import UserNotifications
 
 internal actor NotificationManager {
     internal static let shared = NotificationManager()
