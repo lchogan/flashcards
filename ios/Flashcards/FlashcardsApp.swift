@@ -108,8 +108,15 @@ struct FlashcardsApp: App {
                 .environment(purchases)
                 .modelContainer(container)
                 .task {
-                    await entitlements.load()
-                    await purchases.load()
+                    if UITestLaunch.isActive {
+                        // UI tests run offline against an in-memory store;
+                        // the real load() would hit a nonexistent backend
+                        // and leave gated features blocked by the paywall.
+                        entitlements.applyUnrestricted()
+                    } else {
+                        await entitlements.load()
+                        await purchases.load()
+                    }
                 }
                 .onOpenURL { url in
                     if let token = MagicLinkConsumer.extractToken(from: url) {

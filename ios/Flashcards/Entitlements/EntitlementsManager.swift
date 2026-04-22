@@ -37,6 +37,25 @@ internal final class EntitlementsManager {
         self.cache = cache
     }
 
+    /// Replace the current matrix with a permissive "everything allowed" plan.
+    /// Only called from UI tests (via UITestLaunch) so deck/card creation
+    /// flows aren't blocked by an unloaded EntitlementsManager when the test
+    /// runs offline.
+    internal func applyUnrestricted() {
+        config = [
+            "decks.create": EntitlementConfig(type: "max_count", max: nil, allowed: nil),
+            "cards.create_in_deck": EntitlementConfig(type: "max_count", max: nil, allowed: nil),
+            "cards.create_total": EntitlementConfig(type: "max_count", max: nil, allowed: nil),
+            "study.smart": EntitlementConfig(type: "boolean", max: nil, allowed: true),
+            "study.basic": EntitlementConfig(type: "boolean", max: nil, allowed: true),
+            "reminders.add": EntitlementConfig(type: "max_count", max: nil, allowed: nil),
+            "new_card_limit.above_10": EntitlementConfig(type: "boolean", max: nil, allowed: true),
+        ]
+        planKey = "plus"
+        planVersion = 1
+        isLoaded = true
+    }
+
     /// Loads the cached snapshot if present, then refreshes from server when
     /// the cache is stale (>5 min) or missing. Safe to call repeatedly; a
     /// fresh cache short-circuits the network.
