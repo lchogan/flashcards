@@ -50,7 +50,7 @@ class ReminderController extends Controller
         $reminder = $request->user()->reminders()->create([
             'time_local' => $data['time_local'],
             'enabled' => $data['enabled'] ?? true,
-            'updated_at_ms' => now()->valueOf(),
+            'updated_at_ms' => (int) now()->valueOf(),
         ]);
 
         return response()->json($reminder, 201);
@@ -66,7 +66,7 @@ class ReminderController extends Controller
         ]);
 
         $reminder->fill($data);
-        $reminder->updated_at_ms = now()->valueOf();
+        $reminder->updated_at_ms = (int) now()->valueOf();
         $reminder->save();
 
         return response()->json($reminder);

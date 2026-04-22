@@ -21,7 +21,7 @@ class EntitlementsController extends Controller
     public function show(Request $request): JsonResponse
     {
         $user = $request->user();
-        $planKey = $user?->plan_key ?? config('plans.default_plan_key', 'free');
+        $planKey = $user->plan_key ?? config('plans.default_plan_key', 'free');
         $plan = Plan::where('key', $planKey)->first()
             ?? Plan::where('key', 'free')->firstOrFail();
 
