@@ -16,4 +16,6 @@ Route::prefix('v1')->group(function () {
 
     Route::post('/auth/magic-link/request', [MagicLinkController::class, 'request'])
         ->middleware('throttle:5,60');
+
+    Route::post('/auth/magic-link/consume', [MagicLinkController::class, 'consume']);
 });
