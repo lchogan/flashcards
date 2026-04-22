@@ -20,7 +20,10 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
+// Authed v1 routes: 60 req/min scoped to the authenticated user (see the
+// `api-authed` limiter in AppServiceProvider::boot). Keyed on user id so
+// two users sharing an IP don't deplete each other's bucket.
+Route::middleware(['auth:sanctum', 'throttle:api-authed'])->prefix('v1')->group(function () {
     Route::post('/sync/push', SyncPushController::class);
     Route::get('/sync/pull', SyncPullController::class);
     Route::get('/me', [MeController::class, 'show']);
