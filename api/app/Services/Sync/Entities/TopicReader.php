@@ -13,13 +13,13 @@ declare(strict_types=1);
  * Dependencies:
  *   - App\Models\Topic (Eloquent model, HasUuids)
  *   - App\Models\User (ownership scoping)
- *   - App\Services\Sync\RecordReader (interface contract)
+ *   - App\Services\Sync\AbstractCursorReader (base class; handles pagination,
+ *     cursor computation, and the [rows, hasMore, maxUpdatedMs] tuple)
  *
  * Key concepts:
- *   - Pagination: queries pageSize + 1 rows; if the result exceeds pageSize,
- *     hasMore=true is returned and the extra row is discarded before mapping.
- *   - nextSince: the maximum updated_at_ms in the returned page is passed back
- *     to the client as the cursor for the next pull request.
+ *   - Ownership: scoped by user_id directly on the topics table.
+ *   - Pagination: one-extra-row trick; see AbstractCursorReader.
+ *   - nextSince: max updated_at_ms in page → client's next `since`.
  *   - Ordered by updated_at_ms ASC so cursored pagination is stable.
  */
 
@@ -27,53 +27,55 @@ namespace App\Services\Sync\Entities;
 
 use App\Models\Topic;
 use App\Models\User;
-use App\Services\Sync\RecordReader;
+use App\Services\Sync\AbstractCursorReader;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Reads Topic records for the authenticated user updated after a given timestamp.
  *
- * Implements the RecordReader contract for the "topics" entity key.
+ * Implements the RecordReader contract for the "topics" entity key via
+ * AbstractCursorReader. Only entity-specific concerns are declared here:
+ * model class, ownership scope, and row projection.
  */
-final class TopicReader implements RecordReader
+final class TopicReader extends AbstractCursorReader
 {
     /**
-     * Fetch Topic rows for the user changed after $since, up to $pageSize rows.
-     *
-     * Pagination contract: queries $pageSize + 1 rows. If the result set exceeds
-     * $pageSize, the extra row signals that more data exists (hasMore=true) and is
-     * discarded before serialisation. The returned maxUpdatedMs is the highest
-     * updated_at_ms in the page — the client sends this back as `since` on the
-     * next pull to advance the cursor.
-     *
-     * @param  User  $user  Owner of the records; results are scoped to this user.
-     * @param  int  $since  Millisecond timestamp lower-bound (exclusive); only rows updated after this are returned.
-     * @param  int  $pageSize  Maximum number of rows to include in the returned page.
-     * @return array{0: list<array<string, mixed>>, 1: bool, 2: int}
-     *                                                               [rows, hasMore, maxUpdatedMs]
+     * @return class-string<Model>
      */
-    public function read(User $user, int $since, int $pageSize): array
+    protected function modelClass(): string
     {
-        $rows = Topic::query()
-            ->where('user_id', $user->id)
-            ->where('updated_at_ms', '>', $since)
-            ->orderBy('updated_at_ms')
-            ->limit($pageSize + 1)
-            ->get();
+        return Topic::class;
+    }
 
-        $hasMore = $rows->count() > $pageSize;
-        $page = $rows->take($pageSize);
-        $max = (int) ($page->max('updated_at_ms') ?? $since);
+    /**
+     * Scope the query to topics owned by the authenticated user.
+     *
+     * @param  Builder<Model>  $query  Base query for the Topic model.
+     * @param  User  $user  Authenticated user.
+     * @return Builder<Model> Scoped query.
+     */
+    protected function scopeForUser(Builder $query, User $user): Builder
+    {
+        return $query->where('user_id', $user->id);
+    }
+
+    /**
+     * Project a Topic model into the wire-format row.
+     *
+     * @param  Model  $model  Hydrated Topic instance.
+     * @return array<string, mixed> Wire-format row.
+     */
+    protected function projectRow(Model $model): array
+    {
+        assert($model instanceof Topic);
 
         return [
-            $page->map(fn (Topic $t) => [
-                'id' => $t->id,
-                'name' => $t->name,
-                'color_hint' => $t->color_hint,
-                'updated_at_ms' => $t->updated_at_ms,
-                'deleted_at_ms' => $t->deleted_at_ms,
-            ])->values()->all(),
-            $hasMore,
-            $max,
+            'id' => $model->id,
+            'name' => $model->name,
+            'color_hint' => $model->color_hint,
+            'updated_at_ms' => $model->updated_at_ms,
+            'deleted_at_ms' => $model->deleted_at_ms,
         ];
     }
 }

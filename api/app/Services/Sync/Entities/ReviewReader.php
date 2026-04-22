@@ -24,6 +24,13 @@ declare(strict_types=1);
  *   - nextSince: the maximum updated_at_ms in the returned page is passed back
  *     to the client as the cursor for the next pull request.
  *   - Ordered by updated_at_ms ASC so cursored pagination is stable.
+ *
+ * Does NOT extend AbstractCursorReader:
+ *   Review is append-only and carries significantly more fields than any other
+ *   entity (state_before, state_after as JSON, scheduler_version, etc.). While
+ *   structurally compatible with the base class, keeping it standalone preserves
+ *   the semantic distinction between mutable LWW entities and immutable review
+ *   events, and avoids conflating the two reader categories for future maintainers.
  */
 
 namespace App\Services\Sync\Entities;
