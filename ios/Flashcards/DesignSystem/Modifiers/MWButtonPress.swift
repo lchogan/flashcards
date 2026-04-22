@@ -26,6 +26,12 @@ public struct MWButtonPress: ViewModifier {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    /// Applies the press-scale + reduce-motion-safe animation to `content`.
+    ///
+    /// - Parameter content: The view being decorated.
+    /// - Returns: A view that scales to `pressedScale` while `isPressed` is
+    ///   true, returning to `1.0` otherwise, with the transition collapsed
+    ///   to an instantaneous change when Reduce Motion is enabled.
     public func body(content: Content) -> some View {
         content
             .scaleEffect(isPressed ? Self.pressedScale : 1.0)

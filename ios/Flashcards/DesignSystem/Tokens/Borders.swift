@@ -55,6 +55,7 @@ public extension View {
     ///   - cornerRadius: Corner radius for the overlay shape. Defaults to `0`
     ///     (sharp rectangle). Pass the same value used in an upstream
     ///     `mwCornerRadius` so the stroke hugs the rounded clip.
+    /// - Returns: A view overlaid with the configured stroke.
     func mwStroke(
         color: Color = MWColor.ink,
         width: CGFloat = MWBorder.defaultWidth,

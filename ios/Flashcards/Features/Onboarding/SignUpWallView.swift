@@ -54,18 +54,25 @@ struct SignUpWallView: View {
                     MWEyebrow("Save your progress")
                     Text("No password required.")
                         .font(MWType.headingL).foregroundStyle(MWColor.ink)
-                    // swiftlint:disable:next line_length
-                    Text("We ask for your email so your flashcards live in your account, not just this device. If you lose your phone, you won't lose a single card.")
-                        .font(MWType.bodyL).foregroundStyle(MWColor.inkMuted)
+                    Text(
+                        "We ask for your email so your flashcards live in your account, "
+                            + "not just this device. If you lose your phone, you won't "
+                            + "lose a single card."
+                    )
+                    .font(MWType.bodyL).foregroundStyle(MWColor.inkMuted)
 
                     MWButton("Continue with Apple") {
-                        Task { isSubmitting = true; await onAppleSignIn(); isSubmitting = false }
+                        Task {
+                            isSubmitting = true; await onAppleSignIn(); isSubmitting = false
+                        }
                     }
 
                     MWTextField(label: "Email", text: $email, contentType: .emailAddress, keyboard: .emailAddress)
 
                     MWButton("Continue with email", kind: .secondary) {
-                        Task { isSubmitting = true; await onRequestMagicLink(email); isSubmitting = false }
+                        Task {
+                            isSubmitting = true; await onRequestMagicLink(email); isSubmitting = false
+                        }
                     }.disabled(email.isEmpty || isSubmitting)
 
                     Text("Free to use. No payment needed. We won't sell your data or email you marketing.")

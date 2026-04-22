@@ -6,7 +6,9 @@
 
 **Architecture:** Native iOS client (Swift 6 + SwiftUI + SwiftData + on-device FSRS) against a Laravel 11 / Postgres API. Offline-first: SwiftData is the client source of truth, a `PendingMutation` queue drains to the server opportunistically. Five-rule REST delta sync (`id`, `updated_at`, `deleted_at`, push upsert, pull since). Reviews are append-only; card FSRS state is a cache recomputed from the review log. Entitlements are server-owned config, client-cached, single resolver API. Design system is mechanically enforced (SwiftLint banned patterns + token-only styling).
 
-**Tech Stack:** Swift 6, SwiftUI, SwiftData, StoreKit 2, AuthenticationServices, UserNotifications, URLSession, Codable, `fsrs-rs` (UniFFI), `KeychainAccess`, `swift-markdown-ui`, `swift-snapshot-testing`, `posthog-ios`, `sentry-cocoa`. Laravel 11, PHP 8.3, Postgres, Redis, Horizon, Cloudflare R2, Sanctum, Cashier (StoreKit), `spatie/laravel-query-builder`, `spatie/laravel-signed-url`, `laravel-notification-channels/apn`, `sentry/sentry-laravel`, Pest.
+**Tech Stack:** Swift 6, SwiftUI, SwiftData, StoreKit 2, AuthenticationServices, UserNotifications, URLSession, Codable, `fsrs-rs` (UniFFI), `KeychainAccess`, `swift-markdown-ui`, `swift-snapshot-testing`, `posthog-ios`, `sentry-cocoa`. Laravel 11, PHP 8.3, Postgres, Redis, Horizon, Cloudflare R2, Sanctum, `firebase/php-jwt` (Apple ID token + App Store JWS verification), `spatie/laravel-query-builder`, `spatie/laravel-signed-url`, `laravel-notification-channels/apn`, `sentry/sentry-laravel`, Pest.
+
+**Billing path: Apple In-App Purchases only.** Subscriptions are sold via StoreKit 2 on iOS. The server verifies signed JWS transactions against Apple's public keys (same JWKS pattern as Apple Sign In) and receives App Store Server Notifications v2 on a webhook. **No Stripe, no Cashier** — Apple handles all payment data on-device, which keeps us out of PCI scope and minimises server-side PII.
 
 ---
 
@@ -208,7 +210,6 @@ api/
   config/
     plans.php
     sanctum.php
-    cashier.php
     horizon.php
   database/
     migrations/
@@ -391,8 +392,9 @@ MAGIC_LINK_UNIVERSAL_LINK_HOST=flashcards.app
 SENTRY_LARAVEL_DSN=
 SENTRY_TRACES_SAMPLE_RATE=0.2
 
-# Cashier / StoreKit
-CASHIER_SHARED_SECRET=
+# Apple In-App Purchases
+# We verify StoreKit 2 JWS transactions + App Store Server Notifications v2
+# directly — no Cashier/Stripe layer. See Phase 3 tasks.
 APP_STORE_SHARED_SECRET=
 APP_STORE_ENVIRONMENT=sandbox
 ```
@@ -408,7 +410,7 @@ cd /Users/lukehogan/Code/flashcards/api && php artisan key:generate
 
 ```bash
 git -C /Users/lukehogan/Code/flashcards add api/.env.example
-git -C /Users/lukehogan/Code/flashcards commit -m "chore: add .env.example with R2/Apple/Sentry/Cashier slots (0.3)"
+git -C /Users/lukehogan/Code/flashcards commit -m "chore: add .env.example with R2/Apple/Sentry/IAP slots (0.3)"
 ```
 
 ---
@@ -424,14 +426,13 @@ git -C /Users/lukehogan/Code/flashcards commit -m "chore: add .env.example with 
 cd /Users/lukehogan/Code/flashcards/api && composer require -W \
   laravel/sanctum:^4.0 \
   laravel/horizon:^5.0 \
-  laravel/cashier:^15.0 \
   spatie/laravel-query-builder:^6.0 \
   spatie/url-signer:^2.0 \
   sentry/sentry-laravel:^4.0 \
   laravel-notification-channels/apn:^5.5
 ```
 
-> **Cashier note (verified 2026-04-21):** `laravel/cashier-apple` does not exist on Packagist. We install base Cashier (Stripe) for the subscription/webhook/receipt scaffolding and wire StoreKit manually in Task 3.10. If a `cashier-apple` package ships later, swap the require line and reassess Task 3.10.
+> **Billing note (revised 2026-04-22, post-Phase-0):** We are **not** using Laravel Cashier. Cashier is Stripe/Paddle-first and adds no value for Apple-IAP-only billing — JWS verification (Task 3.10) and App Store Server Notifications v2 (Task 3.10) are hand-rolled on top of `firebase/php-jwt`, which is already installed for Apple Sign In. Original Phase 0 execution installed `laravel/cashier:^15.0`; that dep was removed in `chore/iap-only` after the architectural decision was re-examined. `firebase/php-jwt` is required in Task 0.32, so nothing billing-specific needs to be installed here.
 >
 > **APN note (verified 2026-04-21):** `laravel-notification-channels/apn ^6.0` requires PHP 8.4 + Laravel 12. We pin to `^5.5` which supports PHP 8.3 + Laravel 11. Revisit when the project moves to PHP 8.4 / Laravel 12.
 >
@@ -473,7 +474,7 @@ cd /Users/lukehogan/Code/flashcards/api && php artisan sentry:publish
 
 ```bash
 git -C /Users/lukehogan/Code/flashcards add api
-git -C /Users/lukehogan/Code/flashcards commit -m "feat: install Sanctum, Horizon, Cashier, Sentry, query-builder, signed-url, apn (0.4)"
+git -C /Users/lukehogan/Code/flashcards commit -m "feat: install Sanctum, Horizon, Sentry, query-builder, signed-url, apn (0.4)"
 ```
 
 ---
@@ -10581,7 +10582,7 @@ git -C /Users/lukehogan/Code/flashcards push origin main phase-2.5
 
 ## Phase 3: Monetization + Settings + Notifications (weeks 8-12)
 
-**Goal:** Entitlements system live on both sides; StoreKit 2 + Cashier wired; settings flows complete; local reminders + APNs renewal pushes.
+**Goal:** Entitlements system live on both sides; StoreKit 2 client + Apple IAP server verification (JWS + Server Notifications v2) wired — no Stripe/Cashier; settings flows complete; local reminders + APNs renewal pushes.
 
 ### Task 3.1: `plans` table + config + seeder
 
@@ -13832,7 +13833,7 @@ After each phase merges, run a 30-minute retro:
 ## Known assumptions that may need revision
 
 1. **`fsrs-rs` UniFFI bindings** — if the library's Swift binding surface differs from the task code in 2.2, update only `FsrsScheduler.swift` (the adapter); callers don't change.
-2. **Cashier StoreKit support** — if `laravel/cashier-apple` isn't on Packagist at impl time, Task 0.4 notes the fallback (install base Cashier; wire StoreKit hooks manually in 3.10).
+2. **Apple IAP verification stack** — Task 3.10 verifies StoreKit 2 JWS transactions via `firebase/php-jwt` against Apple's public keys, then cross-checks against App Store Server API on a background job. No Cashier/Stripe. If Apple changes JWS signing key rotation cadence or the StoreKit 2 on-device payload shape, update only `AppStoreVerifier.php` (the decoder) — callers don't change.
 3. **Dependabot grouping syntax** — check current GitHub docs; adjust `.github/dependabot.yml` if schema changed.
 4. **Icon set** — Task 2.10 stubs ten stroke-drawn icons. Replace with the designer's delivered SVG set when available; regenerate `Generated/` via `scripts/generate-icons.sh`.
 5. **Accent palette (open decision §18)** — placeholder hexes in Task 0.20. Swap in designer-supplied values before screenshots (Task 5.1).

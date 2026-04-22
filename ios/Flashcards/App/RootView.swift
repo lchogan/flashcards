@@ -60,22 +60,24 @@ struct RootView: View {
                     .font(MWType.headingM).foregroundStyle(MWColor.ink)
             default:
                 switch step {
-                case .splash: SplashView().task {
-                    try? await Task.sleep(nanoseconds: 1_200_000_000)
-                    step = .intro1
-                }
+                case .splash:
+                    SplashView().task {
+                        try? await Task.sleep(nanoseconds: 1_200_000_000)
+                        step = .intro1
+                    }
                 case .intro1: Intro1View { step = .intro2 }
                 case .intro2: Intro2View { step = .signup }
-                case .signup: SignUpWallView(
-                    onAppleSignIn: {
-                        try? await auth.signInWithApple()
-                    },
-                    onRequestMagicLink: { email in
-                        try? await auth.requestMagicLink(email: email)
-                        emailSent = email
-                        step = .magicLinkSent
-                    }
-                )
+                case .signup:
+                    SignUpWallView(
+                        onAppleSignIn: {
+                            try? await auth.signInWithApple()
+                        },
+                        onRequestMagicLink: { email in
+                            try? await auth.requestMagicLink(email: email)
+                            emailSent = email
+                            step = .magicLinkSent
+                        }
+                    )
                 case .magicLinkSent:
                     MagicLinkSentView(email: emailSent ?? "")
                 }
