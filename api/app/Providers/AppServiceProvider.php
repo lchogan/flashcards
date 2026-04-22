@@ -11,6 +11,8 @@ use App\Services\Sync\Entities\CardSubTopicUpserter;
 use App\Services\Sync\Entities\CardUpserter;
 use App\Services\Sync\Entities\DeckReader;
 use App\Services\Sync\Entities\DeckUpserter;
+use App\Services\Sync\Entities\ReviewReader;
+use App\Services\Sync\Entities\ReviewUpserter;
 use App\Services\Sync\Entities\SubTopicReader;
 use App\Services\Sync\Entities\SubTopicUpserter;
 use App\Services\Sync\Entities\TopicReader;
@@ -71,5 +73,9 @@ class AppServiceProvider extends ServiceProvider
             ->register('card_sub_topics', CardSubTopicUpserter::class);
         app(SyncPullService::class)
             ->register('card_sub_topics', CardSubTopicReader::class);
+        app(SyncPushService::class)
+            ->register('reviews', ReviewUpserter::class);
+        app(SyncPullService::class)
+            ->register('reviews', ReviewReader::class);
     }
 }
