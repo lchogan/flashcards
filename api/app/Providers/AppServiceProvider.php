@@ -7,6 +7,8 @@ namespace App\Providers;
 use App\Services\Auth\AppleIdentityVerifier;
 use App\Services\Sync\Entities\DeckReader;
 use App\Services\Sync\Entities\DeckUpserter;
+use App\Services\Sync\Entities\SubTopicReader;
+use App\Services\Sync\Entities\SubTopicUpserter;
 use App\Services\Sync\Entities\TopicReader;
 use App\Services\Sync\Entities\TopicUpserter;
 use App\Services\Sync\SyncPullService;
@@ -53,5 +55,9 @@ class AppServiceProvider extends ServiceProvider
             ->register('decks', DeckUpserter::class);
         app(SyncPullService::class)
             ->register('decks', DeckReader::class);
+        app(SyncPushService::class)
+            ->register('sub_topics', SubTopicUpserter::class);
+        app(SyncPullService::class)
+            ->register('sub_topics', SubTopicReader::class);
     }
 }
