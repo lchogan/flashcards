@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Api\V1\AccountController;
 use App\Http\Controllers\Api\V1\AppleAuthController;
 use App\Http\Controllers\Api\V1\AppStoreNotificationsController;
 use App\Http\Controllers\Api\V1\EntitlementsController;
@@ -33,6 +34,8 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::delete('/reminders/{id}', [ReminderController::class, 'destroy']);
 
     Route::post('/subscriptions/verify', [SubscriptionController::class, 'verify']);
+
+    Route::delete('/me', [AccountController::class, 'destroy']);
 });
 
 // Apple App Store Server Notifications v2 — unauthenticated, signed by Apple.

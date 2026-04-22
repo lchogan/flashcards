@@ -22,7 +22,7 @@ class User extends Authenticatable
         'daily_goal_cards', 'reminder_time_local', 'reminder_enabled',
         'theme_preference', 'fsrs_weights', 'subscription_status',
         'subscription_expires_at', 'subscription_product_id',
-        'subscription_original_transaction_id', 'plan_key',
+        'subscription_original_transaction_id', 'plan_key', 'scheduled_delete_at',
         'image_quota_used_bytes', 'marketing_opt_in', 'updated_at_ms', 'deleted_at_ms',
     ];
 
@@ -31,6 +31,7 @@ class User extends Authenticatable
         'reminder_enabled' => 'boolean',
         'marketing_opt_in' => 'boolean',
         'subscription_expires_at' => 'datetime',
+        'scheduled_delete_at' => 'datetime',
         'image_quota_used_bytes' => 'integer',
         'updated_at_ms' => 'integer',
         'deleted_at_ms' => 'integer',
