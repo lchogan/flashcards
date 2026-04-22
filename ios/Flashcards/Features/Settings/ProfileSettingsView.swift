@@ -57,7 +57,7 @@ struct ProfileSettingsView: View {
                 method: "GET",
                 path: "/api/v1/me",
                 body: nil,
-                requiresAuth: true,
+                requiresAuth: true
             ))
         {
             name = me.name ?? ""
@@ -88,7 +88,7 @@ struct ProfileSettingsView: View {
                     method: "PATCH",
                     path: "/api/v1/me",
                     body: body,
-                    requiresAuth: true,
+                    requiresAuth: true
                 ))
             savedSuccessfully = true
         } catch {

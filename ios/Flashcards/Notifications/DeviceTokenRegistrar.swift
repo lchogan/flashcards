@@ -31,7 +31,7 @@ internal enum DeviceTokenRegistrar {
                 method: "POST",
                 path: "/api/v1/me/device-token",
                 body: body,
-                requiresAuth: true,
+                requiresAuth: true
             ))
     }
 }

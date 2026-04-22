@@ -141,7 +141,7 @@ struct RootView: View {
                         identifier: "mw.streak.nudge",
                         title: "Your streak is waiting.",
                         body: "A quick session keeps it alive.",
-                        category: ReminderScheduler.streakCategory,
+                        category: ReminderScheduler.streakCategory
                     )
                 } else {
                     await scheduler.cancel(identifier: "mw.streak.nudge")

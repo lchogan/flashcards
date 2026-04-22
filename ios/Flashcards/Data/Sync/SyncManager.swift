@@ -125,7 +125,7 @@ public final class SyncManager {
                     && card.state != "new"
                     && card.dueAtMs != nil
                     && (card.dueAtMs ?? now) <= now
-            },
+            }
         )
         let count = (try? context.fetchCount(descriptor)) ?? 0
         DueCountPublisher.publish(count)

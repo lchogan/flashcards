@@ -35,7 +35,7 @@ import UIKit
 final class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
         _ application: UIApplication,
-        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
     ) {
         Task {
             await DeviceTokenRegistrar.register(tokenData: deviceToken)
@@ -44,7 +44,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
 
     func application(
         _ application: UIApplication,
-        didFailToRegisterForRemoteNotificationsWithError error: Error,
+        didFailToRegisterForRemoteNotificationsWithError error: Error
     ) {
         AnalyticsClient.track("apns.register.fail", properties: ["error": String(describing: error)])
     }
@@ -75,7 +75,7 @@ struct FlashcardsApp: App {
                 api: api,
                 refreshEntitlements: { @Sendable [weak entitlementsManager] in
                     await entitlementsManager?.load(force: true)
-                },
+                }
             ))
 
         let schema: [any PersistentModel.Type] = [

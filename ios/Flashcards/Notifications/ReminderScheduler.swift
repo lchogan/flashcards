@@ -25,7 +25,7 @@ internal actor ReminderScheduler {
         identifier: String,
         title: String,
         body: String,
-        category: String = "MW_STUDY_REMINDER",
+        category: String = "MW_STUDY_REMINDER"
     ) async {
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: [identifier])
@@ -40,14 +40,14 @@ internal actor ReminderScheduler {
         let request = UNNotificationRequest(
             identifier: identifier,
             content: content,
-            trigger: trigger,
+            trigger: trigger
         )
         try? await center.add(request)
     }
 
     internal func cancel(identifier: String) async {
         UNUserNotificationCenter.current().removePendingNotificationRequests(
-            withIdentifiers: [identifier],
+            withIdentifiers: [identifier]
         )
     }
 

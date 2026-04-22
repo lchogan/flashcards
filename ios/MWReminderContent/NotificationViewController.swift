@@ -47,7 +47,7 @@ final class NotificationViewController: UIViewController, UNNotificationContentE
 
         preferredContentSize = CGSize(
             width: view.bounds.width,
-            height: label.sizeThatFits(CGSize(width: view.bounds.width - 32, height: .infinity)).height + 32,
+            height: label.sizeThatFits(CGSize(width: view.bounds.width - 32, height: .infinity)).height + 32
         )
     }
 }

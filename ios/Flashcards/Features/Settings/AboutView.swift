@@ -38,13 +38,13 @@ struct AboutView: View {
                     MWFormRow(
                         title: "Privacy policy",
                         onTap: { openURL("https://flashcards.app/privacy") },
-                        accessory: { MWIcon(.chevronRight, size: 16) },
+                        accessory: { MWIcon(.chevronRight, size: 16) }
                     )
                     MWDivider()
                     MWFormRow(
                         title: "Terms of service",
                         onTap: { openURL("https://flashcards.app/terms") },
-                        accessory: { MWIcon(.chevronRight, size: 16) },
+                        accessory: { MWIcon(.chevronRight, size: 16) }
                     )
                 }
                 .mwPadding(.all, .xl)

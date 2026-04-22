@@ -52,7 +52,7 @@ internal final class PurchasesManager {
 
     internal init(
         api: APIClientProtocol,
-        refreshEntitlements: @Sendable @escaping () async -> Void = {},
+        refreshEntitlements: @Sendable @escaping () async -> Void = {}
     ) {
         self.api = api
         self.refreshEntitlements = refreshEntitlements
@@ -148,7 +148,7 @@ internal final class PurchasesManager {
             method: "POST",
             path: "/api/v1/subscriptions/verify",
             body: body,
-            requiresAuth: true,
+            requiresAuth: true
         )
         _ = try await api.send(endpoint)
     }

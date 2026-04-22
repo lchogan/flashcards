@@ -72,7 +72,7 @@ struct CreateDeckView: View {
 
     private func attemptCreate() {
         let descriptor = FetchDescriptor<DeckEntity>(
-            predicate: #Predicate { $0.syncDeletedAtMs == nil },
+            predicate: #Predicate { $0.syncDeletedAtMs == nil }
         )
         let count = (try? context.fetchCount(descriptor)) ?? 0
 

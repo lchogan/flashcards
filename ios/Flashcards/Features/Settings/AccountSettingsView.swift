@@ -47,7 +47,7 @@ struct AccountSettingsView: View {
         .confirmationDialog(
             "Delete your account?",
             isPresented: $showingDeleteConfirm,
-            titleVisibility: .visible,
+            titleVisibility: .visible
         ) {
             Button("Delete permanently", role: .destructive) {
                 Task { await deleteAccount() }
@@ -81,7 +81,7 @@ struct AccountSettingsView: View {
                     method: "DELETE",
                     path: "/api/v1/me",
                     body: nil,
-                    requiresAuth: true,
+                    requiresAuth: true
                 ))
             await tokenStore.clear()
             await MainActor.run {

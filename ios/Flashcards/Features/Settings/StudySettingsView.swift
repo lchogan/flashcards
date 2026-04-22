@@ -38,7 +38,7 @@ struct StudySettingsView: View {
                                         return
                                     }
                                     dailyNewCardLimit = newValue
-                                },
+                                }
                             ), in: 1...50
                         )
                         .font(MWType.bodyL)

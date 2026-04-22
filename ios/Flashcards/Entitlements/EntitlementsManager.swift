@@ -54,12 +54,12 @@ internal final class EntitlementsManager {
                     method: "GET",
                     path: "/api/v1/me/entitlements",
                     body: nil,
-                    requiresAuth: true,
+                    requiresAuth: true
                 ))
             let snapshot = PlanSnapshot(
                 planKey: resp.planKey,
                 version: resp.version,
-                entitlements: resp.entitlements,
+                entitlements: resp.entitlements
             )
             await cache.store(snapshot)
             apply(snapshot)

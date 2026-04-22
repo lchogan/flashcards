@@ -72,10 +72,10 @@ struct CreateCardView: View {
     private func save() {
         let localDeckId = deckId
         let inDeckDescriptor = FetchDescriptor<CardEntity>(
-            predicate: #Predicate { $0.deckId == localDeckId && $0.syncDeletedAtMs == nil },
+            predicate: #Predicate { $0.deckId == localDeckId && $0.syncDeletedAtMs == nil }
         )
         let totalDescriptor = FetchDescriptor<CardEntity>(
-            predicate: #Predicate { $0.syncDeletedAtMs == nil },
+            predicate: #Predicate { $0.syncDeletedAtMs == nil }
         )
         let countInDeck = (try? context.fetchCount(inDeckDescriptor)) ?? 0
         let countTotal = (try? context.fetchCount(totalDescriptor)) ?? 0

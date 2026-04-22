@@ -135,7 +135,7 @@ internal enum PaywallCopy {
             "More reminders, more control",
             "Smart mode stays smart",
         ],
-        ctaLabel: "Upgrade to Plus",
+        ctaLabel: "Upgrade to Plus"
     )
 
     internal static let map: [EntitlementKey: PaywallCopyEntry] = [
@@ -148,7 +148,7 @@ internal enum PaywallCopy {
                 "Unlimited cards per deck",
                 "Up to 3 daily reminders",
             ],
-            ctaLabel: "Upgrade to Plus",
+            ctaLabel: "Upgrade to Plus"
         ),
         .cardsCreateInDeck: PaywallCopyEntry(
             eyebrow: "Limit reached",
@@ -159,7 +159,7 @@ internal enum PaywallCopy {
                 "Unlimited total cards",
                 "Higher new-card daily limit",
             ],
-            ctaLabel: "Upgrade to Plus",
+            ctaLabel: "Upgrade to Plus"
         ),
         .cardsCreateTotal: PaywallCopyEntry(
             eyebrow: "Limit reached",
@@ -170,7 +170,7 @@ internal enum PaywallCopy {
                 "Unlimited decks",
                 "More reminders",
             ],
-            ctaLabel: "Upgrade to Plus",
+            ctaLabel: "Upgrade to Plus"
         ),
         .remindersAdd: PaywallCopyEntry(
             eyebrow: "Reminder locked",
@@ -181,7 +181,7 @@ internal enum PaywallCopy {
                 "Unlimited decks and cards",
                 "Higher new-card daily limit",
             ],
-            ctaLabel: "Upgrade to Plus",
+            ctaLabel: "Upgrade to Plus"
         ),
         .newCardLimitAbove10: PaywallCopyEntry(
             eyebrow: "Locked",
@@ -192,7 +192,7 @@ internal enum PaywallCopy {
                 "Unlimited decks and cards",
                 "More reminders",
             ],
-            ctaLabel: "Upgrade to Plus",
+            ctaLabel: "Upgrade to Plus"
         ),
     ]
 }

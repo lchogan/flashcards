@@ -32,10 +32,10 @@ internal final class StreakMonitor {
         let yesterdayStart = Int64(cal.startOfDay(for: yesterday).timeIntervalSince1970 * 1000)
 
         let todayDescriptor = FetchDescriptor<ReviewEntity>(
-            predicate: #Predicate { $0.ratedAtMs >= todayStart },
+            predicate: #Predicate { $0.ratedAtMs >= todayStart }
         )
         let yesterdayDescriptor = FetchDescriptor<ReviewEntity>(
-            predicate: #Predicate { $0.ratedAtMs >= yesterdayStart && $0.ratedAtMs < todayStart },
+            predicate: #Predicate { $0.ratedAtMs >= yesterdayStart && $0.ratedAtMs < todayStart }
         )
 
         let studiedToday = ((try? context.fetchCount(todayDescriptor)) ?? 0) > 0
