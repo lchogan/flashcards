@@ -19,8 +19,11 @@ declare(strict_types=1);
  *   - "Entity key" is the top-level key in the client's `records` payload
  *     (e.g. "decks", "cards"). Each maps to a concrete RecordUpserter.
  *   - Unknown entity keys are silently skipped (forward-compatible clients).
- *   - RecordUpserter implementations are resolved fresh per-row via app(), so
- *     each upserter can declare its own constructor dependencies.
+ *   - RecordUpserter implementations are resolved once per entity key per
+ *     request via app(), so each upserter can declare its own constructor
+ *     dependencies. Upserter classes should be stateless or request-scoped —
+ *     don't bind an upserter as a container singleton, or per-request state
+ *     will leak across requests via the shared SyncPushService registry.
  *   - Multi-class file: PSR-4 autoloads SyncPushService by filename; sibling
  *     types (SyncPushResult, RecordUpserter, UpsertResult) load alongside it.
  */
