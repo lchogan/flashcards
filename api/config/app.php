@@ -58,6 +58,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Magic Link Host
+    |--------------------------------------------------------------------------
+    |
+    | Host used to render magic-link sign-in URLs delivered by email. Kept
+    | distinct from APP_URL so the email link can point at a public host
+    | (flashcards.lukehogan.com) even when the API is on an internal domain.
+    |
+    */
+
+    'magic_link_host' => env('APP_MAGIC_LINK_HOST', 'flashcards.lukehogan.com'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |
