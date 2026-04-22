@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		034B1AD5FF44E65062615B47 /* SessionQueueBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48C55A0C36640F3F80A4346 /* SessionQueueBuilderTests.swift */; };
 		0517803C799830F5D2612199 /* Control.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1E904C0BB96CFDF0B549B4 /* Control.swift */; };
+		05DA212F265AF76F77C41B19 /* SessionQueueBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69BE1712FF228283528309B /* SessionQueueBuilder.swift */; };
 		0663734BD2CB80C862FB72B4 /* MutationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C541DE92720101FECDDBFDF /* MutationQueue.swift */; };
 		08587D58067C0A312630DA8D /* RatingMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF2A62213E52FA682809B1B /* RatingMapping.swift */; };
 		08CDD3732EDAFE1C60B0B926 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC88DBBFD5579BED38C6C052 /* Clock.swift */; };
@@ -149,11 +151,13 @@
 		9B3925292F9A0F8A65D5ADA9 /* MWAccentKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAccentKey.swift; sourceTree = "<group>"; };
 		9D49E4AA2AE135563BBDA46A /* MWPrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWPrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		9FF2A62213E52FA682809B1B /* RatingMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingMapping.swift; sourceTree = "<group>"; };
+		A48C55A0C36640F3F80A4346 /* SessionQueueBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionQueueBuilderTests.swift; sourceTree = "<group>"; };
 		A6D19E2DA08AE57F2E891450 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		ABD8EE62BED3535F866F5F43 /* DeckEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckEntity.swift; sourceTree = "<group>"; };
 		AC88DBBFD5579BED38C6C052 /* Clock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
 		B08B320524436C5B4CCC4CD9 /* DesignSystemSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemSnapshotTests.swift; sourceTree = "<group>"; };
 		B164C49CB882DD2A86A4F46E /* MWScreenChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScreenChrome.swift; sourceTree = "<group>"; };
+		B69BE1712FF228283528309B /* SessionQueueBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionQueueBuilder.swift; sourceTree = "<group>"; };
 		B82C4A4AA1D82A8B89FB92E8 /* PendingMutationEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMutationEntity.swift; sourceTree = "<group>"; };
 		BB0EDBD405DDBA367BDF1503 /* Radii.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radii.swift; sourceTree = "<group>"; };
 		BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScreen.swift; sourceTree = "<group>"; };
@@ -229,6 +233,7 @@
 				F2AB305B3F7E1933D1A125DE /* FsrsSchedulerTests.swift */,
 				359B4E74E5113D4D8EE1518E /* MagicLinkConsumerTests.swift */,
 				F8BD4C5AD2B7B6777590445B /* MutationQueueTests.swift */,
+				A48C55A0C36640F3F80A4346 /* SessionQueueBuilderTests.swift */,
 				0F4549AF5E4A8FF1B8BBBF31 /* SyncIntegrationTests.swift */,
 				3C1769328EFBFFB86212C962 /* SyncPullerTests.swift */,
 				D6F136EB56F53DE1E21EC1B6 /* SyncPusherTests.swift */,
@@ -404,6 +409,14 @@
 			path = Layout;
 			sourceTree = "<group>";
 		};
+		9FC4D87C120431AF03FAF42F /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				B69BE1712FF228283528309B /* SessionQueueBuilder.swift */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
 		A7C7D1A8F0526AE0ACC967A6 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -469,6 +482,7 @@
 			children = (
 				A7C7D1A8F0526AE0ACC967A6 /* Auth */,
 				C07066FF8BDC3A30FB318EE4 /* Onboarding */,
+				9FC4D87C120431AF03FAF42F /* Session */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -681,6 +695,7 @@
 				1F66E163B88A2C2BF974A268 /* FsrsSchedulerTests.swift in Sources */,
 				B632620852D90304CF7F1510 /* MagicLinkConsumerTests.swift in Sources */,
 				FF3E7BF78806CC52E924FE69 /* MutationQueueTests.swift in Sources */,
+				034B1AD5FF44E65062615B47 /* SessionQueueBuilderTests.swift in Sources */,
 				46EF757D55EAC0A4A9F39128 /* SyncIntegrationTests.swift in Sources */,
 				A72996DA8E1FF8E4F7D5CCC1 /* SyncPullerTests.swift in Sources */,
 				1632434E093FB8EA04CC736E /* SyncPusherTests.swift in Sources */,
@@ -735,6 +750,7 @@
 				09E626CEFFD279643612951A /* ReviewEntity.swift in Sources */,
 				DF68FC3FC3330E8A257D5B34 /* RootView.swift in Sources */,
 				782DF0C67B844C19FA65CCFE /* SessionEntity.swift in Sources */,
+				05DA212F265AF76F77C41B19 /* SessionQueueBuilder.swift in Sources */,
 				17EF0C4A3171AF043E4BAC80 /* Shadows.swift in Sources */,
 				4202B146CCA490A0CAC26E09 /* SignUpWallView.swift in Sources */,
 				37DE4CDC872A96BF66F19D8F /* Spacing.swift in Sources */,
