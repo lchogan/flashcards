@@ -37,6 +37,7 @@
 		7469D2561DCEC06499A1C483 /* MWSecondaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A16BDB6D28578249699970F /* MWSecondaryButtonStyle.swift */; };
 		7C00A1D91D4886048AC8B54F /* Intro2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC69613C1B6A205B4F07A10 /* Intro2View.swift */; };
 		8B1C8DA5B9FFA67E666742C9 /* MWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C21C770B2B3AF3347CF2284 /* MWButton.swift */; };
+		9068880F7AD7040BBD0B3E25 /* SyncableRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF568EFFD771971970B8D385 /* SyncableRecord.swift */; };
 		908C1BA6C8BEFF7595F4E477 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40CC12E5F4D662B8D653E9 /* AppStateTests.swift */; };
 		918FA4E3B46D91876C6A1ED6 /* test_MWButton_primary_dark.dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 7877A917EF68E9D82DE4ED2E /* test_MWButton_primary_dark.dark.png */; };
 		97BB3DE8DA72E45A9CF0DD8F /* test_MWTextField.1.png in Resources */ = {isa = PBXBuildFile; fileRef = 490ECA2DC834EBB5DCEAFD89 /* test_MWTextField.1.png */; };
@@ -135,6 +136,7 @@
 		EB119C7EA6CDB08651643EC5 /* MagicLinkSentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkSentView.swift; sourceTree = "<group>"; };
 		ED2F2E000D8E52F893AB59AF /* Flashcards.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flashcards.entitlements; sourceTree = "<group>"; };
 		EF1D480537F787B33D90D3D7 /* Shadows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadows.swift; sourceTree = "<group>"; };
+		EF568EFFD771971970B8D385 /* SyncableRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncableRecord.swift; sourceTree = "<group>"; };
 		F040D73BB3A94134B162AE1B /* test_MWCard.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_MWCard.1.png; sourceTree = "<group>"; };
 		F5CDDABFB08660589DAC7564 /* APIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
 		F760E860CA556E45A8229982 /* FlashcardsUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = FlashcardsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,6 +216,14 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		26B827142C4107CAD33D42AD /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				4304CCAD52294A3AD9BD92B7 /* Sync */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		379B282C25770B71CD958878 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -224,6 +234,14 @@
 				4792559B161866F590E6EFEA /* Tokens */,
 			);
 			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		4304CCAD52294A3AD9BD92B7 /* Sync */ = {
+			isa = PBXGroup;
+			children = (
+				EF568EFFD771971970B8D385 /* SyncableRecord.swift */,
+			);
+			path = Sync;
 			sourceTree = "<group>";
 		};
 		4792559B161866F590E6EFEA /* Tokens */ = {
@@ -285,6 +303,7 @@
 			children = (
 				0A05C347E58406AA34A532F5 /* Analytics */,
 				F5F58FEB583413C13FFB468F /* App */,
+				26B827142C4107CAD33D42AD /* Data */,
 				379B282C25770B71CD958878 /* DesignSystem */,
 				E6CC567D895B707D164840A7 /* Features */,
 				AC22C941271FA71AE6097241 /* Networking */,
@@ -611,6 +630,7 @@
 				4202B146CCA490A0CAC26E09 /* SignUpWallView.swift in Sources */,
 				37DE4CDC872A96BF66F19D8F /* Spacing.swift in Sources */,
 				4F3739FD8C07B8D27B0A7FF6 /* SplashView.swift in Sources */,
+				9068880F7AD7040BBD0B3E25 /* SyncableRecord.swift in Sources */,
 				72C41A07DC840AA76BAB53AA /* TokenStore.swift in Sources */,
 				D6716D000299EB9DA4283B57 /* Typography.swift in Sources */,
 			);
