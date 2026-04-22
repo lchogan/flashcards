@@ -2,37 +2,83 @@
 //  RootView.swift
 //  Flashcards
 //
-//  Purpose: Top-level view mounted by `FlashcardsApp`. In Phase 0 this is a
-//           thin scaffold that reads `AppState` from the environment and
-//           renders a design-system-styled placeholder — just enough to
-//           prove the environment wiring and token chain are intact.
-//  Dependencies: SwiftUI, `AppState`, `MWScreen`, `MWEyebrow`, `MWSpacing`,
+//  Purpose: Top-level view mounted by `FlashcardsApp`. Owns the
+//           `AuthManager` and the onboarding `step` enum, routing the
+//           user through Splash → Intro1 → Intro2 → SignUpWall →
+//           MagicLinkSent while `auth.state` is not yet `.signedIn`.
+//           Once authenticated it swaps in a placeholder stand-in for
+//           the Phase 2 home screen.
+//  Dependencies: SwiftUI, `AppState`, `AuthManager`, `APIClient`,
+//                onboarding views (`SplashView`, `Intro1View`,
+//                `Intro2View`, `SignUpWallView`, `MagicLinkSentView`),
 //                `MWType`, `MWColor`.
-//  Key concepts: No routing, no navigation stack, no auth branching. Those
-//                arrive in Tasks 0.39–0.40. This view intentionally stays
-//                shallow so the routing task can replace its body without
-//                fighting existing hierarchy.
+//  Key concepts: `auth` is held via `@State` so SwiftUI owns its
+//                lifetime for the scene. `step` is the onboarding
+//                cursor; once `auth.state` becomes `.signedIn` the
+//                `switch` short-circuits past it entirely and the
+//                cursor becomes irrelevant. Magic-link completion does
+//                NOT happen here — the universal-link handler (future
+//                task) will call `AuthManager.consumeMagicLink(token:)`,
+//                which flips `auth.state` and causes this view to
+//                re-route. `appState` is kept in scope for downstream
+//                tasks that will read subscription / sync projections
+//                off it.
 //
 
 import SwiftUI
 
-/// Root view for the Flashcards app. Thin scaffold reading `AppState` from the
-/// environment; Phase 0 placeholder pending routing in Task 0.39.
+/// Root view for the Flashcards app. Owns `AuthManager` and drives the
+/// onboarding step machine; switches to a signed-in placeholder once
+/// `auth.state == .signedIn`.
 struct RootView: View {
     @Environment(AppState.self) private var appState
+    // Hardcoded localhost base URL — placeholder. A later Phase 0 task wires
+    // a real configuration source (build config / environment) and removes
+    // this literal. Kept explicit so grep picks it up when that task lands.
+    // swiftlint:disable:next todo
+    // TODO: Replace hardcoded localhost base URL with build-config-driven value.
+    @State private var auth = AuthManager(
+        api: APIClient(baseURL: URL(string: "http://localhost:8000")!) { nil }
+    )
+    @State private var step: Step = .splash
+    @State private var emailSent: String?
 
+    /// Onboarding cursor. Advanced by the intro screens' continue
+    /// closures and by the magic-link request path.
+    enum Step { case splash, intro1, intro2, signup, magicLinkSent }
+
+    /// Routes on `auth.state` first — signed-in short-circuits to a
+    /// placeholder; otherwise the onboarding `step` decides what to
+    /// render. `auth.restore()` runs once on appear via `.task`.
     var body: some View {
-        MWScreen {
-            VStack(spacing: MWSpacing.l) {
-                MWEyebrow("Flashcards")
-                Text("Phase 0 scaffold").font(MWType.headingM).foregroundStyle(MWColor.ink)
-                Text("Auth status: \(String(describing: appState.authStatus))")
-                    .font(MWType.body).foregroundStyle(MWColor.inkMuted)
+        Group {
+            switch auth.state {
+            case .signedIn:
+                Text("Signed in — home coming in Phase 2.")
+                    .font(MWType.headingM).foregroundStyle(MWColor.ink)
+            default:
+                switch step {
+                case .splash: SplashView().task {
+                    try? await Task.sleep(nanoseconds: 1_200_000_000)
+                    step = .intro1
+                }
+                case .intro1: Intro1View { step = .intro2 }
+                case .intro2: Intro2View { step = .signup }
+                case .signup: SignUpWallView(
+                    onAppleSignIn: {
+                        try? await auth.signInWithApple()
+                    },
+                    onRequestMagicLink: { email in
+                        try? await auth.requestMagicLink(email: email)
+                        emailSent = email
+                        step = .magicLinkSent
+                    }
+                )
+                case .magicLinkSent:
+                    MagicLinkSentView(email: emailSent ?? "")
+                }
             }
         }
+        .task { await auth.restore() }
     }
-}
-
-#Preview {
-    RootView().environment(AppState())
 }
