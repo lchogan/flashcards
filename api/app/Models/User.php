@@ -29,6 +29,7 @@ class User extends Authenticatable
         'reminder_enabled' => 'boolean',
         'marketing_opt_in' => 'boolean',
         'subscription_expires_at' => 'datetime',
+        'image_quota_used_bytes' => 'integer',
         'updated_at_ms' => 'integer',
         'deleted_at_ms' => 'integer',
     ];

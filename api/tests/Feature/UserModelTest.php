@@ -17,7 +17,7 @@ it('creates a user with spec fields', function () {
     expect($user->daily_goal_cards)->toBe(20);
     expect($user->reminder_enabled)->toBeFalse();
     expect($user->marketing_opt_in)->toBeFalse();
-    expect((int) $user->image_quota_used_bytes)->toBe(0);
+    expect($user->image_quota_used_bytes)->toBe(0);
     expect($user->theme_preference)->toBe('system');
 });
 
