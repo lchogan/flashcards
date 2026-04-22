@@ -39,6 +39,7 @@
 		EAF6EBF27A4ABC187CA6F186 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 9A85F47B4666B3448616D1FF /* KeychainAccess */; };
 		F03144EE96CEA0A0C37E3256 /* MWEyebrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2046EA17B9CF3B81354EBB /* MWEyebrow.swift */; };
 		F1642B745813ABE669A91B85 /* MWCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5666B85823F4898EAB769C5A /* MWCard.swift */; };
+		F169AD878724E333007A4999 /* MWScreenChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = B164C49CB882DD2A86A4F46E /* MWScreenChrome.swift */; };
 		F25E11BD413D3218216BB972 /* Borders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4233F9E69A788D61C2D472C0 /* Borders.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +82,7 @@
 		9B3925292F9A0F8A65D5ADA9 /* MWAccentKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAccentKey.swift; sourceTree = "<group>"; };
 		9D49E4AA2AE135563BBDA46A /* MWPrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWPrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		A6D19E2DA08AE57F2E891450 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		B164C49CB882DD2A86A4F46E /* MWScreenChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScreenChrome.swift; sourceTree = "<group>"; };
 		BB0EDBD405DDBA367BDF1503 /* Radii.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radii.swift; sourceTree = "<group>"; };
 		BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScreen.swift; sourceTree = "<group>"; };
 		CB15FDE0C8DC4DAAAD34C765 /* ControlTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlTokenTests.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 			children = (
 				76798B4897CAC276448E489B /* MWButtonPress.swift */,
 				5666B85823F4898EAB769C5A /* MWCard.swift */,
+				B164C49CB882DD2A86A4F46E /* MWScreenChrome.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 				6621BD3199DA11A08EAFE665 /* MWPill.swift in Sources */,
 				C9D10B114F52606849C96E01 /* MWPrimaryButtonStyle.swift in Sources */,
 				319BDA71D9F0A272D6841EDA /* MWScreen.swift in Sources */,
+				F169AD878724E333007A4999 /* MWScreenChrome.swift in Sources */,
 				7469D2561DCEC06499A1C483 /* MWSecondaryButtonStyle.swift in Sources */,
 				50D528B50CDEA0E4A89FA353 /* MWTextField.swift in Sources */,
 				A200308DB65D7AC28BF3AB87 /* Motion.swift in Sources */,
