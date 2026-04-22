@@ -42,3 +42,22 @@ test('push rejects sub-topic attaching to someone else\'s deck', function () {
         ]);
     $res->assertJson(['accepted' => 0]);
 });
+
+test('pull does not leak sub-topics belonging to other users', function () {
+    $owner = User::factory()->create();
+    $intruder = User::factory()->create();
+
+    $ownerDeck = Deck::factory()->for($owner)->create();
+    $intruderDeck = Deck::factory()->for($intruder)->create();
+
+    SubTopic::factory()->for($ownerDeck)->create(['name' => 'Mine', 'updated_at_ms' => 1000]);
+    SubTopic::factory()->for($intruderDeck)->create(['name' => 'Not yours', 'updated_at_ms' => 1000]);
+
+    $token = $owner->createToken('t')->plainTextToken;
+    $res = $this->withHeader('Authorization', "Bearer {$token}")
+        ->getJson('/api/v1/sync/pull?since=0&entities=sub_topics');
+
+    $res->assertOk();
+    expect($res->json('records.sub_topics'))->toHaveCount(1)
+        ->and($res->json('records.sub_topics.0.name'))->toBe('Mine');
+});
