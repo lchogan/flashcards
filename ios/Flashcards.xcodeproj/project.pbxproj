@@ -17,6 +17,7 @@
 		319BDA71D9F0A272D6841EDA /* MWScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */; };
 		37DE4CDC872A96BF66F19D8F /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFBCFA88524780D98CE086 /* Spacing.swift */; };
 		4F357D7944554375AB0165EC /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1F414A0711619C5FDF3269DD /* MarkdownUI */; };
+		50D528B50CDEA0E4A89FA353 /* MWTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA292D13A4FD4DFA9AAE6053 /* MWTextField.swift */; };
 		677876272A9353657D56BC78 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = B2E7B02A2283DBE098796542 /* Sentry */; };
 		6BC96A54318A7EC43FB27FC3 /* MWDestructiveButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2F6309A56C16DB54F4E208 /* MWDestructiveButtonStyle.swift */; };
 		7046D80BB7E05D4488B8E620 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40590CEF9514F130D9EB7101 /* Assets.xcassets */; };
@@ -82,6 +83,7 @@
 		E8601E71EC6CC580329D9D3A /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		EF1D480537F787B33D90D3D7 /* Shadows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadows.swift; sourceTree = "<group>"; };
 		F760E860CA556E45A8229982 /* FlashcardsUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = FlashcardsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA292D13A4FD4DFA9AAE6053 /* MWTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				7C21C770B2B3AF3347CF2284 /* MWButton.swift */,
+				FA292D13A4FD4DFA9AAE6053 /* MWTextField.swift */,
 			);
 			path = Atoms;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				C9D10B114F52606849C96E01 /* MWPrimaryButtonStyle.swift in Sources */,
 				319BDA71D9F0A272D6841EDA /* MWScreen.swift in Sources */,
 				7469D2561DCEC06499A1C483 /* MWSecondaryButtonStyle.swift in Sources */,
+				50D528B50CDEA0E4A89FA353 /* MWTextField.swift in Sources */,
 				A200308DB65D7AC28BF3AB87 /* Motion.swift in Sources */,
 				D9DD838304ED3D163450007C /* Radii.swift in Sources */,
 				17EF0C4A3171AF043E4BAC80 /* Shadows.swift in Sources */,
