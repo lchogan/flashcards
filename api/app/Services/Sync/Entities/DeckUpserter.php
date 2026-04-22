@@ -26,6 +26,7 @@ namespace App\Services\Sync\Entities;
 
 use App\Models\Deck;
 use App\Models\User;
+use App\Services\Entitlements\EntitlementChecker;
 use App\Services\Sync\RecordUpserter;
 use App\Services\Sync\UpsertResult;
 
@@ -64,6 +65,15 @@ final class DeckUpserter implements RecordUpserter
 
         if ($existing && $existing->updated_at_ms >= $incoming) {
             return new UpsertResult(false, 'stale');
+        }
+
+        // Gate only on insert (not update): a net-new deck must fit under the
+        // user's decks.create cap; editing an existing deck never re-gates.
+        if ($existing === null) {
+            $check = app(EntitlementChecker::class)->can($user, 'decks.create');
+            if (! $check->allowed) {
+                return new UpsertResult(false, (string) $check->reason);
+            }
         }
 
         // Use firstOrNew + explicit id assignment to avoid HasUuids overwriting the

@@ -27,13 +27,17 @@
 //                off it.
 //
 
+import SwiftData
 import SwiftUI
+import UIKit
 
 /// Root view for the Flashcards app. Owns `AuthManager` and drives the
 /// onboarding step machine; switches to a signed-in placeholder once
 /// `auth.state == .signedIn`.
 struct RootView: View {
     @Environment(AppState.self) private var appState
+    @Environment(\.modelContext) private var modelContext
+    @Environment(\.scenePhase) private var scenePhase
     // Hardcoded localhost base URL — placeholder. A later Phase 0 task wires
     // a real configuration source (build config / environment) and removes
     // this literal. Kept explicit so grep picks it up when that task lands.
@@ -114,6 +118,35 @@ struct RootView: View {
                 return
             }
             Task { try? await auth.consumeMagicLink(token: token) }
+        }
+        // Streak-at-risk nudge: when the app is backgrounded (or never
+        // opened after breakfast), re-evaluate and schedule a one-shot 20:00
+        // reminder if the streak needs rescuing. Scheduled every foreground
+        // so it self-cancels the moment the user logs a review.
+        .onChange(of: scenePhase) { _, newPhase in
+            guard newPhase == .active else {
+                return
+            }
+            let monitor = StreakMonitor(context: modelContext)
+            let scheduler = ReminderScheduler()
+            Task {
+                if await NotificationManager.shared.requestAuthorizationIfNeeded() {
+                    await MainActor.run {
+                        UIApplication.shared.registerForRemoteNotifications()
+                    }
+                }
+                if monitor.streakAtRisk() {
+                    await scheduler.schedule(
+                        time: DateComponents(hour: 20, minute: 0),
+                        identifier: "mw.streak.nudge",
+                        title: "Your streak is waiting.",
+                        body: "A quick session keeps it alive.",
+                        category: ReminderScheduler.streakCategory
+                    )
+                } else {
+                    await scheduler.cancel(identifier: "mw.streak.nudge")
+                }
+            }
         }
     }
 }

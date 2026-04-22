@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Jobs\HardDeleteExpiredUsers;
 use App\Jobs\PurgeTombstones;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
@@ -12,3 +13,5 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::job(new PurgeTombstones)->daily();
+
+Schedule::job(new HardDeleteExpiredUsers)->dailyAt('03:00');

@@ -26,14 +26,58 @@
 
 import SwiftData
 import SwiftUI
+import UIKit
+
+/// UIApplicationDelegate shim so we can receive APNs token callbacks. iOS
+/// only calls `didRegisterForRemoteNotifications...` on a UIApplication-
+/// Delegate, not on SwiftUI's App — so we bridge through `@UIApplication-
+/// DelegateAdaptor`.
+final class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(
+        _ application: UIApplication,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    ) {
+        Task {
+            await DeviceTokenRegistrar.register(tokenData: deviceToken)
+        }
+    }
+
+    func application(
+        _ application: UIApplication,
+        didFailToRegisterForRemoteNotificationsWithError error: Error
+    ) {
+        AnalyticsClient.track("apns.register.fail", properties: ["error": String(describing: error)])
+    }
+}
 
 @main
 struct FlashcardsApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @State private var appState = AppState()
+    @State private var entitlements: EntitlementsManager
+    @State private var purchases: PurchasesManager
     let container: ModelContainer
 
     init() {
         AnalyticsClient.configure()
+
+        // One APIClient shared between the entitlement and purchase surfaces
+        // so both see the same auth token. AuthManager keeps its own client in
+        // RootView for the unauthenticated auth flows.
+        let tokenStore = TokenStore()
+        let api = APIClient(baseURL: URL(string: "http://localhost:8000")!) {
+            await tokenStore.access()
+        }
+        let entitlementsManager = EntitlementsManager(api: api)
+        self._entitlements = State(initialValue: entitlementsManager)
+        self._purchases = State(
+            initialValue: PurchasesManager(
+                api: api,
+                refreshEntitlements: { @Sendable [weak entitlementsManager] in
+                    await entitlementsManager?.load(force: true)
+                }
+            ))
+
         let schema: [any PersistentModel.Type] = [
             UserEntity.self, TopicEntity.self, DeckEntity.self, SubTopicEntity.self,
             CardEntity.self, CardSubTopicEntity.self, ReviewEntity.self,
@@ -60,7 +104,20 @@ struct FlashcardsApp: App {
     var body: some Scene {
         WindowGroup {
             RootView().environment(appState)
+                .environment(entitlements)
+                .environment(purchases)
                 .modelContainer(container)
+                .task {
+                    if UITestLaunch.isActive {
+                        // UI tests run offline against an in-memory store;
+                        // the real load() would hit a nonexistent backend
+                        // and leave gated features blocked by the paywall.
+                        entitlements.applyUnrestricted()
+                    } else {
+                        await entitlements.load()
+                        await purchases.load()
+                    }
+                }
                 .onOpenURL { url in
                     if let token = MagicLinkConsumer.extractToken(from: url) {
                         NotificationCenter.default.post(

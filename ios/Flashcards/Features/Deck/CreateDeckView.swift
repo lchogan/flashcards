@@ -12,6 +12,7 @@ import SwiftUI
 struct CreateDeckView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @Environment(EntitlementsManager.self) private var entitlements
 
     let userId: String
     let onCreated: () -> Void
@@ -20,6 +21,7 @@ struct CreateDeckView: View {
     @State private var description = ""
     @State private var accent: MWAccent = .amber
     @State private var mode: SessionMode = .smart
+    @State private var paywallReason: EntitlementKey?
 
     var body: some View {
         ScrollView {
@@ -56,13 +58,30 @@ struct CreateDeckView: View {
                 }
 
                 MWButton("Create deck") {
-                    createDeck()
+                    attemptCreate()
                 }
                 .disabled(title.trimmingCharacters(in: .whitespaces).isEmpty)
             }
             .mwPadding(.all, .xl)
         }
         .background(MWColor.canvas)
+        .sheet(item: $paywallReason) { reason in
+            PaywallView(reason: reason)
+        }
+    }
+
+    private func attemptCreate() {
+        let descriptor = FetchDescriptor<DeckEntity>(
+            predicate: #Predicate { $0.syncDeletedAtMs == nil }
+        )
+        let count = (try? context.fetchCount(descriptor)) ?? 0
+
+        switch entitlements.can(.decksCreate, currentCount: count).outcome {
+        case .allowed:
+            createDeck()
+        case .paywall(let reason, _):
+            paywallReason = reason
+        }
     }
 
     private func createDeck() {

@@ -84,6 +84,8 @@ targets:
         product: Sentry
       - package: SwiftFSRS
         product: SwiftFSRS
+      - target: MWReminderContent
+        embed: true
     preBuildScripts:
       - name: SwiftLint
         script: |
@@ -93,6 +95,24 @@ targets:
             echo "warning: SwiftLint not installed — brew install swiftlint"
           fi
         basedOnDependencyAnalysis: false
+
+  MWReminderContent:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: MWReminderContent
+        createIntermediateGroups: true
+        excludes:
+          - Info.plist
+          - MWReminderContent.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lukehogan.flashcards.ReminderContent
+        CODE_SIGN_ENTITLEMENTS: MWReminderContent/MWReminderContent.entitlements
+        INFOPLIST_FILE: MWReminderContent/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        SKIP_INSTALL: YES
 
   FlashcardsTests:
     type: bundle.unit-test

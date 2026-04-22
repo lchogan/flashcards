@@ -71,4 +71,23 @@ class MeController extends Controller
 
         return $this->show($request);
     }
+
+    /**
+     * Register / overwrite the APNs device token for this user. Called by
+     * iOS from `UIApplicationDelegate.didRegisterForRemoteNotificationsWithDeviceToken`
+     * so the server can route SubscriptionRenewed / PaymentFailed to the
+     * device. Idempotent; tokens rotate on device reinstall.
+     */
+    public function registerDeviceToken(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'device_token' => ['required', 'string', 'max:255'],
+        ]);
+
+        /** @var User $u */
+        $u = $request->user();
+        $u->update(['apn_device_token' => $data['device_token']]);
+
+        return response()->json(status: 204);
+    }
 }
