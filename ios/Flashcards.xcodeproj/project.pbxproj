@@ -28,6 +28,8 @@
 		1F66E163B88A2C2BF974A268 /* FsrsSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AB305B3F7E1933D1A125DE /* FsrsSchedulerTests.swift */; };
 		24189012899F3CED7AB44E5E /* PostHog in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF295D3928BC732211057E9 /* PostHog */; };
 		243778810AF92E413F4A7823 /* UUIDv7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FC6B253B1E1DE3A8740B95 /* UUIDv7.swift */; };
+		269B12D667F48D430D1EBCD6 /* MWSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FC48EE569534CBA573C1C8 /* MWSection.swift */; };
+		285CF35E0C520419F1E10EE5 /* MWTextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5230E893284E35730064E5E /* MWTextArea.swift */; };
 		2C783B53D6E3E96C7E386CC0 /* AssetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8383BCF5096BCC46DE05D02 /* AssetEntity.swift */; };
 		2FBB276265F68FA8374898A6 /* AppleSignInService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A12C1B6BE8A6235B115D87 /* AppleSignInService.swift */; };
 		319BDA71D9F0A272D6841EDA /* MWScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */; };
@@ -47,6 +49,7 @@
 		5151286603222647B1AACCB5 /* Intro1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026338AE29FD796E495EB78B /* Intro1View.swift */; };
 		52D5439183B9053C7E7404EB /* CardEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033AC2926EB4D961C4C424DC /* CardEntity.swift */; };
 		58DB376C943A13A4DEB0F39C /* SyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A675AF8DB65EE2904C44D0B /* SyncScheduler.swift */; };
+		59F5DF420EF34A63C92C3CA5 /* MWFormRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC1DA0E68DA712D4F980330 /* MWFormRow.swift */; };
 		5D67882376226C37CCEDBDED /* MagicLinkConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2EEF58ABB8E128D7C31244 /* MagicLinkConsumer.swift */; };
 		60CE3ABF4DCA85511909BDA1 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6944DDE653DA2FDC75F8FA1B /* Reachability.swift */; };
 		61E3A6707A721022A5241E94 /* MWRatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829365D41AABE8389B3A7FDC /* MWRatingButton.swift */; };
@@ -61,6 +64,7 @@
 		7469D2561DCEC06499A1C483 /* MWSecondaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A16BDB6D28578249699970F /* MWSecondaryButtonStyle.swift */; };
 		782DF0C67B844C19FA65CCFE /* SessionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF8F77B9F27EABE94CD5BDA /* SessionEntity.swift */; };
 		7C00A1D91D4886048AC8B54F /* Intro2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC69613C1B6A205B4F07A10 /* Intro2View.swift */; };
+		8513744E217874560E72406D /* MWTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDA16CADF647B3B6848CB1A /* MWTopBar.swift */; };
 		8B1C8DA5B9FFA67E666742C9 /* MWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C21C770B2B3AF3347CF2284 /* MWButton.swift */; };
 		9068880F7AD7040BBD0B3E25 /* SyncableRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF568EFFD771971970B8D385 /* SyncableRecord.swift */; };
 		908C1BA6C8BEFF7595F4E477 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40CC12E5F4D662B8D653E9 /* AppStateTests.swift */; };
@@ -133,6 +137,7 @@
 		1A2F6309A56C16DB54F4E208 /* MWDestructiveButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDestructiveButtonStyle.swift; sourceTree = "<group>"; };
 		28278995FCCF84EB0A23F25E /* ReviewEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewEntity.swift; sourceTree = "<group>"; };
 		300F3D467E2E539FF66D566E /* Motion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Motion.swift; sourceTree = "<group>"; };
+		32FC48EE569534CBA573C1C8 /* MWSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSection.swift; sourceTree = "<group>"; };
 		345D340AF68F033F6EE939F4 /* test_MWButton_primary_idle.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_MWButton_primary_idle.1.png; sourceTree = "<group>"; };
 		359B4E74E5113D4D8EE1518E /* MagicLinkConsumerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkConsumerTests.swift; sourceTree = "<group>"; };
 		3C1769328EFBFFB86212C962 /* SyncPullerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPullerTests.swift; sourceTree = "<group>"; };
@@ -142,6 +147,7 @@
 		4233F9E69A788D61C2D472C0 /* Borders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Borders.swift; sourceTree = "<group>"; };
 		490ECA2DC834EBB5DCEAFD89 /* test_MWTextField.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_MWTextField.1.png; sourceTree = "<group>"; };
 		4AB8DD260175A68C1CA1FCEA /* MWPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWPill.swift; sourceTree = "<group>"; };
+		4BC1DA0E68DA712D4F980330 /* MWFormRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWFormRow.swift; sourceTree = "<group>"; };
 		4EE79E0CDC597ADAB502C8C9 /* SubTopicEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTopicEntity.swift; sourceTree = "<group>"; };
 		53FF0E03041A7DF5873A4E23 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		5666B85823F4898EAB769C5A /* MWCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCard.swift; sourceTree = "<group>"; };
@@ -165,6 +171,7 @@
 		9D49E4AA2AE135563BBDA46A /* MWPrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWPrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		9FF2A62213E52FA682809B1B /* RatingMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingMapping.swift; sourceTree = "<group>"; };
 		A48C55A0C36640F3F80A4346 /* SessionQueueBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionQueueBuilderTests.swift; sourceTree = "<group>"; };
+		A5230E893284E35730064E5E /* MWTextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWTextArea.swift; sourceTree = "<group>"; };
 		A6D19E2DA08AE57F2E891450 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		ABD8EE62BED3535F866F5F43 /* DeckEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckEntity.swift; sourceTree = "<group>"; };
 		AC88DBBFD5579BED38C6C052 /* Clock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
@@ -174,6 +181,7 @@
 		B82C4A4AA1D82A8B89FB92E8 /* PendingMutationEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingMutationEntity.swift; sourceTree = "<group>"; };
 		BB0EDBD405DDBA367BDF1503 /* Radii.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radii.swift; sourceTree = "<group>"; };
 		BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScreen.swift; sourceTree = "<group>"; };
+		BFDA16CADF647B3B6848CB1A /* MWTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWTopBar.swift; sourceTree = "<group>"; };
 		C0779B8D6E61E0FA843454D6 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
 		C4046CD24470CE2356BFFCF4 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		C7A12C1B6BE8A6235B115D87 /* AppleSignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInService.swift; sourceTree = "<group>"; };
@@ -349,7 +357,10 @@
 			isa = PBXGroup;
 			children = (
 				8355F6FE220725A6DAD560B3 /* MWDuePill.swift */,
+				4BC1DA0E68DA712D4F980330 /* MWFormRow.swift */,
 				829365D41AABE8389B3A7FDC /* MWRatingButton.swift */,
+				32FC48EE569534CBA573C1C8 /* MWSection.swift */,
+				BFDA16CADF647B3B6848CB1A /* MWTopBar.swift */,
 			);
 			path = Molecules;
 			sourceTree = "<group>";
@@ -535,6 +546,7 @@
 				4AB8DD260175A68C1CA1FCEA /* MWPill.swift */,
 				8FE7C8DABC4C17BDAD170ED4 /* MWProgressBar.swift */,
 				080906C8209BFFC0A09C6D70 /* MWSwitch.swift */,
+				A5230E893284E35730064E5E /* MWTextArea.swift */,
 				FA292D13A4FD4DFA9AAE6053 /* MWTextField.swift */,
 			);
 			path = Atoms;
@@ -776,6 +788,7 @@
 				343AAB64A5721C045E9EE719 /* MWDot.swift in Sources */,
 				187FE4F00E40C3BF4E1A4740 /* MWDuePill.swift in Sources */,
 				F03144EE96CEA0A0C37E3256 /* MWEyebrow.swift in Sources */,
+				59F5DF420EF34A63C92C3CA5 /* MWFormRow.swift in Sources */,
 				6621BD3199DA11A08EAFE665 /* MWPill.swift in Sources */,
 				C9D10B114F52606849C96E01 /* MWPrimaryButtonStyle.swift in Sources */,
 				FDF1E30B9389B8590813789B /* MWProgressBar.swift in Sources */,
@@ -783,8 +796,11 @@
 				319BDA71D9F0A272D6841EDA /* MWScreen.swift in Sources */,
 				F169AD878724E333007A4999 /* MWScreenChrome.swift in Sources */,
 				7469D2561DCEC06499A1C483 /* MWSecondaryButtonStyle.swift in Sources */,
+				269B12D667F48D430D1EBCD6 /* MWSection.swift in Sources */,
 				0FE353CC6C9D1D5117085ECC /* MWSwitch.swift in Sources */,
+				285CF35E0C520419F1E10EE5 /* MWTextArea.swift in Sources */,
 				50D528B50CDEA0E4A89FA353 /* MWTextField.swift in Sources */,
+				8513744E217874560E72406D /* MWTopBar.swift in Sources */,
 				5D67882376226C37CCEDBDED /* MagicLinkConsumer.swift in Sources */,
 				3C0A04027670D60D6C90DF14 /* MagicLinkSentView.swift in Sources */,
 				A200308DB65D7AC28BF3AB87 /* Motion.swift in Sources */,
