@@ -10,7 +10,11 @@
 //  Dependencies: Foundation (`URL`, `URLComponents`, `Notification.Name`).
 //  Key concepts: Pure value-level parsing — `extractToken(from:)` is a
 //                stateless function on an empty-enum namespace so it is
-//                trivially Sendable and unit-testable. The notification
+//                trivially Sendable and unit-testable. The parser is
+//                tolerant of trailing slashes in the URL path (Mail
+//                clients, MDM filters, and copy-paste workflows can
+//                introduce them), so both `/auth/consume` and
+//                `/auth/consume/` are accepted. The notification
 //                name lives alongside the parser to keep the universal-
 //                link surface area co-located; producers post to it from
 //                `FlashcardsApp`, and consumers (`RootView`) observe it
@@ -24,18 +28,22 @@ import Foundation
 public enum MagicLinkConsumer {
     /// Extracts the magic-link token from a universal-link URL.
     ///
-    /// Accepts any URL whose path ends with `/auth/consume` and returns
-    /// the value of its `t` query parameter, if present.
+    /// Accepts any URL whose path (after trimming leading/trailing
+    /// slashes) ends with `auth/consume` and returns the value of its
+    /// `t` query parameter, if present. Trailing slashes are tolerated
+    /// because Mail clients, MDM filters, and copy-paste workflows can
+    /// introduce them on the critical auth path.
     ///
     /// - Parameter url: The URL delivered by `onOpenURL` (typically the
     ///   HTTPS universal link the user tapped in Mail / Messages).
     /// - Returns: The token string, or `nil` if the URL does not match
     ///   the consume path or is missing the `t` query item.
     public static func extractToken(from url: URL) -> String? {
-        guard
-            let comps = URLComponents(url: url, resolvingAgainstBaseURL: false),
-            comps.path.hasSuffix("/auth/consume")
-        else {
+        guard let comps = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+            return nil
+        }
+        let normalizedPath = comps.path.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        guard normalizedPath.hasSuffix("auth/consume") else {
             return nil
         }
         return comps.queryItems?.first(where: { $0.name == "t" })?.value

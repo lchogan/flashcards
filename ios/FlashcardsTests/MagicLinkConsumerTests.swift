@@ -7,9 +7,10 @@
 //           path ends with `/auth/consume` qualify, and the `t` query
 //           parameter must be present.
 //  Dependencies: XCTest, Flashcards module (`MagicLinkConsumer`).
-//  Key concepts: Pure function under test — no stubs, no async. Three
-//                cases cover the happy path, wrong path, and missing
-//                query item.
+//  Key concepts: Pure function under test — no stubs, no async. Cases
+//                cover the happy path, wrong path, missing query item,
+//                trailing slash in path, URL fragment, and a "contains
+//                but does not end with" path that must be rejected.
 //
 
 import XCTest
@@ -28,6 +29,21 @@ final class MagicLinkConsumerTests: XCTestCase {
 
     func test_returnsNilWhenTokenMissing() {
         let url = URL(string: "https://flashcards.app/auth/consume")!
+        XCTAssertNil(MagicLinkConsumer.extractToken(from: url))
+    }
+
+    func test_extractsTokenWithTrailingSlashInPath() {
+        let url = URL(string: "https://flashcards.app/auth/consume/?t=xyz")!
+        XCTAssertEqual(MagicLinkConsumer.extractToken(from: url), "xyz")
+    }
+
+    func test_extractsTokenWithURLFragment() {
+        let url = URL(string: "https://flashcards.app/auth/consume?t=abc#section")!
+        XCTAssertEqual(MagicLinkConsumer.extractToken(from: url), "abc")
+    }
+
+    func test_returnsNilForPathContainingButNotEndingWithAuthConsume() {
+        let url = URL(string: "https://flashcards.app/auth/consume/extra?t=xyz")!
         XCTAssertNil(MagicLinkConsumer.extractToken(from: url))
     }
 }
