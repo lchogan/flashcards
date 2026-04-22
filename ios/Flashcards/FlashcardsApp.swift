@@ -37,8 +37,8 @@ struct FlashcardsApp: App {
         do {
             container = try ModelContainer(
                 for: UserEntity.self, TopicEntity.self, DeckEntity.self, SubTopicEntity.self,
-                     CardEntity.self, CardSubTopicEntity.self, ReviewEntity.self,
-                     SessionEntity.self, AssetEntity.self, PendingMutationEntity.self
+                CardEntity.self, CardSubTopicEntity.self, ReviewEntity.self,
+                SessionEntity.self, AssetEntity.self, PendingMutationEntity.self
             )
         } catch {
             fatalError("Failed to initialise SwiftData ModelContainer: \(error)")
