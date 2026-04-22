@@ -106,7 +106,7 @@ Two top-level projects live in this monorepo because the iOS app and the API co-
 | [PHPStan](https://phpstan.org/) level 6 (via Larastan) | Static analysis | Type-checks PHP before runtime |
 | [Pint](https://laravel.com/docs/pint) | Laravel's opinionated style formatter | Zero-config formatter, runs in CI |
 | [firebase/php-jwt](https://github.com/firebase/php-jwt) v7 | JWT library | Used to verify Apple ID tokens against Apple's JWKS |
-| [Cashier](https://laravel.com/docs/billing) | Laravel's billing wrapper (Phase 2+) | Will handle App Store Server notifications |
+| (Apple IAP path — no Stripe/Cashier) | StoreKit 2 JWS verification via `firebase/php-jwt`; App Store Server Notifications v2 webhook hand-rolled | Apple handles all payment data on-device; server only verifies signed transactions and stores subscription state. No PCI scope, minimal PII. |
 | [Horizon](https://laravel.com/docs/horizon) | Redis queue dashboard (Phase 2+) | Background job monitoring |
 | PostgreSQL 14+ | Production database | Strict types, robust migrations, production-proven |
 | SQLite (tests only) | In-memory test database | Fast, hermetic test runs |

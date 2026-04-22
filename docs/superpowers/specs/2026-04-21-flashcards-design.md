@@ -53,7 +53,7 @@ iOS client (SwiftUI + SwiftData + on-device FSRS)
 
 Third-party services:
   - Postmark / Resend — transactional email (magic links)
-  - Apple App Store — subscriptions (Cashier integration)
+  - Apple App Store — subscriptions (StoreKit 2 on device; server-side JWS verification + App Store Server Notifications v2; no Cashier/Stripe)
   - Sentry — crash + error reporting (iOS + backend)
   - PostHog — product analytics
 ```
@@ -77,12 +77,12 @@ Concrete rules:
 |---|---|---|
 | iOS language/UI | Swift 6, SwiftUI + UIKit drop-downs | Platform-native, best quality ceiling |
 | iOS persistence | SwiftData | First-class SwiftUI integration; SQLite under the hood |
-| Backend framework | Laravel 11 / PHP 8.3 | Owner familiarity; excellent scaffolding (Sanctum, Cashier, Horizon) |
+| Backend framework | Laravel 11 / PHP 8.3 | Owner familiarity; excellent scaffolding (Sanctum, Horizon) |
 | Database | Postgres (managed: Neon / Supabase / RDS) | Boring, relational, correct for this data model |
 | Object storage | Cloudflare R2 | S3-compatible; cheaper egress than S3; simple signed URLs |
 | Queue | Redis + Horizon | Laravel-standard |
 | Auth | Sanctum JWTs | Laravel-standard token management |
-| Payments | StoreKit 2 + Laravel Cashier | Native iOS + Laravel-canonical subscription handling |
+| Payments | StoreKit 2 (on-device) + server-side JWS verification via `firebase/php-jwt` + App Store Server Notifications v2 webhook | Apple-IAP-only. Apple handles all payment data; server just verifies signatures. No Stripe/Cashier — keeps us out of PCI scope and minimises server-side PII. |
 | Hosting | Laravel Forge | Minimal ops overhead; can migrate to AWS later |
 
 **Guiding principle (per owner directive): prefer integrating well-maintained packages over building from scratch. Custom code lives only where off-the-shelf doesn't fit, and only with explicit justification.**
@@ -443,9 +443,10 @@ Plug-in mechanism: feature flag (`Features.images`), `ImportSource` protocol, `E
 ### 11.2 Implementation
 
 - **StoreKit 2** (native) on iOS. `Transaction.updates` stream keeps local status in sync.
-- **Laravel Cashier** for StoreKit — receipt verification, subscription state, renewals, refunds.
-- **App Store Server Notifications v2** → Laravel → Cashier.
+- **Server-side JWS verification** via `firebase/php-jwt` against Apple's public keys (same JWKS pattern as Apple Sign In) — receipt verification, subscription state, renewals, refunds. No Stripe/Cashier.
+- **App Store Server Notifications v2** webhook → hand-rolled Laravel controller → updates `User.subscription_*` columns directly.
 - Server is source of truth cross-device; `User.subscription_status` cached in SwiftData for offline paid-feature access.
+- Keeps the app out of PCI scope and minimises server-side PII: Apple handles all payment data on-device; our server only sees signed transaction IDs and subscription state.
 
 ### 11.2.1 Entitlements system — non-negotiable flexibility
 
@@ -502,7 +503,8 @@ Paywall gating is a first-class architectural concern. The specific plan limits 
 **Restore purchases** exposed in Settings and paywall footer — mandatory per App Review 3.1.1.
 
 ### 11.4 Not using
-- RevenueCat — iOS-only v1 doesn't need cross-platform subscription abstraction; Cashier is sufficient.
+- RevenueCat — iOS-only v1 doesn't need cross-platform subscription abstraction; hand-rolled JWS verification (built on top of the same `firebase/php-jwt` we use for Apple Sign In) is sufficient for our scope.
+- Laravel Cashier — Stripe/Paddle-first; adds no value for Apple-IAP-only billing.
 
 ---
 
@@ -619,7 +621,7 @@ Not collected: card content in telemetry, contacts, photos (v1), location, ad ID
 | 0-2 | Design system + SwiftLint rules + component scaffold; backend auth skeleton |
 | 2-6 | All 9 entities modeled iOS + Laravel; sync engine end-to-end |
 | 6-10 | Deck/card CRUD, FSRS wrapper, Smart + Basic Study, Session summary, Home, Deck detail, Search |
-| 8-12 | Settings, paywall, Cashier + StoreKit 2 wiring |
+| 8-12 | Settings, paywall, StoreKit 2 on-device + server-side JWS verification + ASSN v2 webhook |
 | 10-14 | Polish, external TestFlight |
 | 14-18 | App Store submission, review iterations, soft launch |
 | 18-20 | Public launch |
@@ -663,7 +665,7 @@ Native frameworks used: `SwiftUI`, `SwiftData`, `StoreKit 2`, `AuthenticationSer
 | Package | Purpose |
 |---|---|
 | `laravel/sanctum` | API token auth |
-| `laravel/cashier` (StoreKit) | Subscription/receipt handling |
+| `firebase/php-jwt` | Apple Sign In ID token verification + App Store JWS transaction verification (no Cashier/Stripe) |
 | `laravel/horizon` | Queue worker UI + monitoring |
 | `spatie/laravel-signed-url` | Magic link generation/verification |
 | `spatie/laravel-query-builder` | `?since=` filtering on sync endpoints |
