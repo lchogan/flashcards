@@ -11,6 +11,7 @@
 		0663734BD2CB80C862FB72B4 /* MutationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C541DE92720101FECDDBFDF /* MutationQueue.swift */; };
 		08CDD3732EDAFE1C60B0B926 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC88DBBFD5579BED38C6C052 /* Clock.swift */; };
 		09E626CEFFD279643612951A /* ReviewEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28278995FCCF84EB0A23F25E /* ReviewEntity.swift */; };
+		0E2A175C95F7ECC8C1D4F750 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9D3C2D7338126C6D12C080 /* SyncManager.swift */; };
 		1632434E093FB8EA04CC736E /* SyncPusherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F136EB56F53DE1E21EC1B6 /* SyncPusherTests.swift */; };
 		17EF0C4A3171AF043E4BAC80 /* Shadows.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1D480537F787B33D90D3D7 /* Shadows.swift */; };
 		190FCD89EB06257558CF3844 /* MWButtonPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76798B4897CAC276448E489B /* MWButtonPress.swift */; };
@@ -18,6 +19,7 @@
 		1B722014A736E1A696F9CE42 /* AnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DED8C932C8C55A94E71D0C0 /* AnalyticsClient.swift */; };
 		1B7A8C176DF9E0139D736634 /* ControlTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15FDE0C8DC4DAAAD34C765 /* ControlTokenTests.swift */; };
 		1D3B8506D046FAD46CE79849 /* FlashcardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898ED96388E1C5A38EB3EC56 /* FlashcardsApp.swift */; };
+		1DA511CE98F369F45C800BD8 /* SyncPuller.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7550BE1456411229916E6E /* SyncPuller.swift */; };
 		24189012899F3CED7AB44E5E /* PostHog in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF295D3928BC732211057E9 /* PostHog */; };
 		2C783B53D6E3E96C7E386CC0 /* AssetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8383BCF5096BCC46DE05D02 /* AssetEntity.swift */; };
 		2FBB276265F68FA8374898A6 /* AppleSignInService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A12C1B6BE8A6235B115D87 /* AppleSignInService.swift */; };
@@ -36,7 +38,9 @@
 		50D528B50CDEA0E4A89FA353 /* MWTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA292D13A4FD4DFA9AAE6053 /* MWTextField.swift */; };
 		5151286603222647B1AACCB5 /* Intro1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026338AE29FD796E495EB78B /* Intro1View.swift */; };
 		52D5439183B9053C7E7404EB /* CardEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033AC2926EB4D961C4C424DC /* CardEntity.swift */; };
+		58DB376C943A13A4DEB0F39C /* SyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A675AF8DB65EE2904C44D0B /* SyncScheduler.swift */; };
 		5D67882376226C37CCEDBDED /* MagicLinkConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2EEF58ABB8E128D7C31244 /* MagicLinkConsumer.swift */; };
+		60CE3ABF4DCA85511909BDA1 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6944DDE653DA2FDC75F8FA1B /* Reachability.swift */; };
 		6621BD3199DA11A08EAFE665 /* MWPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB8DD260175A68C1CA1FCEA /* MWPill.swift */; };
 		677876272A9353657D56BC78 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = B2E7B02A2283DBE098796542 /* Sentry */; };
 		6BC96A54318A7EC43FB27FC3 /* MWDestructiveButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2F6309A56C16DB54F4E208 /* MWDestructiveButtonStyle.swift */; };
@@ -54,6 +58,7 @@
 		92748C6CB52C39BBAE52F0A3 /* DeckEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD8EE62BED3535F866F5F43 /* DeckEntity.swift */; };
 		97BB3DE8DA72E45A9CF0DD8F /* test_MWTextField.1.png in Resources */ = {isa = PBXBuildFile; fileRef = 490ECA2DC834EBB5DCEAFD89 /* test_MWTextField.1.png */; };
 		A200308DB65D7AC28BF3AB87 /* Motion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F3D467E2E539FF66D566E /* Motion.swift */; };
+		A72996DA8E1FF8E4F7D5CCC1 /* SyncPullerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1769328EFBFFB86212C962 /* SyncPullerTests.swift */; };
 		A732FD46039CA285EC45CB06 /* DesignSystemSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08B320524436C5B4CCC4CD9 /* DesignSystemSnapshotTests.swift */; };
 		B632620852D90304CF7F1510 /* MagicLinkConsumerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359B4E74E5113D4D8EE1518E /* MagicLinkConsumerTests.swift */; };
 		BBFBE898C41CC4D089E2D26E /* FlashcardsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E40CD64F095A8BA4D1644DE /* FlashcardsUITests.swift */; };
@@ -113,6 +118,7 @@
 		300F3D467E2E539FF66D566E /* Motion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Motion.swift; sourceTree = "<group>"; };
 		345D340AF68F033F6EE939F4 /* test_MWButton_primary_idle.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_MWButton_primary_idle.1.png; sourceTree = "<group>"; };
 		359B4E74E5113D4D8EE1518E /* MagicLinkConsumerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkConsumerTests.swift; sourceTree = "<group>"; };
+		3C1769328EFBFFB86212C962 /* SyncPullerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPullerTests.swift; sourceTree = "<group>"; };
 		3C2EEF58ABB8E128D7C31244 /* MagicLinkConsumer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkConsumer.swift; sourceTree = "<group>"; };
 		3E40CD64F095A8BA4D1644DE /* FlashcardsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsUITests.swift; sourceTree = "<group>"; };
 		40590CEF9514F130D9EB7101 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -125,9 +131,11 @@
 		57D2CD70838F57E5188414E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5C541DE92720101FECDDBFDF /* MutationQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutationQueue.swift; sourceTree = "<group>"; };
 		5E1E904C0BB96CFDF0B549B4 /* Control.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Control.swift; sourceTree = "<group>"; };
+		6944DDE653DA2FDC75F8FA1B /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		76798B4897CAC276448E489B /* MWButtonPress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWButtonPress.swift; sourceTree = "<group>"; };
 		7877A917EF68E9D82DE4ED2E /* test_MWButton_primary_dark.dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_MWButton_primary_dark.dark.png; sourceTree = "<group>"; };
 		7A16BDB6D28578249699970F /* MWSecondaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSecondaryButtonStyle.swift; sourceTree = "<group>"; };
+		7A675AF8DB65EE2904C44D0B /* SyncScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncScheduler.swift; sourceTree = "<group>"; };
 		7C21C770B2B3AF3347CF2284 /* MWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWButton.swift; sourceTree = "<group>"; };
 		7D954BBA4FC4F58D5450E56B /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		898ED96388E1C5A38EB3EC56 /* FlashcardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsApp.swift; sourceTree = "<group>"; };
@@ -163,8 +171,10 @@
 		E8601E71EC6CC580329D9D3A /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		EB119C7EA6CDB08651643EC5 /* MagicLinkSentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkSentView.swift; sourceTree = "<group>"; };
 		ED2F2E000D8E52F893AB59AF /* Flashcards.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flashcards.entitlements; sourceTree = "<group>"; };
+		ED9D3C2D7338126C6D12C080 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		EF1D480537F787B33D90D3D7 /* Shadows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadows.swift; sourceTree = "<group>"; };
 		EF568EFFD771971970B8D385 /* SyncableRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncableRecord.swift; sourceTree = "<group>"; };
+		EF7550BE1456411229916E6E /* SyncPuller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPuller.swift; sourceTree = "<group>"; };
 		F040D73BB3A94134B162AE1B /* test_MWCard.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_MWCard.1.png; sourceTree = "<group>"; };
 		F5CDDABFB08660589DAC7564 /* APIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
 		F760E860CA556E45A8229982 /* FlashcardsUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = FlashcardsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -208,6 +218,7 @@
 				DD49C9447BB17F91C561040F /* FlashcardsTests.swift */,
 				359B4E74E5113D4D8EE1518E /* MagicLinkConsumerTests.swift */,
 				F8BD4C5AD2B7B6777590445B /* MutationQueueTests.swift */,
+				3C1769328EFBFFB86212C962 /* SyncPullerTests.swift */,
 				D6F136EB56F53DE1E21EC1B6 /* SyncPusherTests.swift */,
 			);
 			path = FlashcardsTests;
@@ -274,8 +285,12 @@
 			children = (
 				AC88DBBFD5579BED38C6C052 /* Clock.swift */,
 				5C541DE92720101FECDDBFDF /* MutationQueue.swift */,
+				6944DDE653DA2FDC75F8FA1B /* Reachability.swift */,
 				EF568EFFD771971970B8D385 /* SyncableRecord.swift */,
+				ED9D3C2D7338126C6D12C080 /* SyncManager.swift */,
+				EF7550BE1456411229916E6E /* SyncPuller.swift */,
 				D3430FF6B912BDF871884B14 /* SyncPusher.swift */,
+				7A675AF8DB65EE2904C44D0B /* SyncScheduler.swift */,
 			);
 			path = Sync;
 			sourceTree = "<group>";
@@ -641,6 +656,7 @@
 				C155DBC0A9054986EC3BC984 /* FlashcardsTests.swift in Sources */,
 				B632620852D90304CF7F1510 /* MagicLinkConsumerTests.swift in Sources */,
 				FF3E7BF78806CC52E924FE69 /* MutationQueueTests.swift in Sources */,
+				A72996DA8E1FF8E4F7D5CCC1 /* SyncPullerTests.swift in Sources */,
 				1632434E093FB8EA04CC736E /* SyncPusherTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -687,6 +703,7 @@
 				0663734BD2CB80C862FB72B4 /* MutationQueue.swift in Sources */,
 				910979C7FC9DF8B27330B6B6 /* PendingMutationEntity.swift in Sources */,
 				D9DD838304ED3D163450007C /* Radii.swift in Sources */,
+				60CE3ABF4DCA85511909BDA1 /* Reachability.swift in Sources */,
 				09E626CEFFD279643612951A /* ReviewEntity.swift in Sources */,
 				DF68FC3FC3330E8A257D5B34 /* RootView.swift in Sources */,
 				782DF0C67B844C19FA65CCFE /* SessionEntity.swift in Sources */,
@@ -695,7 +712,10 @@
 				37DE4CDC872A96BF66F19D8F /* Spacing.swift in Sources */,
 				4F3739FD8C07B8D27B0A7FF6 /* SplashView.swift in Sources */,
 				4AE24E4F978227D3FEAF428B /* SubTopicEntity.swift in Sources */,
+				0E2A175C95F7ECC8C1D4F750 /* SyncManager.swift in Sources */,
+				1DA511CE98F369F45C800BD8 /* SyncPuller.swift in Sources */,
 				F39183B68ECCDEBD3578668B /* SyncPusher.swift in Sources */,
+				58DB376C943A13A4DEB0F39C /* SyncScheduler.swift in Sources */,
 				9068880F7AD7040BBD0B3E25 /* SyncableRecord.swift in Sources */,
 				72C41A07DC840AA76BAB53AA /* TokenStore.swift in Sources */,
 				C075985FF8E7C236A6FD49BD /* TopicEntity.swift in Sources */,
