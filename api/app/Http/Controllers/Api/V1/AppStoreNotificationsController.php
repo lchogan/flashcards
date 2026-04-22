@@ -6,6 +6,8 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\PaymentFailed;
+use App\Notifications\SubscriptionRenewed;
 use App\Services\Subscriptions\AppStoreVerifier;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -81,6 +83,12 @@ class AppStoreNotificationsController extends Controller
                 'plan_key' => 'free',
                 'updated_at_ms' => now()->valueOf(),
             ]),
+            default => null,
+        };
+
+        match ($notificationType) {
+            'DID_RENEW' => $user->notify(new SubscriptionRenewed),
+            'DID_FAIL_TO_RENEW' => $user->notify(new PaymentFailed),
             default => null,
         };
 

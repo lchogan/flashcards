@@ -26,9 +26,33 @@
 
 import SwiftData
 import SwiftUI
+import UIKit
+
+/// UIApplicationDelegate shim so we can receive APNs token callbacks. iOS
+/// only calls `didRegisterForRemoteNotifications...` on a UIApplication-
+/// Delegate, not on SwiftUI's App — so we bridge through `@UIApplication-
+/// DelegateAdaptor`.
+final class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(
+        _ application: UIApplication,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data,
+    ) {
+        Task {
+            await DeviceTokenRegistrar.register(tokenData: deviceToken)
+        }
+    }
+
+    func application(
+        _ application: UIApplication,
+        didFailToRegisterForRemoteNotificationsWithError error: Error,
+    ) {
+        AnalyticsClient.track("apns.register.fail", properties: ["error": String(describing: error)])
+    }
+}
 
 @main
 struct FlashcardsApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @State private var appState = AppState()
     @State private var entitlements: EntitlementsManager
     @State private var purchases: PurchasesManager

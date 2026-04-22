@@ -22,7 +22,8 @@ class User extends Authenticatable
         'daily_goal_cards', 'reminder_time_local', 'reminder_enabled',
         'theme_preference', 'fsrs_weights', 'subscription_status',
         'subscription_expires_at', 'subscription_product_id',
-        'subscription_original_transaction_id', 'plan_key', 'scheduled_delete_at',
+        'subscription_original_transaction_id', 'apn_device_token',
+        'plan_key', 'scheduled_delete_at',
         'image_quota_used_bytes', 'marketing_opt_in', 'updated_at_ms', 'deleted_at_ms',
     ];
 
@@ -55,5 +56,17 @@ class User extends Authenticatable
     public function reminders(): HasMany
     {
         return $this->hasMany(Reminder::class);
+    }
+
+    /**
+     * Route APNs notifications to this user's registered device token. Called
+     * by laravel-notification-channels/apn at send time. Returns [] when no
+     * token has been registered yet so sends silently no-op.
+     *
+     * @return array<int, string>
+     */
+    public function routeNotificationForApn(): array
+    {
+        return $this->apn_device_token !== null ? [$this->apn_device_token] : [];
     }
 }

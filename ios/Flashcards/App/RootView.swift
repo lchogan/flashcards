@@ -29,6 +29,7 @@
 
 import SwiftData
 import SwiftUI
+import UIKit
 
 /// Root view for the Flashcards app. Owns `AuthManager` and drives the
 /// onboarding step machine; switches to a signed-in placeholder once
@@ -129,6 +130,11 @@ struct RootView: View {
             let monitor = StreakMonitor(context: modelContext)
             let scheduler = ReminderScheduler()
             Task {
+                if await NotificationManager.shared.requestAuthorizationIfNeeded() {
+                    await MainActor.run {
+                        UIApplication.shared.registerForRemoteNotifications()
+                    }
+                }
                 if monitor.streakAtRisk() {
                     await scheduler.schedule(
                         time: DateComponents(hour: 20, minute: 0),

@@ -126,6 +126,7 @@
 		C45A1DA5C023840AC121EC36 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FF0E03041A7DF5873A4E23 /* APIClient.swift */; };
 		C8FE81070F62C04D06B24CD7 /* MWChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEE3ED2340A6253A42ACEC2 /* MWChip.swift */; };
 		C9D10B114F52606849C96E01 /* MWPrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D49E4AA2AE135563BBDA46A /* MWPrimaryButtonStyle.swift */; };
+		CA93D0C2C6A1FCA99BFB20E7 /* DeviceTokenRegistrar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD776F7C7EB68ECAB3A18B61 /* DeviceTokenRegistrar.swift */; };
 		D2238FB3E7F73EA8ABE487FF /* SessionRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A69E4E67F72D477C40C2337 /* SessionRootView.swift */; };
 		D3741E0B6CE09CF567AB2656 /* ManageSubTopicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CEEC2AAF9781CEE487D44D /* ManageSubTopicsView.swift */; };
 		D6716D000299EB9DA4283B57 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D19E2DA08AE57F2E891450 /* Typography.swift */; };
@@ -276,6 +277,7 @@
 		A968DA2C0D1C065832FED33C /* AppearanceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsView.swift; sourceTree = "<group>"; };
 		ABD8EE62BED3535F866F5F43 /* DeckEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckEntity.swift; sourceTree = "<group>"; };
 		AC88DBBFD5579BED38C6C052 /* Clock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
+		AD776F7C7EB68ECAB3A18B61 /* DeviceTokenRegistrar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTokenRegistrar.swift; sourceTree = "<group>"; };
 		B08B320524436C5B4CCC4CD9 /* DesignSystemSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemSnapshotTests.swift; sourceTree = "<group>"; };
 		B164C49CB882DD2A86A4F46E /* MWScreenChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScreenChrome.swift; sourceTree = "<group>"; };
 		B69BE1712FF228283528309B /* SessionQueueBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionQueueBuilder.swift; sourceTree = "<group>"; };
@@ -462,6 +464,7 @@
 		2F5532E1FA4E3D2559AB169D /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
+				AD776F7C7EB68ECAB3A18B61 /* DeviceTokenRegistrar.swift */,
 				215707E42657BB52122090F1 /* DueCountPublisher.swift */,
 				F8B70FE48D59D1CA437A2D14 /* NotificationManager.swift */,
 				48057B503BCD39E3AAFBC4C4 /* ReminderScheduler.swift */,
@@ -1105,6 +1108,7 @@
 				AF3BFB36C7F1217E4491C3D9 /* DeckDetailViewModel.swift in Sources */,
 				92748C6CB52C39BBAE52F0A3 /* DeckEntity.swift in Sources */,
 				586FEAF9A3BAF8A87F8DB4E2 /* DeckRepository.swift in Sources */,
+				CA93D0C2C6A1FCA99BFB20E7 /* DeviceTokenRegistrar.swift in Sources */,
 				72A95E60C67E631EB3FD2DBE /* DueCountPublisher.swift in Sources */,
 				96F2B0B1239C69AD2B52AD75 /* EntitlementKey.swift in Sources */,
 				02DD8B9EE0C3BC3336D2D9C5 /* EntitlementsManager.swift in Sources */,

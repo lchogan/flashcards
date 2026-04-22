@@ -25,6 +25,7 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::get('/sync/pull', SyncPullController::class);
     Route::get('/me', [MeController::class, 'show']);
     Route::patch('/me', [MeController::class, 'update']);
+    Route::post('/me/device-token', [MeController::class, 'registerDeviceToken']);
 
     Route::get('/me/entitlements', [EntitlementsController::class, 'show']);
 
