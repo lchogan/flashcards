@@ -47,7 +47,9 @@ public final class TopicEntity: SyncableRecord {
 
     // MARK: - SyncableRecord
 
+    /// Wire-format key for sync endpoints (e.g. "topics").
     public static var syncEntityKey: String { "topics" }
+    /// Stable UUID string for sync identity.
     public var syncId: String { id }
 
     /// Serialises the topic into the snake_case wire format expected by the API.

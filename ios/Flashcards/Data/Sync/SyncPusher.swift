@@ -87,18 +87,20 @@ public final class SyncPusher {
             records[m.entityKey, default: []].append(payload)
         }
 
-        let body = try JSONSerialization.data(withJSONObject: [
-            "client_clock_ms": Clock.nowMs(),
-            "records": records,
-        ] as [String: Any])
+        let body = try JSONSerialization.data(
+            withJSONObject: [
+                "client_clock_ms": Clock.nowMs(),
+                "records": records,
+            ] as [String: Any])
 
         do {
-            let resp: SyncPushResponse = try await api.send(APIEndpoint<SyncPushResponse>(
-                method: "POST",
-                path: "/api/v1/sync/push",
-                body: body,
-                requiresAuth: true
-            ))
+            let resp: SyncPushResponse = try await api.send(
+                APIEndpoint<SyncPushResponse>(
+                    method: "POST",
+                    path: "/api/v1/sync/push",
+                    body: body,
+                    requiresAuth: true
+                ))
 
             let rejectedIds = Set(resp.rejected.map(\.id))
             let nowMs = Clock.nowMs()
@@ -109,13 +111,7 @@ public final class SyncPusher {
                     try q.markSuccess(m)
                 }
             }
-            AnalyticsClient.track(
-                "sync.push.ok",
-                properties: [
-                    "accepted": resp.accepted,
-                    "rejected": resp.rejected.count,
-                ]
-            )
+            trackPushOk(accepted: resp.accepted, rejected: resp.rejected.count)
             return resp.accepted
         } catch {
             // Transport failure: retry-queue every mutation in this batch so
@@ -124,11 +120,24 @@ public final class SyncPusher {
             for m in batch {
                 try? q.markFailure(m, now: nowMs)
             }
-            AnalyticsClient.track(
-                "sync.push.fail",
-                properties: ["error": String(describing: error)]
-            )
+            trackPushFail(error)
             throw error
         }
+    }
+
+    /// Emits a sync.push.ok analytics event.
+    private func trackPushOk(accepted: Int, rejected: Int) {
+        AnalyticsClient.track(
+            "sync.push.ok",
+            properties: ["accepted": accepted, "rejected": rejected]
+        )
+    }
+
+    /// Emits a sync.push.fail analytics event.
+    private func trackPushFail(_ error: Error) {
+        AnalyticsClient.track(
+            "sync.push.fail",
+            properties: ["error": String(describing: error)]
+        )
     }
 }

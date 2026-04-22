@@ -27,8 +27,11 @@ import SwiftData
 @Observable
 @MainActor
 public final class SyncManager {
+    /// Timestamp of the most recently completed sync cycle.
     public var lastSyncedAt: Date?
+    /// Human-readable description of the last sync failure, or nil on success.
     public var lastError: String?
+    /// True while a push→pull cycle is in flight.
     public var isSyncing: Bool = false
 
     private let context: ModelContext
@@ -42,6 +45,7 @@ public final class SyncManager {
         "card_sub_topics", "reviews", "sessions",
     ]
 
+    /// Creates the sync manager wrapping the given context, API client, and reachability probe.
     public init(
         context: ModelContext,
         api: APIClientProtocol,
@@ -66,8 +70,8 @@ public final class SyncManager {
 
         let pending = (try? MutationQueue(context: context).pendingCount()) ?? 0
         if pending > 100,
-           let last = lastSyncedAt,
-           Date().timeIntervalSince(last) > 600
+            let last = lastSyncedAt,
+            Date().timeIntervalSince(last) > 600
         {
             AnalyticsClient.track(
                 "sync.queue.stuck",

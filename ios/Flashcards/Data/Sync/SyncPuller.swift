@@ -23,9 +23,13 @@ import SwiftData
 
 /// Decoded response body for GET /api/v1/sync/pull.
 public struct SyncPullResponse: Decodable, Sendable {
+    /// Server wall-clock timestamp (ms since epoch) at the time the response was generated.
     public let serverClockMs: Int64
+    /// Entity records keyed by entity name, each row encoded as a field→value dictionary.
     public let records: [String: [[String: AnyCodable]]]
+    /// True when additional pages are available for this cursor range.
     public let hasMore: Bool?
+    /// Cursor to supply as `since` on the next page request, or nil when no more pages.
     public let nextSince: Int64?
 }
 
@@ -38,8 +42,10 @@ public struct SyncPullResponse: Decodable, Sendable {
 /// primitives (String, Int64, Double, Bool, NSNull, or collections of
 /// those), all of which are safe to cross concurrency boundaries.
 public struct AnyCodable: Codable, @unchecked Sendable {
+    /// Decoded JSON value: String, Int64, Double, Bool, [Any], [String: Any], or NSNull.
     public let value: Any
 
+    /// Decode the next single-value container, trying primitives, dict, list, null in order.
     public init(from decoder: Decoder) throws {
         let c = try decoder.singleValueContainer()
         if c.decodeNil() {
@@ -75,6 +81,7 @@ public struct AnyCodable: Codable, @unchecked Sendable {
         )
     }
 
+    /// No-op: AnyCodable is decode-only (sync pull never serialises back).
     public func encode(to encoder: Encoder) throws {
         // Decode-only — sync pull is GET, we never serialise AnyCodable back.
     }
@@ -88,6 +95,7 @@ public final class SyncPuller {
     private let context: ModelContext
     private let api: APIClientProtocol
 
+    /// Creates the puller wrapping the given ModelContext and API client.
     public init(context: ModelContext, api: APIClientProtocol) {
         self.context = context
         self.api = api
@@ -103,9 +111,10 @@ public final class SyncPuller {
         let csv = entities.joined(separator: ",")
         let path = "/api/v1/sync/pull?since=\(since)&entities=\(csv)"
 
-        let resp: SyncPullResponse = try await api.send(APIEndpoint<SyncPullResponse>(
-            method: "GET", path: path, body: nil, requiresAuth: true
-        ))
+        let resp: SyncPullResponse = try await api.send(
+            APIEndpoint<SyncPullResponse>(
+                method: "GET", path: path, body: nil, requiresAuth: true
+            ))
 
         for (entityKey, rows) in resp.records {
             let rawRows: [[String: Any]] = rows.map { $0.mapValues(\.value) }
@@ -116,13 +125,13 @@ public final class SyncPuller {
 
     private func apply(entityKey: String, rows: [[String: Any]]) throws {
         switch entityKey {
-        case "topics":           try applyTopics(rows)
-        case "decks":            try applyDecks(rows)
-        case "sub_topics":       try applySubTopics(rows)
-        case "cards":            try applyCards(rows)
-        case "card_sub_topics":  try applyCardSubTopics(rows)
-        case "reviews":          try applyReviews(rows)
-        case "sessions":         try applySessions(rows)
+        case "topics": try applyTopics(rows)
+        case "decks": try applyDecks(rows)
+        case "sub_topics": try applySubTopics(rows)
+        case "cards": try applyCards(rows)
+        case "card_sub_topics": try applyCardSubTopics(rows)
+        case "reviews": try applyReviews(rows)
+        case "sessions": try applySessions(rows)
         default: return
         }
     }
@@ -253,7 +262,7 @@ public final class SyncPuller {
                 predicate: #Predicate { $0.id == id }
             )
             if try context.fetch(descriptor).first != nil {
-                continue // append-only
+                continue  // append-only
             }
             let r = ReviewEntity(
                 id: id,

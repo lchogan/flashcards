@@ -53,7 +53,9 @@ public final class SubTopicEntity: SyncableRecord {
 
     // MARK: - SyncableRecord
 
+    /// Wire-format key for sync endpoints (e.g. "sub_topics").
     public static var syncEntityKey: String { "sub_topics" }
+    /// Stable UUID string for sync identity.
     public var syncId: String { id }
 
     /// Serialises the sub-topic into the snake_case wire format expected by the API.

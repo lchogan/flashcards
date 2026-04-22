@@ -90,7 +90,9 @@ public final class CardEntity: SyncableRecord {
 
     // MARK: - SyncableRecord
 
+    /// Wire-format key for sync endpoints (e.g. "cards").
     public static var syncEntityKey: String { "cards" }
+    /// Stable UUID string for sync identity.
     public var syncId: String { id }
 
     /// Serialises the card and its scheduler state into the snake_case wire format.

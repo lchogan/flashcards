@@ -27,6 +27,7 @@ public final class SyncScheduler {
     /// 5 minutes expressed in nanoseconds for Task.sleep(nanoseconds:).
     private static let tickInterval: UInt64 = 5 * 60 * 1_000_000_000
 
+    /// Creates the scheduler wrapping the given SyncManager.
     public init(manager: SyncManager) {
         self.manager = manager
     }

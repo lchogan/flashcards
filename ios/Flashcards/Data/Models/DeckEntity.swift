@@ -76,7 +76,9 @@ public final class DeckEntity: SyncableRecord {
 
     // MARK: - SyncableRecord
 
+    /// Wire-format key for sync endpoints (e.g. "decks").
     public static var syncEntityKey: String { "decks" }
+    /// Stable UUID string for sync identity.
     public var syncId: String { id }
 
     /// Serialises the deck into the snake_case wire format expected by the API.

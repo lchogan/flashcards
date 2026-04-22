@@ -78,7 +78,9 @@ public final class SessionEntity: SyncableRecord {
 
     // MARK: - SyncableRecord
 
+    /// Wire-format key for sync endpoints (e.g. "sessions").
     public static var syncEntityKey: String { "sessions" }
+    /// Stable UUID string for sync identity.
     public var syncId: String { id }
 
     /// Serialises the session into the snake_case wire format.

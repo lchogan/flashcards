@@ -87,7 +87,9 @@ public final class ReviewEntity: SyncableRecord {
 
     // MARK: - SyncableRecord
 
+    /// Wire-format key for sync endpoints (e.g. "reviews").
     public static var syncEntityKey: String { "reviews" }
+    /// Stable UUID string for sync identity.
     public var syncId: String { id }
 
     /// Serialises the review into the snake_case wire format.

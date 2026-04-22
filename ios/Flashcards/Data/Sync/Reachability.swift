@@ -20,8 +20,10 @@ import Network
 /// satisfies NWPathMonitor's reachability check.
 public actor Reachability {
     private let monitor = NWPathMonitor()
+    /// True when NWPathMonitor reports any satisfying interface.
     public private(set) var isConnected: Bool = false
 
+    /// Creates the reachability actor wrapping NWPathMonitor.
     public init() {
         monitor.pathUpdateHandler = { [weak self] path in
             Task { [weak self] in
