@@ -7,10 +7,10 @@
 //           above section headers, form fields, and metadata groups.
 //  Dependencies: SwiftUI (View, Text), `MWColor`, `MWType`.
 //  Key concepts: Input text is uppercased at render time, so call sites can
-//                pass naturally cased strings. `MWTextField` inlines this same
-//                treatment for its field label; extracting it here lets future
-//                atoms (`MWSectionHeader`, list group captions) share the
-//                exact typography without duplicating the recipe.
+//                pass naturally cased strings. Used by `MWTextField` for its
+//                field labels; extracting the recipe here lets future atoms
+//                (`MWSectionHeader`, list group captions) share the exact
+//                typography without duplicating the chain.
 //
 
 import SwiftUI

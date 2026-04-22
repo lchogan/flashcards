@@ -11,12 +11,16 @@
 //                UIKeyboardType — these are UIKit types and are not re-exported
 //                by SwiftUI), `MWSpacing` / `MWSpacingToken` (`mwPadding`),
 //                `MWRadius` / `MWRadiusToken` (`mwCornerRadius`), `MWColor`,
-//                `MWType`, `mwStroke` (Borders.swift).
+//                `MWType`, `MWEyebrow` (label treatment), `mwStroke`
+//                (Borders.swift).
 //  Key concepts: Defaults `.textInputAutocapitalization(.never)` and
 //                `.autocorrectionDisabled()` — sensible for email/username,
 //                which is the only current use site (onboarding). Future
 //                variants (secure, numeric, multiline) will land as separate
 //                atoms or parameterized forms once we have concrete call sites.
+//                The field label delegates to `MWEyebrow` so the uppercase +
+//                tracked + muted-ink treatment stays consistent across the
+//                design system instead of being re-inlined per atom.
 //                The overlay stroke is paired with a matching `cornerRadius`
 //                so the border traces the rounded clip instead of a sharp
 //                rectangle (same pattern as MWCard and MWSecondaryButtonStyle).
@@ -57,9 +61,7 @@ public struct MWTextField: View {
     /// Renders the eyebrow label stacked above a bordered, rounded `TextField`.
     public var body: some View {
         VStack(alignment: .leading, spacing: MWSpacing.xs) {
-            Text(label)
-                .font(MWType.eyebrow).tracking(MWType.eyebrowTracking)
-                .foregroundStyle(MWColor.inkMuted)
+            MWEyebrow(label)
 
             TextField("", text: $text)
                 .textContentType(contentType)
