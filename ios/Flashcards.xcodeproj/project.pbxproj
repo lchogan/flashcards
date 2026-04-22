@@ -15,6 +15,7 @@
 		08587D58067C0A312630DA8D /* RatingMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF2A62213E52FA682809B1B /* RatingMapping.swift */; };
 		08CDD3732EDAFE1C60B0B926 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC88DBBFD5579BED38C6C052 /* Clock.swift */; };
 		09E626CEFFD279643612951A /* ReviewEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28278995FCCF84EB0A23F25E /* ReviewEntity.swift */; };
+		0B74F651D3DFD81C346B4BF8 /* BulkActionsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A5FCDCF59EA98B403E6950 /* BulkActionsSheet.swift */; };
 		0CE9FF860E161A9FAE5EEB2C /* CardEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260DE1302BED01867EB042A4 /* CardEditView.swift */; };
 		0E2A175C95F7ECC8C1D4F750 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9D3C2D7338126C6D12C080 /* SyncManager.swift */; };
 		0FE353CC6C9D1D5117085ECC /* MWSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080906C8209BFFC0A09C6D70 /* MWSwitch.swift */; };
@@ -244,6 +245,7 @@
 		CF7468B7B18BF5DB2D3E671D /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		CFB0E68B8D3541EC7636DEFC /* MWDot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDot.swift; sourceTree = "<group>"; };
 		D1253B9488FFE8A7299500BC /* SessionEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEngineTests.swift; sourceTree = "<group>"; };
+		D2A5FCDCF59EA98B403E6950 /* BulkActionsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulkActionsSheet.swift; sourceTree = "<group>"; };
 		D3430FF6B912BDF871884B14 /* SyncPusher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPusher.swift; sourceTree = "<group>"; };
 		D4A6C997AC419320FA6B3516 /* FsrsScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FsrsScheduler.swift; sourceTree = "<group>"; };
 		D6F136EB56F53DE1E21EC1B6 /* SyncPusherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPusherTests.swift; sourceTree = "<group>"; };
@@ -436,6 +438,7 @@
 		469D663F9161FAA61A0EC8AB /* DeckDetail */ = {
 			isa = PBXGroup;
 			children = (
+				D2A5FCDCF59EA98B403E6950 /* BulkActionsSheet.swift */,
 				97807773209CB638A7C3856A /* CardsTabView.swift */,
 				32A13A898D5B48D77F9F05C2 /* DeckDetailView.swift */,
 				E7F32B7393E6D76DD2E8D5EC /* DeckDetailViewModel.swift */,
@@ -917,6 +920,7 @@
 				E086CE937F972443F1E2A40D /* AuthManager.swift in Sources */,
 				443049A2EF4251E98FEAED53 /* BasicStudyView.swift in Sources */,
 				F25E11BD413D3218216BB972 /* Borders.swift in Sources */,
+				0B74F651D3DFD81C346B4BF8 /* BulkActionsSheet.swift in Sources */,
 				0CE9FF860E161A9FAE5EEB2C /* CardEditView.swift in Sources */,
 				52D5439183B9053C7E7404EB /* CardEntity.swift in Sources */,
 				74E690F3B65905B02875F4A6 /* CardFormModel.swift in Sources */,

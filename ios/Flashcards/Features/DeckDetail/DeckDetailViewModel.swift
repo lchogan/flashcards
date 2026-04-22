@@ -20,7 +20,9 @@ public final class DeckDetailViewModel {
     public var recentSessions: [SessionEntity] = []
     public var dueCount: Int = 0
 
-    private let context: ModelContext
+    /// Exposed (non-private) so tab views can construct repositories against the
+    /// same context without re-plumbing through the view tree.
+    public let context: ModelContext
     private let deckId: String
 
     public init(context: ModelContext, deckId: String) {
