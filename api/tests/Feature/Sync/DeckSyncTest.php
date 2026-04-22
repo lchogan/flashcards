@@ -59,6 +59,41 @@ test('tombstone push marks deck deleted', function () {
     expect($d->fresh()->deleted_at_ms)->toBe(2000);
 });
 
+test('partial push preserves omitted nullable fields', function () {
+    // A deck with an existing description and topic_id.
+    $u = User::factory()->create();
+    $topic = Topic::factory()->for($u)->create();
+    $d = Deck::factory()->for($u)->create([
+        'topic_id' => $topic->id,
+        'description' => 'Original description',
+        'last_studied_at_ms' => 9000,
+        'updated_at_ms' => 1000,
+    ]);
+    $token = $u->createToken('t')->plainTextToken;
+
+    // Push an update that omits description, topic_id, and last_studied_at_ms entirely.
+    // The existing values must be preserved — absent keys must not overwrite with null.
+    $this->withHeader('Authorization', "Bearer {$token}")
+        ->postJson('/api/v1/sync/push', [
+            'client_clock_ms' => 2000,
+            'records' => ['decks' => [[
+                'id' => $d->id,
+                'title' => 'Updated Title',
+                'accent_color' => $d->accent_color,
+                'default_study_mode' => 'smart',
+                'card_count' => 0,
+                'updated_at_ms' => 2000,
+                // description, topic_id, last_studied_at_ms intentionally omitted
+            ]]],
+        ])->assertOk()->assertJson(['accepted' => 1]);
+
+    $fresh = $d->fresh();
+    expect($fresh->title)->toBe('Updated Title')
+        ->and($fresh->description)->toBe('Original description')
+        ->and($fresh->topic_id)->toBe($topic->id)
+        ->and($fresh->last_studied_at_ms)->toBe(9000);
+});
+
 test('pull returns decks since cursor', function () {
     $u = User::factory()->create();
     Deck::factory()->for($u)->create(['title' => 'Old', 'updated_at_ms' => 100]);

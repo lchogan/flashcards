@@ -26,6 +26,15 @@ declare(strict_types=1);
  *       (1) card must exist and its deck must be owned by the authenticated user.
  *       (2) sub-topic must exist and its deck_id must match the card's deck_id.
  *   - Stateless: no constructor dependencies; safe to resolve per-request via app().
+ *
+ * Does NOT extend AbstractLwwUpserter:
+ *   The checkOwnership() hook in AbstractLwwUpserter supports a single ownership
+ *   predicate. CardSubTopicUpserter requires a two-part check — (1) card's deck
+ *   must be owned by the user AND (2) the sub-topic must belong to the same deck
+ *   as the card. The second condition is a cross-entity structural invariant, not
+ *   a simple ownership guard, and cannot be expressed through the single-hook contract.
+ *   Forcing it into the base class would require awkward workarounds that obscure
+ *   the intent; a standalone implementation is simpler and clearer.
  */
 
 namespace App\Services\Sync\Entities;

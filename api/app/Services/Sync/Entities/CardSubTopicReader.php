@@ -26,6 +26,15 @@ declare(strict_types=1);
  *   - nextSince: the maximum updated_at_ms in the returned page is passed back
  *     to the client as the cursor for the next pull request.
  *   - Ordered by updated_at_ms ASC so cursored pagination is stable.
+ *
+ * Does NOT extend AbstractCursorReader:
+ *   AbstractCursorReader's scopeForUser() hook is designed for direct ownership
+ *   (user_id on entity) or single-level parent ownership (whereIn deck_id).
+ *   CardSubTopicReader needs a two-level nested whereHas traversal to reach the
+ *   user via card → deck. Expressing this through scopeForUser() would work
+ *   mechanically, but the contract's documentation and typical usage imply a
+ *   flat or single-level scope. A standalone implementation is clearer and avoids
+ *   misleading future developers about the expected scope shape.
  */
 
 namespace App\Services\Sync\Entities;

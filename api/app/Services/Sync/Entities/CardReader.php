@@ -13,17 +13,16 @@ declare(strict_types=1);
  * Dependencies:
  *   - App\Models\Card (Eloquent model, HasUuids)
  *   - App\Models\User (ownership scoping via decks() relation)
- *   - App\Services\Sync\RecordReader (interface contract)
+ *   - App\Services\Sync\AbstractCursorReader (base class; handles pagination,
+ *     cursor computation, and the [rows, hasMore, maxUpdatedMs] tuple)
  *
  * Key concepts:
  *   - Ownership: Card has no direct user_id column. Ownership is enforced
  *     by constraining deck_id to the set of deck IDs owned by the user, resolved
  *     via a subquery on $user->decks()->select('id'). This is why the User model
  *     must expose a decks() HasMany relation.
- *   - Pagination: queries pageSize + 1 rows; if the result exceeds pageSize,
- *     hasMore=true is returned and the extra row is discarded before mapping.
- *   - nextSince: the maximum updated_at_ms in the returned page is passed back
- *     to the client as the cursor for the next pull request.
+ *   - Pagination: one-extra-row trick; see AbstractCursorReader.
+ *   - nextSince: max updated_at_ms in page → client's next `since`.
  *   - Ordered by updated_at_ms ASC so cursored pagination is stable.
  */
 
@@ -31,68 +30,69 @@ namespace App\Services\Sync\Entities;
 
 use App\Models\Card;
 use App\Models\User;
-use App\Services\Sync\RecordReader;
+use App\Services\Sync\AbstractCursorReader;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Reads Card records accessible to the authenticated user updated after a given timestamp.
  *
- * Implements the RecordReader contract for the "cards" entity key.
- * Ownership is enforced via a subquery on the user's owned deck IDs.
+ * Implements the RecordReader contract for the "cards" entity key via
+ * AbstractCursorReader. Ownership is enforced via a whereIn subquery on the
+ * user's owned deck IDs.
  */
-final class CardReader implements RecordReader
+final class CardReader extends AbstractCursorReader
 {
     /**
-     * Fetch Card rows for the user changed after $since, up to $pageSize rows.
-     *
-     * Pagination contract: queries $pageSize + 1 rows. If the result set exceeds
-     * $pageSize, the extra row signals that more data exists (hasMore=true) and is
-     * discarded before serialisation. The returned maxUpdatedMs is the highest
-     * updated_at_ms in the page — the client sends this back as `since` on the
-     * next pull to advance the cursor.
-     *
-     * Ownership is enforced by restricting deck_id to the subquery
-     * $user->decks()->select('id'), which returns only decks owned by the user.
-     *
-     * @param  User  $user  Owner of the records; results are scoped to this user's decks.
-     * @param  int  $since  Millisecond timestamp lower-bound (exclusive); only rows updated after this are returned.
-     * @param  int  $pageSize  Maximum number of rows to include in the returned page.
-     * @return array{0: list<array<string, mixed>>, 1: bool, 2: int}
-     *                                                               [rows, hasMore, maxUpdatedMs]
+     * @return class-string<Model>
      */
-    public function read(User $user, int $since, int $pageSize): array
+    protected function modelClass(): string
     {
-        $rows = Card::query()
-            ->whereIn('deck_id', $user->decks()->select('id'))
-            ->where('updated_at_ms', '>', $since)
-            ->orderBy('updated_at_ms')
-            ->limit($pageSize + 1)
-            ->get();
+        return Card::class;
+    }
 
-        $hasMore = $rows->count() > $pageSize;
-        $page = $rows->take($pageSize);
-        $max = (int) ($page->max('updated_at_ms') ?? $since);
+    /**
+     * Scope the query to cards belonging to decks owned by the user.
+     *
+     * Uses a whereIn subquery on $user->decks()->select('id') so that ownership
+     * is enforced without a JOIN — the User model must expose a decks() HasMany.
+     *
+     * @param  Builder<Model>  $query  Base query for the Card model.
+     * @param  User  $user  Authenticated user.
+     * @return Builder<Model> Scoped query.
+     */
+    protected function scopeForUser(Builder $query, User $user): Builder
+    {
+        return $query->whereIn('deck_id', $user->decks()->select('id'));
+    }
+
+    /**
+     * Project a Card model into the wire-format row.
+     *
+     * @param  Model  $model  Hydrated Card instance.
+     * @return array<string, mixed> Wire-format row.
+     */
+    protected function projectRow(Model $model): array
+    {
+        assert($model instanceof Card);
 
         return [
-            $page->map(fn (Card $card) => [
-                'id' => $card->id,
-                'deck_id' => $card->deck_id,
-                'front_text' => $card->front_text,
-                'back_text' => $card->back_text,
-                'front_image_asset_id' => $card->front_image_asset_id,
-                'back_image_asset_id' => $card->back_image_asset_id,
-                'position' => $card->position,
-                'stability' => $card->stability,
-                'difficulty' => $card->difficulty,
-                'state' => $card->state,
-                'last_reviewed_at_ms' => $card->last_reviewed_at_ms,
-                'due_at_ms' => $card->due_at_ms,
-                'lapses' => $card->lapses,
-                'reps' => $card->reps,
-                'updated_at_ms' => $card->updated_at_ms,
-                'deleted_at_ms' => $card->deleted_at_ms,
-            ])->values()->all(),
-            $hasMore,
-            $max,
+            'id' => $model->id,
+            'deck_id' => $model->deck_id,
+            'front_text' => $model->front_text,
+            'back_text' => $model->back_text,
+            'front_image_asset_id' => $model->front_image_asset_id,
+            'back_image_asset_id' => $model->back_image_asset_id,
+            'position' => $model->position,
+            'stability' => $model->stability,
+            'difficulty' => $model->difficulty,
+            'state' => $model->state,
+            'last_reviewed_at_ms' => $model->last_reviewed_at_ms,
+            'due_at_ms' => $model->due_at_ms,
+            'lapses' => $model->lapses,
+            'reps' => $model->reps,
+            'updated_at_ms' => $model->updated_at_ms,
+            'deleted_at_ms' => $model->deleted_at_ms,
         ];
     }
 }

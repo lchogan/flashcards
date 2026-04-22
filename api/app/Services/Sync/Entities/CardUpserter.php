@@ -15,14 +15,17 @@ declare(strict_types=1);
  *   - App\Models\Card (Eloquent model, HasUuids)
  *   - App\Models\Deck (parent entity; ownership resolved via deck->user_id)
  *   - App\Models\User (ownership scoping)
- *   - App\Services\Sync\RecordUpserter (interface contract)
- *   - App\Services\Sync\UpsertResult (return value object)
+ *   - App\Services\Sync\AbstractLwwUpserter (base class; handles transaction,
+ *     LWW check, UUID preservation, partial-update semantics)
  *
  * Key concepts:
  *   - LWW rule: incoming row is rejected when existing updated_at_ms >= incoming updated_at_ms.
  *   - Forbidden: the referenced deck must exist and be owned by the authenticated user.
  *     Unlike top-level entities (Topic, Deck), there is no user_id column on cards;
  *     ownership is enforced via the deck's user_id.
+ *   - Partial updates: front_image_asset_id, back_image_asset_id, stability,
+ *     difficulty, last_reviewed_at_ms, and due_at_ms use preserve() so absent keys
+ *     do not overwrite existing values with null.
  *   - Stateless: no constructor dependencies; safe to resolve per-request via app().
  */
 
@@ -31,78 +34,82 @@ namespace App\Services\Sync\Entities;
 use App\Models\Card;
 use App\Models\Deck;
 use App\Models\User;
-use App\Services\Sync\RecordUpserter;
-use App\Services\Sync\UpsertResult;
+use App\Services\Sync\AbstractLwwUpserter;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Upserts a single Card record for the authenticated user.
  *
- * Implements the RecordUpserter contract for the "cards" entity key.
- * Ownership is enforced via the parent deck's user_id — the cards table
- * has no direct user_id column.
+ * Implements the RecordUpserter contract for the "cards" entity key via
+ * AbstractLwwUpserter. Ownership is enforced via the parent deck's user_id —
+ * the cards table has no direct user_id column.
  */
-final class CardUpserter implements RecordUpserter
+final class CardUpserter extends AbstractLwwUpserter
 {
     /**
-     * Attempt to upsert a Card row using last-write-wins conflict resolution.
-     *
-     * LWW rule: if an existing row's updated_at_ms is >= the incoming value,
-     * the update is considered stale and rejected with reason "stale". This
-     * ensures a slower client cannot overwrite newer server state.
-     *
-     * Ownership check: the referenced deck_id must belong to the authenticated
-     * user. If the deck does not exist or belongs to another user, the row is
-     * rejected with reason "forbidden".
-     *
-     * @param  User  $user  Authenticated owner; used to verify deck ownership.
-     * @param  array<string, mixed>  $row  Raw record payload from the client push request.
-     * @return UpsertResult Accepted (true) or rejected (false) with a reason string.
+     * @return class-string<Model>
      */
-    public function upsert(User $user, array $row): UpsertResult
+    protected function modelClass(): string
     {
-        $id = (string) ($row['id'] ?? '');
-        $deckId = (string) ($row['deck_id'] ?? '');
-        $incoming = (int) ($row['updated_at_ms'] ?? 0);
+        return Card::class;
+    }
 
-        if ($id === '' || $deckId === '') {
-            return new UpsertResult(false, 'missing_id');
+    /**
+     * Reject if deck_id is missing or the referenced deck is not owned by the user.
+     *
+     * Also returns 'missing_id' when deck_id is absent, since a Card without
+     * a parent deck is structurally invalid.
+     *
+     * @param  User  $user  Authenticated user.
+     * @param  string  $id  Card UUID from the client row.
+     * @param  array<string, mixed>  $row  Full client row payload (must contain deck_id).
+     * @return string|null 'missing_id', 'forbidden', or null to proceed.
+     */
+    protected function checkOwnership(User $user, string $id, array $row): ?string
+    {
+        $deckId = (string) ($row['deck_id'] ?? '');
+        if ($deckId === '') {
+            return 'missing_id';
         }
 
         $deck = Deck::find($deckId);
-        if (! $deck || $deck->user_id !== $user->id) {
-            return new UpsertResult(false, 'forbidden');
-        }
 
-        $existing = Card::find($id);
-        if ($existing && $existing->updated_at_ms >= $incoming) {
-            return new UpsertResult(false, 'stale');
-        }
+        return (! $deck || $deck->user_id !== $user->id) ? 'forbidden' : null;
+    }
 
-        // Use firstOrNew + explicit id assignment to avoid HasUuids overwriting the
-        // client-supplied UUID during mass-assignment (id is not in $fillable, so
-        // updateOrCreate's where-clause id would not reach setUniqueIds' empty check).
-        $card = Card::firstOrNew(['id' => $id]);
-        $card->id = $id;
-        $card->fill([
-            'deck_id' => $deckId,
-            'front_text' => (string) ($row['front_text'] ?? ''),
-            'back_text' => (string) ($row['back_text'] ?? ''),
-            // TODO(1.15): validate asset ownership and add FK constraint after assets table exists.
-            'front_image_asset_id' => $row['front_image_asset_id'] ?? null,
-            'back_image_asset_id' => $row['back_image_asset_id'] ?? null,
-            'position' => (int) ($row['position'] ?? 0),
-            'stability' => isset($row['stability']) ? (float) $row['stability'] : null,
-            'difficulty' => isset($row['difficulty']) ? (float) $row['difficulty'] : null,
-            'state' => (string) ($row['state'] ?? 'new'),
-            'last_reviewed_at_ms' => isset($row['last_reviewed_at_ms']) ? (int) $row['last_reviewed_at_ms'] : null,
-            'due_at_ms' => isset($row['due_at_ms']) ? (int) $row['due_at_ms'] : null,
-            'lapses' => (int) ($row['lapses'] ?? 0),
-            'reps' => (int) ($row['reps'] ?? 0),
-            'updated_at_ms' => $incoming,
-            'deleted_at_ms' => isset($row['deleted_at_ms']) ? (int) $row['deleted_at_ms'] : null,
-        ]);
-        $card->save();
+    /**
+     * Map client row fields onto the Card model.
+     *
+     * front_image_asset_id, back_image_asset_id, stability, difficulty,
+     * last_reviewed_at_ms, and due_at_ms use preserve() so that absent keys
+     * do not overwrite existing values with null (partial-update semantics).
+     *
+     * TODO(1.15): validate asset ownership and add FK constraint after assets table exists.
+     *
+     * @param  Model  $model  Card model instance (new or fetched).
+     * @param  User  $user  Authenticated owner (unused here; ownership is via deck).
+     * @param  array<string, mixed>  $row  Client row payload.
+     * @param  Model|null  $existing  Pre-lock existing record, or null on create.
+     */
+    protected function applyFields(Model $model, User $user, array $row, ?Model $existing): void
+    {
+        assert($model instanceof Card);
 
-        return new UpsertResult(true);
+        $model->deck_id = (string) ($row['deck_id'] ?? '');
+        $model->front_text = (string) ($row['front_text'] ?? '');
+        $model->back_text = (string) ($row['back_text'] ?? '');
+        $model->front_image_asset_id = $this->preserve($row, $existing, 'front_image_asset_id');
+        $model->back_image_asset_id = $this->preserve($row, $existing, 'back_image_asset_id');
+        $model->position = (int) ($row['position'] ?? 0);
+        $stability = $this->preserve($row, $existing, 'stability');
+        $model->stability = $stability !== null ? (float) $stability : null;
+
+        $difficulty = $this->preserve($row, $existing, 'difficulty');
+        $model->difficulty = $difficulty !== null ? (float) $difficulty : null;
+        $model->state = (string) ($row['state'] ?? 'new');
+        $model->last_reviewed_at_ms = $this->preserve($row, $existing, 'last_reviewed_at_ms', castInt: true);
+        $model->due_at_ms = $this->preserve($row, $existing, 'due_at_ms', castInt: true);
+        $model->lapses = (int) ($row['lapses'] ?? 0);
+        $model->reps = (int) ($row['reps'] ?? 0);
     }
 }

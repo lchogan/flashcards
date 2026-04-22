@@ -13,13 +13,13 @@ declare(strict_types=1);
  * Dependencies:
  *   - App\Models\Session (Eloquent model, HasUuids, table=study_sessions)
  *   - App\Models\User (ownership scoping)
- *   - App\Services\Sync\RecordReader (interface contract)
+ *   - App\Services\Sync\AbstractCursorReader (base class; handles pagination,
+ *     cursor computation, and the [rows, hasMore, maxUpdatedMs] tuple)
  *
  * Key concepts:
- *   - Pagination: queries pageSize + 1 rows; if the result exceeds pageSize,
- *     hasMore=true is returned and the extra row is discarded before mapping.
- *   - nextSince: the maximum updated_at_ms in the returned page is passed back
- *     to the client as the cursor for the next pull request.
+ *   - Ownership: scoped by user_id directly on the study_sessions table.
+ *   - Pagination: one-extra-row trick; see AbstractCursorReader.
+ *   - nextSince: max updated_at_ms in page → client's next `since`.
  *   - Ordered by updated_at_ms ASC so cursored pagination is stable.
  */
 
@@ -27,59 +27,61 @@ namespace App\Services\Sync\Entities;
 
 use App\Models\Session;
 use App\Models\User;
-use App\Services\Sync\RecordReader;
+use App\Services\Sync\AbstractCursorReader;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Reads Session records for the authenticated user updated after a given timestamp.
  *
- * Implements the RecordReader contract for the "sessions" entity key.
+ * Implements the RecordReader contract for the "sessions" entity key via
+ * AbstractCursorReader. Only entity-specific concerns are declared here:
+ * model class, ownership scope, and row projection.
  */
-final class SessionReader implements RecordReader
+final class SessionReader extends AbstractCursorReader
 {
     /**
-     * Fetch Session rows for the user changed after $since, up to $pageSize rows.
-     *
-     * Pagination contract: queries $pageSize + 1 rows. If the result set exceeds
-     * $pageSize, the extra row signals that more data exists (hasMore=true) and is
-     * discarded before serialisation. The returned maxUpdatedMs is the highest
-     * updated_at_ms in the page — the client sends this back as `since` on the
-     * next pull to advance the cursor.
-     *
-     * @param  User  $user  Owner of the records; results are scoped to this user.
-     * @param  int  $since  Millisecond timestamp lower-bound (exclusive); only rows updated after this are returned.
-     * @param  int  $pageSize  Maximum number of rows to include in the returned page.
-     * @return array{0: list<array<string, mixed>>, 1: bool, 2: int}
-     *                                                               [rows, hasMore, maxUpdatedMs]
+     * @return class-string<Model>
      */
-    public function read(User $user, int $since, int $pageSize): array
+    protected function modelClass(): string
     {
-        $rows = Session::query()
-            ->where('user_id', $user->id)
-            ->where('updated_at_ms', '>', $since)
-            ->orderBy('updated_at_ms')
-            ->limit($pageSize + 1)
-            ->get();
+        return Session::class;
+    }
 
-        $hasMore = $rows->count() > $pageSize;
-        $page = $rows->take($pageSize);
-        $max = (int) ($page->max('updated_at_ms') ?? $since);
+    /**
+     * Scope the query to sessions owned by the authenticated user.
+     *
+     * @param  Builder<Model>  $query  Base query for the Session model.
+     * @param  User  $user  Authenticated user.
+     * @return Builder<Model> Scoped query.
+     */
+    protected function scopeForUser(Builder $query, User $user): Builder
+    {
+        return $query->where('user_id', $user->id);
+    }
+
+    /**
+     * Project a Session model into the wire-format row.
+     *
+     * @param  Model  $model  Hydrated Session instance.
+     * @return array<string, mixed> Wire-format row.
+     */
+    protected function projectRow(Model $model): array
+    {
+        assert($model instanceof Session);
 
         return [
-            $page->map(fn (Session $s) => [
-                'id' => $s->id,
-                'user_id' => $s->user_id,
-                'deck_id' => $s->deck_id,
-                'mode' => $s->mode,
-                'started_at_ms' => $s->started_at_ms,
-                'ended_at_ms' => $s->ended_at_ms,
-                'cards_reviewed' => $s->cards_reviewed,
-                'accuracy_pct' => $s->accuracy_pct,
-                'mastery_delta' => $s->mastery_delta,
-                'updated_at_ms' => $s->updated_at_ms,
-                'deleted_at_ms' => $s->deleted_at_ms,
-            ])->values()->all(),
-            $hasMore,
-            $max,
+            'id' => $model->id,
+            'user_id' => $model->user_id,
+            'deck_id' => $model->deck_id,
+            'mode' => $model->mode,
+            'started_at_ms' => $model->started_at_ms,
+            'ended_at_ms' => $model->ended_at_ms,
+            'cards_reviewed' => $model->cards_reviewed,
+            'accuracy_pct' => $model->accuracy_pct,
+            'mastery_delta' => $model->mastery_delta,
+            'updated_at_ms' => $model->updated_at_ms,
+            'deleted_at_ms' => $model->deleted_at_ms,
         ];
     }
 }
