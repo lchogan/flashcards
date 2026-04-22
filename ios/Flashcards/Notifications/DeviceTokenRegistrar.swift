@@ -11,11 +11,11 @@
 
 import Foundation
 
-public enum DeviceTokenRegistrar {
+internal enum DeviceTokenRegistrar {
     /// Converts the raw `Data` token to hex and posts it to the server.
     /// Fires best-effort: a failed network round-trip just means the next
     /// launch retries.
-    public static func register(tokenData: Data) async {
+    internal static func register(tokenData: Data) async {
         let hex = tokenData.map { String(format: "%02x", $0) }.joined()
         let tokenStore = TokenStore()
         let api = APIClient(baseURL: URL(string: "http://localhost:8000")!) {
@@ -26,11 +26,12 @@ public enum DeviceTokenRegistrar {
         guard let body = try? JSONEncoder.api.encode(Body(deviceToken: hex)) else {
             return
         }
-        _ = try? await api.send(APIEndpoint<Empty204>(
-            method: "POST",
-            path: "/api/v1/me/device-token",
-            body: body,
-            requiresAuth: true,
-        ))
+        _ = try? await api.send(
+            APIEndpoint<Empty204>(
+                method: "POST",
+                path: "/api/v1/me/device-token",
+                body: body,
+                requiresAuth: true,
+            ))
     }
 }

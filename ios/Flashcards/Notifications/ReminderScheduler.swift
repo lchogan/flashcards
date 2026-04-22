@@ -11,16 +11,16 @@
 import Foundation
 import UserNotifications
 
-public actor ReminderScheduler {
-    public static let studyCategory = "MW_STUDY_REMINDER"
-    public static let streakCategory = "MW_STREAK_NUDGE"
+internal actor ReminderScheduler {
+    internal static let studyCategory = "MW_STUDY_REMINDER"
+    internal static let streakCategory = "MW_STREAK_NUDGE"
 
-    public init() {}
+    internal init() {}
 
     /// Schedules a repeating daily local notification at `time`. Removes any
     /// existing request with the same identifier first so the caller doesn't
     /// have to track lifecycle.
-    public func schedule(
+    internal func schedule(
         time: DateComponents,
         identifier: String,
         title: String,
@@ -45,13 +45,13 @@ public actor ReminderScheduler {
         try? await center.add(request)
     }
 
-    public func cancel(identifier: String) async {
+    internal func cancel(identifier: String) async {
         UNUserNotificationCenter.current().removePendingNotificationRequests(
             withIdentifiers: [identifier],
         )
     }
 
-    public func cancelAll() async {
+    internal func cancelAll() async {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
 }

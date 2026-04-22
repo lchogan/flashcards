@@ -12,14 +12,14 @@
 import Foundation
 import UserNotifications
 
-public actor NotificationManager {
-    public static let shared = NotificationManager()
+internal actor NotificationManager {
+    internal static let shared = NotificationManager()
 
-    public init() {}
+    internal init() {}
 
     /// Requests notification authorization if we don't already have it.
     /// Returns true if the final authorization status is authorized.
-    public func requestAuthorizationIfNeeded() async -> Bool {
+    internal func requestAuthorizationIfNeeded() async -> Bool {
         let center = UNUserNotificationCenter.current()
         let current = await center.notificationSettings()
         if current.authorizationStatus == .authorized {
@@ -32,7 +32,7 @@ public actor NotificationManager {
         }
     }
 
-    public func currentStatus() async -> UNAuthorizationStatus {
+    internal func currentStatus() async -> UNAuthorizationStatus {
         await UNUserNotificationCenter.current().notificationSettings().authorizationStatus
     }
 }

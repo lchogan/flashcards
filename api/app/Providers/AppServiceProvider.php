@@ -8,9 +8,6 @@ use App\Services\Auth\AppleIdentityVerifier;
 use App\Services\Entitlements\EntitlementChecker;
 use App\Services\Subscriptions\AppStoreVerifier;
 use App\Services\Sync\Entities\CardReader;
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\RateLimiter;
 use App\Services\Sync\Entities\CardSubTopicReader;
 use App\Services\Sync\Entities\CardSubTopicUpserter;
 use App\Services\Sync\Entities\CardUpserter;
@@ -26,6 +23,9 @@ use App\Services\Sync\Entities\TopicReader;
 use App\Services\Sync\Entities\TopicUpserter;
 use App\Services\Sync\SyncPullService;
 use App\Services\Sync\SyncPushService;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

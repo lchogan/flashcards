@@ -26,17 +26,21 @@ struct StudySettingsView: View {
                     }
 
                     MWSection("Daily new-card limit") {
-                        Stepper("\(dailyNewCardLimit) cards", value: Binding(
-                            get: { dailyNewCardLimit },
-                            set: { newValue in
-                                if newValue > 10,
-                                   case .paywall(let reason, _) = entitlements.can(.newCardLimitAbove10).outcome {
-                                    paywallReason = reason
-                                    return
-                                }
-                                dailyNewCardLimit = newValue
-                            },
-                        ), in: 1...50)
+                        Stepper(
+                            "\(dailyNewCardLimit) cards",
+                            value: Binding(
+                                get: { dailyNewCardLimit },
+                                set: { newValue in
+                                    if newValue > 10,
+                                        case .paywall(let reason, _) = entitlements.can(.newCardLimitAbove10).outcome
+                                    {
+                                        paywallReason = reason
+                                        return
+                                    }
+                                    dailyNewCardLimit = newValue
+                                },
+                            ), in: 1...50
+                        )
                         .font(MWType.bodyL)
                         .foregroundStyle(MWColor.ink)
                     }

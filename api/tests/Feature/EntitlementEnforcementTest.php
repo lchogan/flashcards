@@ -5,10 +5,11 @@ declare(strict_types=1);
 use App\Models\Card;
 use App\Models\Deck;
 use App\Models\User;
+use Database\Seeders\PlanSeeder;
 use Illuminate\Support\Str;
 
 beforeEach(function () {
-    $this->seed(\Database\Seeders\PlanSeeder::class);
+    $this->seed(PlanSeeder::class);
 });
 
 test('free user pushing 6th deck: sixth rejected with reason=decks.create', function () {

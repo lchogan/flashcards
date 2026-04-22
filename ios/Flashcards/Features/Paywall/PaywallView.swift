@@ -20,19 +20,19 @@ import SwiftUI
 /// Paywall modal. Presented by any gated call site when an entitlement
 /// check returns `.paywall`. Copy is keyed off the triggering
 /// `EntitlementKey` via `PaywallCopy`.
-public struct PaywallView: View {
-    public let reason: EntitlementKey
+internal struct PaywallView: View {
+    internal let reason: EntitlementKey
     @Environment(\.dismiss) private var dismiss
     @Environment(PurchasesManager.self) private var purchases
 
     @State private var isPurchasing = false
     @State private var errorMessage: String?
 
-    public init(reason: EntitlementKey) {
+    internal init(reason: EntitlementKey) {
         self.reason = reason
     }
 
-    public var body: some View {
+    internal var body: some View {
         let copy = PaywallCopy.map[reason] ?? PaywallCopy.fallback
 
         MWScreen {
@@ -114,19 +114,19 @@ public struct PaywallView: View {
 }
 
 /// Copy block shown on the paywall sheet, keyed off the triggering gate.
-public struct PaywallCopyEntry: Sendable {
-    public let eyebrow: String
-    public let headline: String
-    public let body: String
-    public let bullets: [String]
-    public let ctaLabel: String
+internal struct PaywallCopyEntry: Sendable {
+    internal let eyebrow: String
+    internal let headline: String
+    internal let body: String
+    internal let bullets: [String]
+    internal let ctaLabel: String
 }
 
 /// Static table mapping each `EntitlementKey` to the copy shown when it
 /// triggers the paywall. New entitlements must add a row here or the
 /// caller will fall through to `fallback`.
-public enum PaywallCopy {
-    public static let fallback = PaywallCopyEntry(
+internal enum PaywallCopy {
+    internal static let fallback = PaywallCopyEntry(
         eyebrow: "Upgrade",
         headline: "Unlock Plus",
         body: "Everything in Flashcards, without the guardrails.",
@@ -138,7 +138,7 @@ public enum PaywallCopy {
         ctaLabel: "Upgrade to Plus",
     )
 
-    public static let map: [EntitlementKey: PaywallCopyEntry] = [
+    internal static let map: [EntitlementKey: PaywallCopyEntry] = [
         .decksCreate: PaywallCopyEntry(
             eyebrow: "Limit reached",
             headline: "You've got 5 decks.",

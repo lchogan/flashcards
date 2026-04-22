@@ -76,12 +76,13 @@ struct AccountSettingsView: View {
             await tokenStore.access()
         }
         do {
-            _ = try await api.send(APIEndpoint<Empty204>(
-                method: "DELETE",
-                path: "/api/v1/me",
-                body: nil,
-                requiresAuth: true,
-            ))
+            _ = try await api.send(
+                APIEndpoint<Empty204>(
+                    method: "DELETE",
+                    path: "/api/v1/me",
+                    body: nil,
+                    requiresAuth: true,
+                ))
             await tokenStore.clear()
             await MainActor.run {
                 appState.authStatus = .unauthenticated

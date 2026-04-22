@@ -16,58 +16,46 @@
 import Foundation
 
 /// Cached copy of a `GET /v1/me/entitlements` response.
-public struct PlanSnapshot: Codable, Equatable, Sendable {
-    public let planKey: String
-    public let version: Int
-    public let entitlements: [String: EntitlementConfig]
-
-    public init(planKey: String, version: Int, entitlements: [String: EntitlementConfig]) {
-        self.planKey = planKey
-        self.version = version
-        self.entitlements = entitlements
-    }
+internal struct PlanSnapshot: Codable, Equatable, Sendable {
+    internal let planKey: String
+    internal let version: Int
+    internal let entitlements: [String: EntitlementConfig]
 }
 
 /// Server-side entitlement rule. One of `boolean` or `max_count`; unused
 /// fields are `nil`.
-public struct EntitlementConfig: Codable, Equatable, Sendable {
-    public let type: String
-    public let max: Int?
-    public let allowed: Bool?
-
-    public init(type: String, max: Int?, allowed: Bool?) {
-        self.type = type
-        self.max = max
-        self.allowed = allowed
-    }
+internal struct EntitlementConfig: Codable, Equatable, Sendable {
+    internal let type: String
+    internal let max: Int?
+    internal let allowed: Bool?
 }
 
 /// Actor-isolated wrapper around a single UserDefaults slot for the plan
 /// snapshot. Safe to call from any task; every operation is a single
 /// synchronous defaults read/write under the actor.
-public actor PlansCache {
+internal actor PlansCache {
     private let defaults: UserDefaults
     private let storageKey = "mw.plansCache"
 
-    public init(defaults: UserDefaults = .standard) {
+    internal init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
     }
 
-    public func load() -> PlanSnapshot? {
+    internal func load() -> PlanSnapshot? {
         guard let data = defaults.data(forKey: storageKey) else {
             return nil
         }
         return try? JSONDecoder.api.decode(PlanSnapshot.self, from: data)
     }
 
-    public func store(_ snapshot: PlanSnapshot) {
+    internal func store(_ snapshot: PlanSnapshot) {
         guard let data = try? JSONEncoder.api.encode(snapshot) else {
             return
         }
         defaults.set(data, forKey: storageKey)
     }
 
-    public func clear() {
+    internal func clear() {
         defaults.removeObject(forKey: storageKey)
     }
 }

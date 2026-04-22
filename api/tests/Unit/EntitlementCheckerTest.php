@@ -5,12 +5,13 @@ declare(strict_types=1);
 use App\Models\Deck;
 use App\Models\User;
 use App\Services\Entitlements\EntitlementChecker;
+use Database\Seeders\PlanSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->seed(\Database\Seeders\PlanSeeder::class);
+    $this->seed(PlanSeeder::class);
 });
 
 test('free user hitting 5-deck cap on create returns paywall', function () {

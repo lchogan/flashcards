@@ -52,12 +52,14 @@ struct ProfileSettingsView: View {
         struct MeResponse: Decodable {
             let name: String?
         }
-        if let me: MeResponse = try? await api.send(APIEndpoint<MeResponse>(
-            method: "GET",
-            path: "/api/v1/me",
-            body: nil,
-            requiresAuth: true,
-        )) {
+        if let me: MeResponse = try? await api.send(
+            APIEndpoint<MeResponse>(
+                method: "GET",
+                path: "/api/v1/me",
+                body: nil,
+                requiresAuth: true,
+            ))
+        {
             name = me.name ?? ""
         }
     }
@@ -81,12 +83,13 @@ struct ProfileSettingsView: View {
         }
 
         do {
-            _ = try await api.send(APIEndpoint<Resp>(
-                method: "PATCH",
-                path: "/api/v1/me",
-                body: body,
-                requiresAuth: true,
-            ))
+            _ = try await api.send(
+                APIEndpoint<Resp>(
+                    method: "PATCH",
+                    path: "/api/v1/me",
+                    body: body,
+                    requiresAuth: true,
+                ))
             savedSuccessfully = true
         } catch {
             errorMessage = "Save failed. Try again."

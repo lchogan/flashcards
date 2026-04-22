@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Database\Seeders\PlanSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -19,10 +21,10 @@ abstract class TestCase extends BaseTestCase
         $uses = parent::setUpTraits();
 
         if (
-            isset($uses[\Illuminate\Foundation\Testing\RefreshDatabase::class])
-            && class_exists(\Database\Seeders\PlanSeeder::class)
+            isset($uses[RefreshDatabase::class])
+            && class_exists(PlanSeeder::class)
         ) {
-            $this->artisan('db:seed', ['--class' => \Database\Seeders\PlanSeeder::class]);
+            $this->artisan('db:seed', ['--class' => PlanSeeder::class]);
         }
 
         return $uses;

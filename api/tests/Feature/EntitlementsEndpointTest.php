@@ -3,9 +3,10 @@
 declare(strict_types=1);
 
 use App\Models\User;
+use Database\Seeders\PlanSeeder;
 
 beforeEach(function () {
-    $this->seed(\Database\Seeders\PlanSeeder::class);
+    $this->seed(PlanSeeder::class);
 });
 
 test('GET /v1/me/entitlements returns current plan + snapshot', function () {

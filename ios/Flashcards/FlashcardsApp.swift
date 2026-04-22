@@ -70,12 +70,13 @@ struct FlashcardsApp: App {
         }
         let entitlementsManager = EntitlementsManager(api: api)
         self._entitlements = State(initialValue: entitlementsManager)
-        self._purchases = State(initialValue: PurchasesManager(
-            api: api,
-            refreshEntitlements: { @Sendable [weak entitlementsManager] in
-                await entitlementsManager?.load(force: true)
-            },
-        ))
+        self._purchases = State(
+            initialValue: PurchasesManager(
+                api: api,
+                refreshEntitlements: { @Sendable [weak entitlementsManager] in
+                    await entitlementsManager?.load(force: true)
+                },
+            ))
 
         let schema: [any PersistentModel.Type] = [
             UserEntity.self, TopicEntity.self, DeckEntity.self, SubTopicEntity.self,

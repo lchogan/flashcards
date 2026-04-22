@@ -18,15 +18,21 @@ struct SettingsRootView: View {
                     MWEyebrow("Settings")
 
                     MWSection("Account") {
-                        NavigationLink { ProfileSettingsView() } label: {
+                        NavigationLink {
+                            ProfileSettingsView()
+                        } label: {
                             MWFormRow(title: "Profile") { MWIcon(.chevronRight, size: 16) }
                         }
                         MWDivider()
-                        NavigationLink { AccountSettingsView() } label: {
+                        NavigationLink {
+                            AccountSettingsView()
+                        } label: {
                             MWFormRow(title: "Account") { MWIcon(.chevronRight, size: 16) }
                         }
                         MWDivider()
-                        NavigationLink { SubscriptionSettingsView() } label: {
+                        NavigationLink {
+                            SubscriptionSettingsView()
+                        } label: {
                             MWFormRow(title: "Subscription") { MWIcon(.chevronRight, size: 16) }
                         }
                     }
@@ -34,11 +40,15 @@ struct SettingsRootView: View {
                     MWDivider()
 
                     MWSection("Preferences") {
-                        NavigationLink { StudySettingsView() } label: {
+                        NavigationLink {
+                            StudySettingsView()
+                        } label: {
                             MWFormRow(title: "Study") { MWIcon(.chevronRight, size: 16) }
                         }
                         MWDivider()
-                        NavigationLink { AppearanceSettingsView() } label: {
+                        NavigationLink {
+                            AppearanceSettingsView()
+                        } label: {
                             MWFormRow(title: "Appearance") { MWIcon(.chevronRight, size: 16) }
                         }
                     }
@@ -46,7 +56,9 @@ struct SettingsRootView: View {
                     MWDivider()
 
                     MWSection("About") {
-                        NavigationLink { AboutView() } label: {
+                        NavigationLink {
+                            AboutView()
+                        } label: {
                             MWFormRow(title: "About Flashcards") { MWIcon(.chevronRight, size: 16) }
                         }
                     }

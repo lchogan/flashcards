@@ -22,17 +22,17 @@ import Observation
 
 @Observable
 @MainActor
-public final class EntitlementsManager {
-    public var planKey: String = "free"
-    public var planVersion: Int = 0
-    public var isLoaded = false
+internal final class EntitlementsManager {
+    internal var planKey: String = "free"
+    internal var planVersion: Int = 0
+    internal var isLoaded = false
 
     private var config: [String: EntitlementConfig] = [:]
     private let api: APIClientProtocol
     private let cache: PlansCache
     private var lastFetchAt: Date?
 
-    public init(api: APIClientProtocol, cache: PlansCache = PlansCache()) {
+    internal init(api: APIClientProtocol, cache: PlansCache = PlansCache()) {
         self.api = api
         self.cache = cache
     }
@@ -40,7 +40,7 @@ public final class EntitlementsManager {
     /// Loads the cached snapshot if present, then refreshes from server when
     /// the cache is stale (>5 min) or missing. Safe to call repeatedly; a
     /// fresh cache short-circuits the network.
-    public func load(force: Bool = false) async {
+    internal func load(force: Bool = false) async {
         if let cached = await cache.load() {
             apply(cached)
             if !force, let last = lastFetchAt, Date().timeIntervalSince(last) < 300 {
@@ -49,12 +49,13 @@ public final class EntitlementsManager {
         }
 
         do {
-            let resp: EntitlementsResponse = try await api.send(APIEndpoint<EntitlementsResponse>(
-                method: "GET",
-                path: "/api/v1/me/entitlements",
-                body: nil,
-                requiresAuth: true,
-            ))
+            let resp: EntitlementsResponse = try await api.send(
+                APIEndpoint<EntitlementsResponse>(
+                    method: "GET",
+                    path: "/api/v1/me/entitlements",
+                    body: nil,
+                    requiresAuth: true,
+                ))
             let snapshot = PlanSnapshot(
                 planKey: resp.planKey,
                 version: resp.version,
@@ -72,7 +73,7 @@ public final class EntitlementsManager {
     /// Synchronous gate check. Caller supplies any current-count hint needed
     /// for `max_count` entitlements (e.g. the user's existing deck count for
     /// `decksCreate`).
-    public func can(_ key: EntitlementKey, currentCount: Int = 0) -> EntitlementResult {
+    internal func can(_ key: EntitlementKey, currentCount: Int = 0) -> EntitlementResult {
         guard let cfg = config[key.rawValue] else {
             return EntitlementResult(outcome: .paywall(reason: key, limit: nil))
         }
@@ -92,7 +93,7 @@ public final class EntitlementsManager {
     }
 
     /// Reset to defaults (sign-out).
-    public func reset() async {
+    internal func reset() async {
         planKey = "free"
         planVersion = 0
         config = [:]

@@ -40,7 +40,8 @@ final class NotificationViewController: UIViewController, UNNotificationContentE
         let shared = UserDefaults(suiteName: "group.com.lukehogan.flashcards")
         let dueCount = shared?.integer(forKey: "mw.dueCount") ?? 0
 
-        label.text = dueCount == 0
+        label.text =
+            dueCount == 0
             ? "All caught up. Nothing due right now."
             : "\(dueCount) \(dueCount == 1 ? "card is" : "cards are") waiting for you."
 

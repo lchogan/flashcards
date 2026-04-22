@@ -17,7 +17,7 @@ import Foundation
 /// Rawvalues MUST match `config/plans.php` and the entitlement keys emitted by
 /// `GET /v1/me/entitlements`. Adding a new entitlement: add a case here *and*
 /// a row on the server config — out-of-sync keys silently deny in the client.
-public enum EntitlementKey: String, Codable, CaseIterable, Identifiable, Sendable {
+internal enum EntitlementKey: String, Codable, CaseIterable, Identifiable, Sendable {
     case decksCreate = "decks.create"
     case cardsCreateInDeck = "cards.create_in_deck"
     case cardsCreateTotal = "cards.create_total"
@@ -31,26 +31,26 @@ public enum EntitlementKey: String, Codable, CaseIterable, Identifiable, Sendabl
     case exportCsv = "export.csv"
     case exportJson = "export.json"
 
-    public var id: String { rawValue }
+    internal var id: String { rawValue }
 }
 
 /// Outcome of an `EntitlementsManager.can(_:)` check.
-public struct EntitlementResult: Equatable, Sendable {
-    public enum Outcome: Equatable, Sendable {
+internal struct EntitlementResult: Equatable, Sendable {
+    internal enum Outcome: Equatable, Sendable {
         case allowed
         case paywall(reason: EntitlementKey, limit: Int?)
     }
 
-    public let outcome: Outcome
+    internal let outcome: Outcome
 
-    public var allowed: Bool {
+    internal var allowed: Bool {
         if case .allowed = outcome {
             return true
         }
         return false
     }
 
-    public init(outcome: Outcome) {
+    internal init(outcome: Outcome) {
         self.outcome = outcome
     }
 }

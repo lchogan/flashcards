@@ -23,7 +23,7 @@ final class EntitlementChecker
 {
     /**
      * @param  array<string, mixed>  $context  Extra hints for count-bounded checks
-     *                                        (e.g. ['deck_id' => '…'] for cards.create_in_deck).
+     *                                         (e.g. ['deck_id' => '…'] for cards.create_in_deck).
      */
     public function can(User $user, string $key, array $context = []): EntitlementResult
     {

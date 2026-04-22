@@ -17,14 +17,14 @@ import Observation
 import StoreKit
 
 /// Top-level shape of the client→server verify handshake response.
-public struct PurchaseVerifyResponse: Decodable, Sendable {
-    public let planKey: String
-    public let subscriptionStatus: String
-    public let subscriptionExpiresAt: Date?
+internal struct PurchaseVerifyResponse: Decodable, Sendable {
+    internal let planKey: String
+    internal let subscriptionStatus: String
+    internal let subscriptionExpiresAt: Date?
 }
 
 /// Outcome of a StoreKit purchase attempt.
-public enum PurchaseOutcome: Equatable, Sendable {
+internal enum PurchaseOutcome: Equatable, Sendable {
     case success
     case userCancelled
     case pending
@@ -39,18 +39,18 @@ public enum PurchaseOutcome: Equatable, Sendable {
 /// `EntitlementsManager.load(force: true)` so the UI re-gates immediately.
 @Observable
 @MainActor
-public final class PurchasesManager {
-    public static let plusMonthlyProductId = "com.lukehogan.flashcards.plus.monthly"
-    public static let plusAnnualProductId = "com.lukehogan.flashcards.plus.annual"
+internal final class PurchasesManager {
+    internal static let plusMonthlyProductId = "com.lukehogan.flashcards.plus.monthly"
+    internal static let plusAnnualProductId = "com.lukehogan.flashcards.plus.annual"
 
-    public private(set) var products: [Product] = []
-    public private(set) var isLoaded = false
+    internal private(set) var products: [Product] = []
+    internal private(set) var isLoaded = false
 
     private let api: APIClientProtocol
     private let refreshEntitlements: @Sendable () async -> Void
     private var updatesTask: Task<Void, Never>?
 
-    public init(
+    internal init(
         api: APIClientProtocol,
         refreshEntitlements: @Sendable @escaping () async -> Void = {},
     ) {
@@ -60,7 +60,7 @@ public final class PurchasesManager {
 
     /// Loads the two Plus product IDs from the App Store and starts the
     /// transaction-update listener. Idempotent.
-    public func load() async {
+    internal func load() async {
         if !isLoaded {
             do {
                 products = try await Product.products(for: [
@@ -90,7 +90,7 @@ public final class PurchasesManager {
     // termination to tear down the transaction-update listener.
 
     /// Kicks off a purchase. Server-side verify runs on success.
-    public func purchase(productId: String) async throws -> PurchaseOutcome {
+    internal func purchase(productId: String) async throws -> PurchaseOutcome {
         guard let product = products.first(where: { $0.id == productId }) else {
             throw PurchasesError.productUnavailable(productId)
         }
@@ -118,7 +118,7 @@ public final class PurchasesManager {
     /// Re-verifies whatever the device already has with the App Store +
     /// backend. Used by the "Restore purchases" button on the paywall and in
     /// Settings.
-    public func restore() async throws {
+    internal func restore() async throws {
         try await AppStore.sync()
         var forwarded = false
         for await result in Transaction.currentEntitlements {
@@ -154,7 +154,7 @@ public final class PurchasesManager {
     }
 }
 
-public enum PurchasesError: Error, Equatable {
+internal enum PurchasesError: Error, Equatable {
     case productUnavailable(String)
     case unverifiedTransaction
 }
