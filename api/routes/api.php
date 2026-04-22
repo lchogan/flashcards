@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\AppleAuthController;
 use App\Http\Controllers\Api\V1\EntitlementsController;
 use App\Http\Controllers\Api\V1\MagicLinkController;
 use App\Http\Controllers\Api\V1\MeController;
+use App\Http\Controllers\Api\V1\ReminderController;
 use App\Http\Controllers\Api\V1\SyncPullController;
 use App\Http\Controllers\Api\V1\SyncPushController;
 use App\Http\Controllers\Api\V1\TokenController;
@@ -23,6 +24,11 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::patch('/me', [MeController::class, 'update']);
 
     Route::get('/me/entitlements', [EntitlementsController::class, 'show']);
+
+    Route::get('/reminders', [ReminderController::class, 'index']);
+    Route::post('/reminders', [ReminderController::class, 'store']);
+    Route::patch('/reminders/{id}', [ReminderController::class, 'update']);
+    Route::delete('/reminders/{id}', [ReminderController::class, 'destroy']);
 });
 
 Route::prefix('v1')->group(function () {

@@ -46,4 +46,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Deck::class);
     }
+
+    /**
+     * @return HasMany<Reminder, $this>
+     */
+    public function reminders(): HasMany
+    {
+        return $this->hasMany(Reminder::class);
+    }
 }
