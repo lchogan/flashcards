@@ -15,11 +15,14 @@
 		1D3B8506D046FAD46CE79849 /* FlashcardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898ED96388E1C5A38EB3EC56 /* FlashcardsApp.swift */; };
 		24189012899F3CED7AB44E5E /* PostHog in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF295D3928BC732211057E9 /* PostHog */; };
 		319BDA71D9F0A272D6841EDA /* MWScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */; };
+		343AAB64A5721C045E9EE719 /* MWDot.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB0E68B8D3541EC7636DEFC /* MWDot.swift */; };
 		37DE4CDC872A96BF66F19D8F /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFBCFA88524780D98CE086 /* Spacing.swift */; };
 		4F357D7944554375AB0165EC /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1F414A0711619C5FDF3269DD /* MarkdownUI */; };
 		50D528B50CDEA0E4A89FA353 /* MWTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA292D13A4FD4DFA9AAE6053 /* MWTextField.swift */; };
+		6621BD3199DA11A08EAFE665 /* MWPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB8DD260175A68C1CA1FCEA /* MWPill.swift */; };
 		677876272A9353657D56BC78 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = B2E7B02A2283DBE098796542 /* Sentry */; };
 		6BC96A54318A7EC43FB27FC3 /* MWDestructiveButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2F6309A56C16DB54F4E208 /* MWDestructiveButtonStyle.swift */; };
+		6D7E3BF8947D24D9C2C8A064 /* MWDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088B7E1F4FEA8DB8F1829EC2 /* MWDivider.swift */; };
 		7046D80BB7E05D4488B8E620 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40590CEF9514F130D9EB7101 /* Assets.xcassets */; };
 		7469D2561DCEC06499A1C483 /* MWSecondaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A16BDB6D28578249699970F /* MWSecondaryButtonStyle.swift */; };
 		8B1C8DA5B9FFA67E666742C9 /* MWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C21C770B2B3AF3347CF2284 /* MWButton.swift */; };
@@ -34,6 +37,7 @@
 		E4E6973A11C056D294601697 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8601E71EC6CC580329D9D3A /* Colors.swift */; };
 		E7648228F66E1B871F8CACDE /* ColorsTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75AEF6EC4869BDEED745175 /* ColorsTokenTests.swift */; };
 		EAF6EBF27A4ABC187CA6F186 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 9A85F47B4666B3448616D1FF /* KeychainAccess */; };
+		F03144EE96CEA0A0C37E3256 /* MWEyebrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2046EA17B9CF3B81354EBB /* MWEyebrow.swift */; };
 		F1642B745813ABE669A91B85 /* MWCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5666B85823F4898EAB769C5A /* MWCard.swift */; };
 		F25E11BD413D3218216BB972 /* Borders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4233F9E69A788D61C2D472C0 /* Borders.swift */; };
 /* End PBXBuildFile section */
@@ -57,6 +61,8 @@
 
 /* Begin PBXFileReference section */
 		070938971B6DA36EDC8B8668 /* Flashcards.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Flashcards.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		088B7E1F4FEA8DB8F1829EC2 /* MWDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDivider.swift; sourceTree = "<group>"; };
+		0A2046EA17B9CF3B81354EBB /* MWEyebrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWEyebrow.swift; sourceTree = "<group>"; };
 		0D5E661B31CAD40E670B867A /* FlashcardsTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = FlashcardsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2F6309A56C16DB54F4E208 /* MWDestructiveButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDestructiveButtonStyle.swift; sourceTree = "<group>"; };
 		300F3D467E2E539FF66D566E /* Motion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Motion.swift; sourceTree = "<group>"; };
@@ -64,6 +70,7 @@
 		3E40CD64F095A8BA4D1644DE /* FlashcardsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsUITests.swift; sourceTree = "<group>"; };
 		40590CEF9514F130D9EB7101 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4233F9E69A788D61C2D472C0 /* Borders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Borders.swift; sourceTree = "<group>"; };
+		4AB8DD260175A68C1CA1FCEA /* MWPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWPill.swift; sourceTree = "<group>"; };
 		5666B85823F4898EAB769C5A /* MWCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCard.swift; sourceTree = "<group>"; };
 		57D2CD70838F57E5188414E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5E1E904C0BB96CFDF0B549B4 /* Control.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Control.swift; sourceTree = "<group>"; };
@@ -77,6 +84,7 @@
 		BB0EDBD405DDBA367BDF1503 /* Radii.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radii.swift; sourceTree = "<group>"; };
 		BE6E7C25A8A429F6EAF79073 /* MWScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScreen.swift; sourceTree = "<group>"; };
 		CB15FDE0C8DC4DAAAD34C765 /* ControlTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlTokenTests.swift; sourceTree = "<group>"; };
+		CFB0E68B8D3541EC7636DEFC /* MWDot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDot.swift; sourceTree = "<group>"; };
 		D75AEF6EC4869BDEED745175 /* ColorsTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsTokenTests.swift; sourceTree = "<group>"; };
 		DD49C9447BB17F91C561040F /* FlashcardsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsTests.swift; sourceTree = "<group>"; };
 		E7BFBCFA88524780D98CE086 /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
@@ -234,6 +242,10 @@
 			isa = PBXGroup;
 			children = (
 				7C21C770B2B3AF3347CF2284 /* MWButton.swift */,
+				088B7E1F4FEA8DB8F1829EC2 /* MWDivider.swift */,
+				CFB0E68B8D3541EC7636DEFC /* MWDot.swift */,
+				0A2046EA17B9CF3B81354EBB /* MWEyebrow.swift */,
+				4AB8DD260175A68C1CA1FCEA /* MWPill.swift */,
 				FA292D13A4FD4DFA9AAE6053 /* MWTextField.swift */,
 			);
 			path = Atoms;
@@ -422,6 +434,10 @@
 				190FCD89EB06257558CF3844 /* MWButtonPress.swift in Sources */,
 				F1642B745813ABE669A91B85 /* MWCard.swift in Sources */,
 				6BC96A54318A7EC43FB27FC3 /* MWDestructiveButtonStyle.swift in Sources */,
+				6D7E3BF8947D24D9C2C8A064 /* MWDivider.swift in Sources */,
+				343AAB64A5721C045E9EE719 /* MWDot.swift in Sources */,
+				F03144EE96CEA0A0C37E3256 /* MWEyebrow.swift in Sources */,
+				6621BD3199DA11A08EAFE665 /* MWPill.swift in Sources */,
 				C9D10B114F52606849C96E01 /* MWPrimaryButtonStyle.swift in Sources */,
 				319BDA71D9F0A272D6841EDA /* MWScreen.swift in Sources */,
 				7469D2561DCEC06499A1C483 /* MWSecondaryButtonStyle.swift in Sources */,
