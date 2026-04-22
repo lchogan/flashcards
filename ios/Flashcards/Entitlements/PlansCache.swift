@@ -54,12 +54,16 @@ public actor PlansCache {
     }
 
     public func load() -> PlanSnapshot? {
-        guard let data = defaults.data(forKey: storageKey) else { return nil }
+        guard let data = defaults.data(forKey: storageKey) else {
+            return nil
+        }
         return try? JSONDecoder.api.decode(PlanSnapshot.self, from: data)
     }
 
     public func store(_ snapshot: PlanSnapshot) {
-        guard let data = try? JSONEncoder.api.encode(snapshot) else { return }
+        guard let data = try? JSONEncoder.api.encode(snapshot) else {
+            return
+        }
         defaults.set(data, forKey: storageKey)
     }
 

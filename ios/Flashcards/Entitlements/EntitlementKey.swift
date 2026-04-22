@@ -44,7 +44,9 @@ public struct EntitlementResult: Equatable, Sendable {
     public let outcome: Outcome
 
     public var allowed: Bool {
-        if case .allowed = outcome { return true }
+        if case .allowed = outcome {
+            return true
+        }
         return false
     }
 

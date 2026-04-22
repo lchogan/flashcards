@@ -30,10 +30,29 @@ import SwiftUI
 @main
 struct FlashcardsApp: App {
     @State private var appState = AppState()
+    @State private var entitlements: EntitlementsManager
+    @State private var purchases: PurchasesManager
     let container: ModelContainer
 
     init() {
         AnalyticsClient.configure()
+
+        // One APIClient shared between the entitlement and purchase surfaces
+        // so both see the same auth token. AuthManager keeps its own client in
+        // RootView for the unauthenticated auth flows.
+        let tokenStore = TokenStore()
+        let api = APIClient(baseURL: URL(string: "http://localhost:8000")!) {
+            await tokenStore.access()
+        }
+        let entitlementsManager = EntitlementsManager(api: api)
+        self._entitlements = State(initialValue: entitlementsManager)
+        self._purchases = State(initialValue: PurchasesManager(
+            api: api,
+            refreshEntitlements: { @Sendable [weak entitlementsManager] in
+                await entitlementsManager?.load(force: true)
+            },
+        ))
+
         let schema: [any PersistentModel.Type] = [
             UserEntity.self, TopicEntity.self, DeckEntity.self, SubTopicEntity.self,
             CardEntity.self, CardSubTopicEntity.self, ReviewEntity.self,
@@ -60,7 +79,13 @@ struct FlashcardsApp: App {
     var body: some Scene {
         WindowGroup {
             RootView().environment(appState)
+                .environment(entitlements)
+                .environment(purchases)
                 .modelContainer(container)
+                .task {
+                    await entitlements.load()
+                    await purchases.load()
+                }
                 .onOpenURL { url in
                     if let token = MagicLinkConsumer.extractToken(from: url) {
                         NotificationCenter.default.post(

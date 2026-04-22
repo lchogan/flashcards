@@ -12,6 +12,7 @@ import SwiftUI
 struct CreateCardView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @Environment(EntitlementsManager.self) private var entitlements
 
     let deckId: String
     let onSaved: () -> Void
@@ -19,6 +20,7 @@ struct CreateCardView: View {
     @State private var form = CardFormModel()
     @State private var subTopics: [SubTopicEntity] = []
     @State private var showDiscardConfirm = false
+    @State private var paywallReason: EntitlementKey?
 
     var body: some View {
         NavigationStack {
@@ -61,10 +63,32 @@ struct CreateCardView: View {
             .task {
                 subTopics = (try? SubTopicRepository(context: context).list(deckId: deckId)) ?? []
             }
+            .sheet(item: $paywallReason) { reason in
+                PaywallView(reason: reason)
+            }
         }
     }
 
     private func save() {
+        let localDeckId = deckId
+        let inDeckDescriptor = FetchDescriptor<CardEntity>(
+            predicate: #Predicate { $0.deckId == localDeckId && $0.syncDeletedAtMs == nil },
+        )
+        let totalDescriptor = FetchDescriptor<CardEntity>(
+            predicate: #Predicate { $0.syncDeletedAtMs == nil },
+        )
+        let countInDeck = (try? context.fetchCount(inDeckDescriptor)) ?? 0
+        let countTotal = (try? context.fetchCount(totalDescriptor)) ?? 0
+
+        if case .paywall(let reason, _) = entitlements.can(.cardsCreateInDeck, currentCount: countInDeck).outcome {
+            paywallReason = reason
+            return
+        }
+        if case .paywall(let reason, _) = entitlements.can(.cardsCreateTotal, currentCount: countTotal).outcome {
+            paywallReason = reason
+            return
+        }
+
         do {
             _ = try CardRepository(context: context).create(
                 deckId: deckId,

@@ -50,6 +50,7 @@
 		37DE4CDC872A96BF66F19D8F /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFBCFA88524780D98CE086 /* Spacing.swift */; };
 		38D5739924BAD001DFD8E6ED /* CardSubTopicEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AF568BF32CAB05DD5ED053 /* CardSubTopicEntity.swift */; };
 		3C0A04027670D60D6C90DF14 /* MagicLinkSentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB119C7EA6CDB08651643EC5 /* MagicLinkSentView.swift */; };
+		3EE3CE174FA0C82FC94EC066 /* PurchasesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954ADF49C1C6177C87B965F4 /* PurchasesManager.swift */; };
 		4202B146CCA490A0CAC26E09 /* SignUpWallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D51F2962DF1E93EA9668E4 /* SignUpWallView.swift */; };
 		443049A2EF4251E98FEAED53 /* BasicStudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF55A0D140D20340B0E0212A /* BasicStudyView.swift */; };
 		4453BDD5207822B2246E75F3 /* MWActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FA45303CDA14AD66B93806 /* MWActionSheet.swift */; };
@@ -96,6 +97,7 @@
 		96F2B0B1239C69AD2B52AD75 /* EntitlementKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F88FBAA3DD311B27072C7 /* EntitlementKey.swift */; };
 		97BB3DE8DA72E45A9CF0DD8F /* test_MWTextField.1.png in Resources */ = {isa = PBXBuildFile; fileRef = 490ECA2DC834EBB5DCEAFD89 /* test_MWTextField.1.png */; };
 		9A2A72FFFD9D5F254FCB992C /* SessionSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6183B660BA0EF2BA4D04EC6B /* SessionSummaryView.swift */; };
+		9CCEE286FE8DD0B56734C011 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8905531D265A8ED78C0EA5A /* PaywallView.swift */; };
 		A200308DB65D7AC28BF3AB87 /* Motion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F3D467E2E539FF66D566E /* Motion.swift */; };
 		A72996DA8E1FF8E4F7D5CCC1 /* SyncPullerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1769328EFBFFB86212C962 /* SyncPullerTests.swift */; };
 		A732FD46039CA285EC45CB06 /* DesignSystemSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08B320524436C5B4CCC4CD9 /* DesignSystemSnapshotTests.swift */; };
@@ -219,6 +221,7 @@
 		8C087021FFDD8C1E5DDAA809 /* CardRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRepository.swift; sourceTree = "<group>"; };
 		8FDD1D115541E030F53F11A8 /* UserEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
 		8FE7C8DABC4C17BDAD170ED4 /* MWProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWProgressBar.swift; sourceTree = "<group>"; };
+		954ADF49C1C6177C87B965F4 /* PurchasesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesManager.swift; sourceTree = "<group>"; };
 		97807773209CB638A7C3856A /* CardsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsTabView.swift; sourceTree = "<group>"; };
 		9B3925292F9A0F8A65D5ADA9 /* MWAccentKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAccentKey.swift; sourceTree = "<group>"; };
 		9D49E4AA2AE135563BBDA46A /* MWPrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWPrimaryButtonStyle.swift; sourceTree = "<group>"; };
@@ -269,6 +272,7 @@
 		E7D51F2962DF1E93EA9668E4 /* SignUpWallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpWallView.swift; sourceTree = "<group>"; };
 		E7F32B7393E6D76DD2E8D5EC /* DeckDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckDetailViewModel.swift; sourceTree = "<group>"; };
 		E8601E71EC6CC580329D9D3A /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		E8905531D265A8ED78C0EA5A /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		EB119C7EA6CDB08651643EC5 /* MagicLinkSentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkSentView.swift; sourceTree = "<group>"; };
 		EB62B6A6F41C3A1E236E3C10 /* DeckRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckRepository.swift; sourceTree = "<group>"; };
 		ED2F2E000D8E52F893AB59AF /* Flashcards.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flashcards.entitlements; sourceTree = "<group>"; };
@@ -520,6 +524,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		6DEE7DEEF958833BC7274104 /* Paywall */ = {
+			isa = PBXGroup;
+			children = (
+				E8905531D265A8ED78C0EA5A /* PaywallView.swift */,
+			);
+			path = Paywall;
+			sourceTree = "<group>";
+		};
 		72C01DE35B953B002D8ACB8A /* Styles */ = {
 			isa = PBXGroup;
 			children = (
@@ -560,6 +572,7 @@
 				E6CC567D895B707D164840A7 /* Features */,
 				B8FDB318C62DB64023DA2741 /* Fsrs */,
 				AC22C941271FA71AE6097241 /* Networking */,
+				CFA7A7626B4BB603C2A29791 /* Purchases */,
 				9900C377598C7E6AC1D4372F /* Util */,
 				40590CEF9514F130D9EB7101 /* Assets.xcassets */,
 				ED2F2E000D8E52F893AB59AF /* Flashcards.entitlements */,
@@ -677,6 +690,14 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		CFA7A7626B4BB603C2A29791 /* Purchases */ = {
+			isa = PBXGroup;
+			children = (
+				954ADF49C1C6177C87B965F4 /* PurchasesManager.swift */,
+			);
+			path = Purchases;
+			sourceTree = "<group>";
+		};
 		DBFB1E547D31343C7FD8370D = {
 			isa = PBXGroup;
 			children = (
@@ -705,6 +726,7 @@
 				469D663F9161FAA61A0EC8AB /* DeckDetail */,
 				3F20545E0B1ADCFE6C0703B6 /* Home */,
 				C07066FF8BDC3A30FB318EE4 /* Onboarding */,
+				6DEE7DEEF958833BC7274104 /* Paywall */,
 				79675C1A19D39AC2E82839E2 /* Search */,
 				9FC4D87C120431AF03FAF42F /* Session */,
 			);
@@ -1009,8 +1031,10 @@
 				D3741E0B6CE09CF567AB2656 /* ManageSubTopicsView.swift in Sources */,
 				A200308DB65D7AC28BF3AB87 /* Motion.swift in Sources */,
 				0663734BD2CB80C862FB72B4 /* MutationQueue.swift in Sources */,
+				9CCEE286FE8DD0B56734C011 /* PaywallView.swift in Sources */,
 				910979C7FC9DF8B27330B6B6 /* PendingMutationEntity.swift in Sources */,
 				29376E648562E2D0E155C238 /* PlansCache.swift in Sources */,
+				3EE3CE174FA0C82FC94EC066 /* PurchasesManager.swift in Sources */,
 				D9DD838304ED3D163450007C /* Radii.swift in Sources */,
 				08587D58067C0A312630DA8D /* RatingMapping.swift in Sources */,
 				60CE3ABF4DCA85511909BDA1 /* Reachability.swift in Sources */,
