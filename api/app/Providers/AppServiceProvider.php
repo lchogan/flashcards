@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Services\Auth\AppleIdentityVerifier;
+use App\Services\Sync\Entities\TopicReader;
+use App\Services\Sync\Entities\TopicUpserter;
 use App\Services\Sync\SyncPullService;
 use App\Services\Sync\SyncPushService;
 use Illuminate\Support\ServiceProvider;
@@ -35,9 +37,15 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
+     *
+     * Registers entity-specific upserters and readers with the sync push/pull
+     * services so each entity key is routed to the correct handler class.
      */
     public function boot(): void
     {
-        //
+        app(SyncPushService::class)
+            ->register('topics', TopicUpserter::class);
+        app(SyncPullService::class)
+            ->register('topics', TopicReader::class);
     }
 }
