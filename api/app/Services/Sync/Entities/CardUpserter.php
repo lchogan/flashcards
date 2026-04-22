@@ -31,6 +31,7 @@ namespace App\Services\Sync\Entities;
 use App\Models\Card;
 use App\Models\Deck;
 use App\Models\User;
+use App\Services\Entitlements\EntitlementChecker;
 use App\Services\Sync\RecordUpserter;
 use App\Services\Sync\UpsertResult;
 
@@ -76,6 +77,19 @@ final class CardUpserter implements RecordUpserter
         $existing = Card::find($id);
         if ($existing && $existing->updated_at_ms >= $incoming) {
             return new UpsertResult(false, 'stale');
+        }
+
+        // Gate only on insert: a net-new card must fit under both the per-deck
+        // and per-account caps. Updates never re-gate (can edit existing cards
+        // even if you've hit the cap since then).
+        if ($existing === null) {
+            $checker = app(EntitlementChecker::class);
+            foreach (['cards.create_in_deck', 'cards.create_total'] as $key) {
+                $check = $checker->can($user, $key, ['deck_id' => $deckId]);
+                if (! $check->allowed) {
+                    return new UpsertResult(false, (string) $check->reason);
+                }
+            }
         }
 
         // Use firstOrNew + explicit id assignment to avoid HasUuids overwriting the
