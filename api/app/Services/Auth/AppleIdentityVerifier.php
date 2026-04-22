@@ -30,7 +30,7 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\SignatureInvalidException;
 use RuntimeException;
 
-final class AppleIdentityVerifier
+class AppleIdentityVerifier
 {
     /**
      * @param  string  $clientId  The expected audience — app's Apple Bundle ID.

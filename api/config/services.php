@@ -37,4 +37,8 @@ return [
         ],
     ],
 
+    'apple' => [
+        'client_id' => env('APPLE_CLIENT_ID', 'com.lukehogan.flashcards'),
+    ],
+
 ];

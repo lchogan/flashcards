@@ -23,7 +23,7 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'name' => fake()->name(),
             'auth_provider' => 'email',
-            'auth_provider_id' => null,
+            'auth_provider_id' => fake()->uuid(),
             'updated_at_ms' => now()->getTimestampMs(),
         ];
     }
