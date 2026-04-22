@@ -27,13 +27,26 @@ jobs:
         run: xcodebuild -resolvePackageDependencies -scheme Flashcards
       - name: Build & Test
         run: |
+          set -o pipefail
+          # Destination must pin BOTH name AND OS. Dropping OS or passing
+          # `OS=latest` causes xcodebuild to implicitly add `OS:latest`,
+          # which resolves to the newest runtime installed on the runner
+          # (18.x). iPhone 15 is only installed through iOS 17.5 on the
+          # macos-14 / Xcode 16.2 image, so `iPhone 15, OS=latest` fails
+          # to match with exit 70. Pin OS=17.5 explicitly. If a runner
+          # upgrade drops 17.5, bump to whatever iPhone 15 ships with.
           xcodebuild \
             -scheme Flashcards \
-            -destination 'platform=iOS Simulator,OS=latest' \
+            -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.5' \
             -configuration Debug \
             -enableCodeCoverage YES \
+            -derivedDataPath build/DerivedData \
             clean test | xcbeautify --is-ci
       - name: Coverage
         run: |
-          xcrun xccov view --report --only-targets \
-            $(find ~/Library/Developer/Xcode/DerivedData -name '*.xcresult' | head -1)
+          xcresult=$(find build/DerivedData -name '*.xcresult' -print -quit)
+          if [ -z "$xcresult" ]; then
+            echo "No xcresult found under build/DerivedData; skipping coverage report."
+            exit 0
+          fi
+          xcrun xccov view --report --only-targets "$xcresult"

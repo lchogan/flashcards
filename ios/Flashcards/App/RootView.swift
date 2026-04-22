@@ -84,18 +84,28 @@ struct RootView: View {
             }
         }
         .task { await auth.restore() }
-        .task {
-            // Magic-link fan-in: `FlashcardsApp`'s `.onOpenURL` posts
-            // `mwMagicLinkToken` with the parsed token as `object`. We
-            // await that stream here and hand the token to
-            // `AuthManager.consumeMagicLink(token:)`. Errors are
-            // currently swallowed — a later task will surface a
-            // user-visible failure state for a bad/expired token.
-            for await note in NotificationCenter.default.notifications(named: .mwMagicLinkToken) {
-                if let token = note.object as? String {
-                    try? await auth.consumeMagicLink(token: token)
-                }
+        // Magic-link fan-in: `FlashcardsApp`'s `.onOpenURL` posts
+        // `mwMagicLinkToken` with the parsed token as `object`. We
+        // subscribe here via `.onReceive` (Combine publisher) and hand
+        // the token to `AuthManager.consumeMagicLink(token:)`.
+        //
+        // We previously used `.task { for await note in
+        // NotificationCenter.default.notifications(named:) ... }`, which
+        // compiles against the iOS 18 SDK (where `Foundation.Notification`
+        // is Sendable) but fails under Swift 6 strict concurrency on our
+        // iOS 17 deployment target — `Notification` is non-Sendable
+        // there and can't cross the MainActor boundary. `.onReceive` is
+        // MainActor-isolated by construction, so the publisher's values
+        // never leave the main actor and Sendability doesn't apply.
+        //
+        // Errors from `consumeMagicLink` are currently swallowed — a
+        // later task will surface a user-visible failure state for a
+        // bad/expired token.
+        .onReceive(NotificationCenter.default.publisher(for: .mwMagicLinkToken)) { note in
+            guard let token = note.object as? String else {
+                return
             }
+            Task { try? await auth.consumeMagicLink(token: token) }
         }
     }
 }
