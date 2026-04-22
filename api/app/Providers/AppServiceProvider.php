@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Services\Auth\AppleIdentityVerifier;
+use App\Services\Entitlements\EntitlementChecker;
 use App\Services\Sync\Entities\CardReader;
 use App\Services\Sync\Entities\CardSubTopicReader;
 use App\Services\Sync\Entities\CardSubTopicUpserter;
@@ -45,6 +46,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(SyncPushService::class);
 
         $this->app->singleton(SyncPullService::class);
+
+        $this->app->singleton(EntitlementChecker::class);
     }
 
     /**
