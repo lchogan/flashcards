@@ -4,48 +4,34 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, HasUuids, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'email', 'name', 'avatar_url', 'auth_provider', 'auth_provider_id',
+        'daily_goal_cards', 'reminder_time_local', 'reminder_enabled',
+        'theme_preference', 'fsrs_weights', 'subscription_status',
+        'subscription_expires_at', 'subscription_product_id',
+        'image_quota_used_bytes', 'marketing_opt_in', 'updated_at_ms', 'deleted_at_ms',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
+    protected $casts = [
+        'fsrs_weights' => 'array',
+        'reminder_enabled' => 'boolean',
+        'marketing_opt_in' => 'boolean',
+        'subscription_expires_at' => 'datetime',
+        'updated_at_ms' => 'integer',
+        'deleted_at_ms' => 'integer',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    protected $hidden = ['auth_provider_id'];
 }

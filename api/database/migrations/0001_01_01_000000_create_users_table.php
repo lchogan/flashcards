@@ -14,13 +14,27 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->uuid('id')->primary();
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('name')->nullable();
+            $table->string('avatar_url')->nullable();
+            $table->enum('auth_provider', ['apple', 'email']);
+            $table->string('auth_provider_id')->nullable();
+            $table->unsignedSmallInteger('daily_goal_cards')->default(20);
+            $table->time('reminder_time_local')->nullable();
+            $table->boolean('reminder_enabled')->default(false);
+            $table->enum('theme_preference', ['system', 'light', 'dark'])->default('system');
+            $table->json('fsrs_weights')->nullable();
+            $table->enum('subscription_status', ['free', 'active', 'in_grace', 'expired'])->default('free');
+            $table->timestamp('subscription_expires_at')->nullable();
+            $table->string('subscription_product_id')->nullable();
+            $table->unsignedBigInteger('image_quota_used_bytes')->default(0);
+            $table->boolean('marketing_opt_in')->default(false);
+            $table->bigInteger('updated_at_ms');
+            $table->bigInteger('deleted_at_ms')->nullable();
             $table->timestamps();
+            $table->unique(['auth_provider', 'auth_provider_id']);
+            $table->index('updated_at_ms');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
