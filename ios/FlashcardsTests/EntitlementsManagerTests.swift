@@ -7,12 +7,13 @@
 //
 
 import XCTest
+
 @testable import Flashcards
 
 @MainActor
 final class EntitlementsManagerTests: XCTestCase {
     func testDenyDecksCreate_whenAtMax() async throws {
-        let mgr = makeManager(cached: snapshot(freeDefaults()))
+        let mgr = await makeManager(snapshot: snapshot(freeDefaults()))
         await mgr.load()
 
         let result = mgr.can(.decksCreate, currentCount: 5)
@@ -27,21 +28,21 @@ final class EntitlementsManagerTests: XCTestCase {
     }
 
     func testAllowDecksCreate_whenBelowMax() async {
-        let mgr = makeManager(cached: snapshot(freeDefaults()))
+        let mgr = await makeManager(snapshot: snapshot(freeDefaults()))
         await mgr.load()
 
         XCTAssertTrue(mgr.can(.decksCreate, currentCount: 2).allowed)
     }
 
     func testAllowStudySmart_whenBooleanTrue() async {
-        let mgr = makeManager(cached: snapshot(freeDefaults()))
+        let mgr = await makeManager(snapshot: snapshot(freeDefaults()))
         await mgr.load()
 
         XCTAssertTrue(mgr.can(.studySmart).allowed)
     }
 
     func testDenyImagesUse_whenBooleanFalse() async {
-        let mgr = makeManager(cached: snapshot(freeDefaults()))
+        let mgr = await makeManager(snapshot: snapshot(freeDefaults()))
         await mgr.load()
 
         let result = mgr.can(.imagesUse)
@@ -54,19 +55,20 @@ final class EntitlementsManagerTests: XCTestCase {
     }
 
     func testUnknownKey_deniesByDefault() async {
-        // Snapshot intentionally omits reminders.add.
-        let mgr = makeManager(cached: snapshot([
-            "decks.create": EntitlementConfig(type: "max_count", max: 5, allowed: nil),
-        ]))
+        let mgr = await makeManager(
+            snapshot: snapshot([
+                "decks.create": EntitlementConfig(type: "max_count", max: 5, allowed: nil)
+            ]))
         await mgr.load()
 
         XCTAssertFalse(mgr.can(.remindersAdd).allowed)
     }
 
     func testUnlimitedMax_allowsAnyCount() async {
-        let mgr = makeManager(cached: snapshot([
-            "decks.create": EntitlementConfig(type: "max_count", max: nil, allowed: nil),
-        ]))
+        let mgr = await makeManager(
+            snapshot: snapshot([
+                "decks.create": EntitlementConfig(type: "max_count", max: nil, allowed: nil)
+            ]))
         await mgr.load()
 
         XCTAssertTrue(mgr.can(.decksCreate, currentCount: 9999).allowed)
@@ -86,19 +88,32 @@ final class EntitlementsManagerTests: XCTestCase {
         ]
     }
 
-    private func makeManager(cached snap: PlanSnapshot) -> EntitlementsManager {
+    private func makeManager(snapshot snap: PlanSnapshot) async -> EntitlementsManager {
         let defaults = UserDefaults(suiteName: "test-\(UUID().uuidString)")!
         let cache = PlansCache(defaults: defaults)
-        // Pre-populate cache. Since store() is actor-isolated we dispatch and
-        // wait via semaphore; cleaner options aren't worth the extra surface.
-        let done = DispatchSemaphore(value: 0)
-        Task {
-            await cache.store(snap)
-            done.signal()
-        }
-        done.wait()
-        let api = StubAPIEntitlements(response: #"{"plan_key":"free","version":1,"entitlements":{}}"#)
+        await cache.store(snap)
+        let api = StubAPIEntitlements(response: encode(snap))
         return EntitlementsManager(api: api, cache: cache)
+    }
+
+    private func encode(_ snapshot: PlanSnapshot) -> String {
+        // Manually build the wire shape so the stub returns the same data the
+        // test seeded — otherwise the network-refresh step in load() overwrites
+        // the cached snapshot with an empty one.
+        var ent: [String: [String: Any]] = [:]
+        for (key, cfg) in snapshot.entitlements {
+            var row: [String: Any] = ["type": cfg.type]
+            if let max = cfg.max { row["max"] = max }
+            if let allowed = cfg.allowed { row["allowed"] = allowed }
+            ent[key] = row
+        }
+        let payload: [String: Any] = [
+            "plan_key": snapshot.planKey,
+            "version": snapshot.version,
+            "entitlements": ent,
+        ]
+        let data = try! JSONSerialization.data(withJSONObject: payload)
+        return String(data: data, encoding: .utf8)!
     }
 }
 
