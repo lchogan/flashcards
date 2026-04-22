@@ -8,8 +8,8 @@
 //           same footprint, outline instead of solid fill.
 //  Dependencies: SwiftUI (ButtonStyle, Environment), `MWType`, `MWColor`,
 //                `MWRadiusToken` via `mwCornerRadius`, `mwStroke` (+ its
-//                defaults `MWColor.ink` / `MWBorder.defaultWidth`), and
-//                `MWMotion`.
+//                defaults `MWColor.ink` / `MWBorder.defaultWidth`),
+//                `MWControl.Height`, and `MWButtonPress`.
 //  Key concepts: Border-first surface on paper — no shadow, no gradient. The
 //                stroke passes `cornerRadius: MWRadius.s` so the overlay traces
 //                the rounded clip applied by `mwCornerRadius(.s)`; without it
@@ -17,9 +17,10 @@
 //                fill (see Task 0.22-fix, commit 164dd80). Disabled state
 //                applies a 0.5 opacity to the whole body rather than swapping
 //                colors, because the outline + paper combination reads
-//                legibly enough when faded. Reduce-motion wrap for the press
-//                animation is deferred to a later pass for consistency with
-//                `MWPrimaryButtonStyle`.
+//                legibly enough when faded. Height comes from
+//                `MWControl.Height.primary`; the press animation is delegated
+//                to `.mwButtonPress(isPressed:)` which honors Reduce Motion
+//                via `MWMotion.respecting`.
 //
 
 import SwiftUI
@@ -45,13 +46,12 @@ public struct MWSecondaryButtonStyle: ButtonStyle {
         configuration.label
             .font(MWType.bodyL.weight(.semibold))
             .foregroundStyle(MWColor.ink)
-            .frame(maxWidth: .infinity, minHeight: 52)
+            .frame(maxWidth: .infinity, minHeight: MWControl.Height.primary)
             .background(MWColor.paper)
             .mwCornerRadius(.s)
             .mwStroke(cornerRadius: MWRadius.s)
             .opacity(isEnabled ? 1.0 : 0.5)
-            .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
-            .animation(MWMotion.instant, value: configuration.isPressed)
+            .mwButtonPress(isPressed: configuration.isPressed)
     }
 }
 

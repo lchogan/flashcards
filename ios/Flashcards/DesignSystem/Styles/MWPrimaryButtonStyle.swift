@@ -7,15 +7,14 @@
 //           "Save deck"). Only one primary button should appear per screen.
 //  Dependencies: SwiftUI (ButtonStyle, Environment), `MWType`, `MWColor`,
 //                `MWSpacingToken` via `mwPadding`, `MWRadiusToken` via
-//                `mwCornerRadius`, and `MWMotion`.
+//                `mwCornerRadius`, `MWControl.Height`, and `MWButtonPress`.
 //  Key concepts: Flat, border-first Modernist surface — no shadow, no gradient.
 //                Disabled state swaps `MWColor.ink` for `MWColor.inkFaint`
 //                rather than reducing opacity, so the control remains
-//                legible against `MWColor.canvas`. The press animation is a
-//                short 0.98-scale tween via `MWMotion.instant`; the
-//                reduce-motion wrap around it is intentionally deferred to a
-//                later designer-sign-off pass so every button style can adopt
-//                it consistently.
+//                legible against `MWColor.canvas`. Height comes from
+//                `MWControl.Height.primary`; the press animation is delegated
+//                to `.mwButtonPress(isPressed:)` so reduce-motion is honored
+//                uniformly across the button trio (via `MWMotion.respecting`).
 //
 
 import SwiftUI
@@ -39,11 +38,10 @@ public struct MWPrimaryButtonStyle: ButtonStyle {
         configuration.label
             .font(MWType.bodyL.weight(.semibold))
             .foregroundStyle(MWColor.paper)
-            .frame(maxWidth: .infinity, minHeight: 52)
+            .frame(maxWidth: .infinity, minHeight: MWControl.Height.primary)
             .background(isEnabled ? MWColor.ink : MWColor.inkFaint)
             .mwCornerRadius(.s)
-            .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
-            .animation(MWMotion.instant, value: configuration.isPressed)
+            .mwButtonPress(isPressed: configuration.isPressed)
     }
 }
 

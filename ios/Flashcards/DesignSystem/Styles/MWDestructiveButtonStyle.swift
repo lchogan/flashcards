@@ -7,14 +7,19 @@
 //           deck", "Reset progress"). Intentionally borderless and fill-less
 //           to feel lighter than a primary button, while the warning color
 //           still signals caution.
-//  Dependencies: SwiftUI (ButtonStyle), `MWType`, `MWColor`, `MWMotion`.
+//  Dependencies: SwiftUI (ButtonStyle, Environment), `MWType`, `MWColor`,
+//                `MWControl.Height`, and `MWButtonPress`.
 //  Key concepts: No surface fill, no stroke, no corner radius — only a colored
-//                label. Sits at 44pt (the Apple Human Interface minimum tap
-//                target) rather than the 52pt of primary/secondary because it
-//                typically appears as a trailing destructive link rather than
-//                a dominant CTA. Press animation mirrors the other button
-//                styles for consistency; reduce-motion wrap is deferred to a
-//                later pass.
+//                label. Sits at `MWControl.Height.compact` (44pt — the Apple
+//                Human Interface minimum tap target) rather than the 52pt of
+//                primary/secondary because it typically appears as a trailing
+//                destructive link rather than a dominant CTA. Observes
+//                `@Environment(\.isEnabled)` and fades to 50% opacity when
+//                disabled — matching `MWSecondaryButtonStyle`'s treatment —
+//                so a mid-async-delete tap lands on visibly disabled text
+//                rather than a silently-dropped ghost. The press animation
+//                is delegated to `.mwButtonPress(isPressed:)` which honors
+//                Reduce Motion via `MWMotion.respecting`.
 //
 
 import SwiftUI
@@ -25,6 +30,8 @@ import SwiftUI
 /// for irreversible or dangerous actions. Apply via the `.mwDestructive`
 /// static accessor: `Button("Delete deck") { }.buttonStyle(.mwDestructive)`.
 public struct MWDestructiveButtonStyle: ButtonStyle {
+    @Environment(\.isEnabled) private var isEnabled
+
     /// Creates the destructive button style. Prefer the `.mwDestructive`
     /// accessor at call sites; this initializer is public so the style can
     /// also be constructed explicitly (e.g. for previews or tests).
@@ -37,9 +44,9 @@ public struct MWDestructiveButtonStyle: ButtonStyle {
         configuration.label
             .font(MWType.bodyL.weight(.semibold))
             .foregroundStyle(MWColor.again)
-            .frame(maxWidth: .infinity, minHeight: 44)
-            .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
-            .animation(MWMotion.instant, value: configuration.isPressed)
+            .frame(maxWidth: .infinity, minHeight: MWControl.Height.compact)
+            .opacity(isEnabled ? 1.0 : 0.5)
+            .mwButtonPress(isPressed: configuration.isPressed)
     }
 }
 
