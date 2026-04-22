@@ -33,6 +33,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class TokenController extends Controller
@@ -67,9 +68,17 @@ class TokenController extends Controller
             abort(401);
         }
 
-        $access = $user->createToken('ios', ['*'], now()->addMinutes(15));
-        $newRefresh = $user->createToken('refresh', ['auth:refresh'], now()->addDays(90));
-        $token->delete();
+        // Wrap the three mutations (issue access, issue new refresh, delete old
+        // refresh) in a single DB transaction so a mid-flight failure cannot
+        // leave either an orphan access-without-refresh or two-valid-refreshes
+        // state. Either all three succeed or none do.
+        [$access, $newRefresh] = DB::transaction(function () use ($user, $token) {
+            $access = $user->createToken('ios', ['*'], now()->addMinutes(15));
+            $newRefresh = $user->createToken('refresh', ['auth:refresh'], now()->addDays(90));
+            $token->delete();
+
+            return [$access, $newRefresh];
+        });
 
         return response()->json([
             'access_token' => $access->plainTextToken,

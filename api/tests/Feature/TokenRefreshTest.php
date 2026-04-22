@@ -44,3 +44,14 @@ test('expired refresh token returns 401', function () {
     $refresh = $u->createToken('refresh', ['auth:refresh'], now()->subMinute())->plainTextToken;
     $this->postJson('/api/v1/auth/refresh', ['refresh_token' => $refresh])->assertStatus(401);
 });
+
+test('rotated refresh token cannot be reused', function () {
+    // End-to-end rotation-reuse contract: once a refresh token has been
+    // exchanged, the plaintext presented to that first call must be dead.
+    // Complements the structural "new != old" assertion above by proving
+    // the old row is actually deleted (not merely a different new row).
+    $u = User::factory()->create();
+    $refresh = $u->createToken('refresh', ['auth:refresh'], now()->addDays(90))->plainTextToken;
+    $this->postJson('/api/v1/auth/refresh', ['refresh_token' => $refresh])->assertOk();
+    $this->postJson('/api/v1/auth/refresh', ['refresh_token' => $refresh])->assertStatus(401);
+});
