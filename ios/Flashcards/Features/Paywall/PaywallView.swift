@@ -196,3 +196,38 @@ internal enum PaywallCopy {
         ),
     ]
 }
+
+#if DEBUG
+
+/// Stub APIClient for Previews — never actually hits the network.
+private final class PreviewStubAPI: APIClientProtocol, @unchecked Sendable {
+    func send<R>(_ endpoint: APIEndpoint<R>) async throws -> R where R: Decodable & Sendable {
+        throw APIError.offline
+    }
+}
+
+#Preview("Paywall — decksCreate") {
+    let purchases = PurchasesManager(api: PreviewStubAPI())
+    return NavigationStack {
+        PaywallView(reason: .decksCreate)
+    }
+    .environment(purchases)
+}
+
+#Preview("Paywall — remindersAdd") {
+    let purchases = PurchasesManager(api: PreviewStubAPI())
+    return NavigationStack {
+        PaywallView(reason: .remindersAdd)
+    }
+    .environment(purchases)
+}
+
+#Preview("Paywall — cardsCreateInDeck") {
+    let purchases = PurchasesManager(api: PreviewStubAPI())
+    return NavigationStack {
+        PaywallView(reason: .cardsCreateInDeck)
+    }
+    .environment(purchases)
+}
+
+#endif
